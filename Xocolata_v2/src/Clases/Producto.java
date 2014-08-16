@@ -36,6 +36,7 @@ public class Producto {
     private double porcentajeOferta = 0.0;
     private double descuentoOferta = 0.0;
     private double precioOfertado = 0.0;
+    private double precioOfertadoSugerido = 0.0;
     private double porcentajeOfertaVenta  = 0.0;
     private double descuentoVenta = 0.0;
     private double precioVentaFinal = 0.0;
@@ -430,6 +431,20 @@ public class Producto {
      */
     public void setPrecioVentaFinal(double precioVentaFinal) {
         this.precioVentaFinal = precioVentaFinal;
+    }
+
+    /**
+     * @return the precioOfertadoSugerido
+     */
+    public double getPrecioOfertadoSugerido() {
+        return precioOfertadoSugerido;
+    }
+
+    /**
+     * @param precioOfertadoSugerido the precioOfertadoSugerido to set
+     */
+    public void setPrecioOfertadoSugerido(double precioOfertadoSugerido) {
+        this.precioOfertadoSugerido = precioOfertadoSugerido;
     }
 
     
