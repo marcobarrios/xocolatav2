@@ -176,7 +176,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         return fechaFinal;
     }
     
-     private void cargarTipoGastos() {
+    private void cargarTipoGastos() {
         jComboBox1.removeAllItems();
         ResultSet dato = null;
         Connection conexion = ConexionDB.ObtenerConexion();
