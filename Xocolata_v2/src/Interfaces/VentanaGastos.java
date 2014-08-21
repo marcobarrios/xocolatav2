@@ -6,17 +6,30 @@
 
 package Interfaces;
 
+import Clases.Gastos;
+import ContenedorComboBox.Item;
+import Querys.GastoQuerys;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+import xocolata_v2.ConexionDB;
+
 /**
  *
  * @author Marco
  */
 public class VentanaGastos extends javax.swing.JInternalFrame {
 
+    private String fechaFinal;
     /**
      * Creates new form VentanaGastos
      */
     public VentanaGastos() {
         initComponents();
+        cargarTipoGastos();
     }
 
     /**
@@ -28,21 +41,173 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        calendario = new com.toedter.calendar.JDateChooser();
+        IngresarGasto = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tMontoGasto = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jButton2 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+
+        setClosable(true);
+        setIconifiable(true);
+
+        IngresarGasto.setText("Ingresar Gasto");
+        IngresarGasto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IngresarGastoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Fecha del Gasto");
+
+        jLabel2.setText("Monto del Gasto");
+
+        jLabel3.setText("Tipo de Gasto");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Seleccione Tipo de Gasto", "---------------------------------------" }));
+
+        jButton2.setText("+");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Ingreso de Gastos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tMontoGasto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2)))
+                        .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(IngresarGasto)
+                        .addGap(148, 148, 148))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jLabel4)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel4)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tMontoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(29, 29, 29)
+                .addComponent(IngresarGasto)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void IngresarGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarGastoActionPerformed
+        Item gasto = (Item)jComboBox1.getSelectedItem();
+        int id = Integer.parseInt(gasto.getId());
+        Gastos nuevogasto = new Gastos();
+        nuevogasto.setFecha(obtenerFecha());
+        nuevogasto.setGasto(Double.parseDouble(tMontoGasto.getText()));
+        nuevogasto.setIdTipoGasto(id);
+        GastoQuerys.ingresarGasto(nuevogasto);
+        tMontoGasto.setText("");
+        cargarTipoGastos();
+    }//GEN-LAST:event_IngresarGastoActionPerformed
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String tipogasto = JOptionPane.showInputDialog(null, "Ingrese Fabricante: ", "Fabricante", 1);
+        if(tipogasto!=null)
+        {
+            Connection conexion = ConexionDB.ObtenerConexion();
+            try
+            {
+                Statement comando = (Statement)conexion.createStatement();
+                comando.execute("insert into tbltipogasto values('0','" + tipogasto + "')");
+                comando.close();
+                conexion.close();
+            }
+            catch (SQLException ex)
+            {
+                //JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+        cargarTipoGastos();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
+    public String obtenerFecha() {
+        Calendar fecha = calendario.getCalendar();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH);
+        int año = fecha.get(Calendar.YEAR);
+        this.fechaFinal = Integer.toString(año)+"-"+Integer.toString(mes)+"-"+Integer.toString(dia);
+        return fechaFinal;
+    }
+    
+     private void cargarTipoGastos() {
+        jComboBox1.removeAllItems();
+        ResultSet dato = null;
+        Connection conexion = ConexionDB.ObtenerConexion();
+            try
+            {
+                Statement comando = (Statement)conexion.createStatement();
+                dato = comando.executeQuery("Select idTipoGasto, TipoGasto from tbltipogasto ORDER BY TipoGasto");
+                while(dato.next())
+                {
+                    Item vendedor = new Item(dato.getString("idTipoGasto"), dato.getString("TipoGasto"));
+                    jComboBox1.addItem(vendedor);
+                }
+                dato.close();
+                comando.close();
+                conexion.close();
+            }
+            catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton IngresarGasto;
+    private com.toedter.calendar.JDateChooser calendario;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField tMontoGasto;
     // End of variables declaration//GEN-END:variables
 }
