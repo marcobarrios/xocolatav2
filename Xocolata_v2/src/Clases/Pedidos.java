@@ -10,7 +10,7 @@ package Clases;
  *
  * @author Marco
  */
-public class Pedido {
+public class Pedidos {
     private String codigo = "";
     private String fecha = "";
     private double subtotal = 0.0;

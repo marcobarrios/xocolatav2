@@ -10,7 +10,7 @@ package Clases;
  *
  * @author Marco
  */
-public class Producto {
+public class Productos {
     private String codigo = "";
     private int marca = 0;
     private int tipoProducto = 0;

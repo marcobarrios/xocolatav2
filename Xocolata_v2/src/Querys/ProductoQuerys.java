@@ -6,10 +6,11 @@
 
 package Querys;
 
-import Clases.Producto;
+import Clases.Productos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,7 +22,7 @@ import xocolata_v2.ConexionDB;
  */
 public class ProductoQuerys {
     
-    public static void insertarProducto(Producto producto)
+    public static void insertarProducto(Productos producto)
     {
         try {
             Connection conexion = ConexionDB.ObtenerConexion();
@@ -65,4 +66,69 @@ public class ProductoQuerys {
             Logger.getLogger(ProductoQuerys.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static void insertarMarca(String marca)
+    {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            comando.execute("insert into tblMarcas values('0','" + marca + "')");
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            //JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+        public static void insertarTipoProducto(String tipo)
+    {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            comando.execute("insert into tblTipoProductos values('0','" + tipo + "')");
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            //JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+        
+    public static void insertarTalla(String talla)
+    {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            comando.execute("insert into tblTallas values('0','" + talla + "')");
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            //JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    public static void insertarGenero(String genero)
+    {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            comando.execute("insert into tblGenero values('0','" + genero + "')");
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            //JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
 }

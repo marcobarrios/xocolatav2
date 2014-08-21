@@ -6,7 +6,7 @@
 
 package Querys;
 
-import Clases.Pedido;
+import Clases.Pedidos;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,16 +21,16 @@ import xocolata_v2.ConexionDB;
  */
 public class PedidoQuerys {
     
-    public static void insertarPedido(Pedido pedido) {
+    public static void insertarPedido(Pedidos pedido) {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                comando.execute("insert into tblPedidos values('0','" + pedido.getCodigo() + "','" + pedido.getFecha()
+                comando.execute("insert into tblPedidos values('0','" + pedido.getCodigo() 
                         + "','" + pedido.getSubtotal() + "','" + pedido.getImpuesto()
                         + "','" + pedido.getEnvioUSA() + "','" + pedido.getCantidadProductos()
-                        + "','" + pedido.getEnvioGTUnitario()+ "','" + pedido.getTipoCambio()
-                        + "','" + pedido.getImpuestoUnitario() + "','" + pedido.getEnvioUSAUnitario()+ "')");
+                        + "','" + pedido.getImpuestoUnitario()+ "','" + pedido.getEnvioUSAUnitario()
+                        + "','" + pedido.getFecha() + "','" + pedido.getTipoCambio() + "','" + pedido.getEnvioGTUnitario() + "')");
                 JOptionPane.showMessageDialog(null, "Pedido ingresado correctamente", "Ingreso Exitoso", 1);
             }
             conexion.close();
