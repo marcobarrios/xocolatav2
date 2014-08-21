@@ -42,4 +42,54 @@ public class VendedorQuerys {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }   
+    
+    public static void editarVendedor(Vendedores p)
+    {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            ResultSet dato = comando.executeQuery("select idVendedor from tblVendedores where nombreVendedor='"+ p.getNombre() + "'"); 
+            dato.next();
+            int id = dato.getInt("idVendedor");
+            comando.execute("Update tblVendedores SET dpi='" + p.getDpi() + "', direccionVendedor='" + p.getDireccion()+"' where idVendedor='" + id + "'");
+            comando.execute("Update tblcontactovendedor SET contacto = '" + p.getTelefono() + "' where idvendedor = '" + id + "' AND idcontacto = '1'");
+            JOptionPane.showMessageDialog(null, "Edición Exitoso", "Cambio Exitoso", 1);
+            comando.close();
+            conexion.close();
+        }
+        catch (HeadlessException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    public static Vendedores consultarVendedor(String nombre) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        Vendedores persona = null;
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                ResultSet dato = comando.executeQuery("select * from tblVendedores INNER JOIN tblcontactovendedor on tblVendedores.idVendedor = tblcontactovendedor.idVendedor where nombreVendedor = '" + nombre + "'");
+                dato.next();
+                persona = new Vendedores();
+                persona.setNombre(dato.getString("nombreVendedor"));
+                persona.setDpi(dato.getString("dpi"));
+                //persona.setCorreo(dato.getString("correoPersona"));
+                persona.setDireccion(dato.getString("direccionVendedor"));
+                int id = dato.getInt("idVendedor");
+                dato = comando.executeQuery("select * from tblcontactovendedor where idVendedor = '" + id + "'");
+                dato.next();
+                persona.setTelefono(dato.getString("contacto"));
+            }
+            conexion.close();
+        }
+        catch (NumberFormatException | SQLException ex)
+        {
+            return null;
+        }
+        return persona;
+    }
 }
