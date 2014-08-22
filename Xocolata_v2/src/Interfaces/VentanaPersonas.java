@@ -10,6 +10,9 @@ import Clases.Clientes;
 import Clases.Vendedores;
 import Querys.ClienteQuerys;
 import Querys.VendedorQuerys;
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.Icon;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -48,6 +51,10 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        tTitulo = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         lTelefono = new javax.swing.JLabel();
         tTelefono = new javax.swing.JTextField();
         lDPI = new javax.swing.JLabel();
@@ -56,7 +63,6 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
         tCorreo = new javax.swing.JTextField();
         lDireccion = new javax.swing.JLabel();
         tDireccion = new javax.swing.JTextField();
-        tTitulo = new javax.swing.JLabel();
         bIngresar = new javax.swing.JButton();
         lNombre = new javax.swing.JLabel();
         tNombre = new javax.swing.JTextField();
@@ -64,34 +70,66 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel2.setBackground(new java.awt.Color(153, 0, 153));
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setPreferredSize(new java.awt.Dimension(440, 40));
+
+        tTitulo.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        tTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        tTitulo.setText("Ingreso de Persona");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tTitulo)
+                .addContainerGap(252, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tTitulo)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel2);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
         lTelefono.setBackground(new java.awt.Color(255, 255, 255));
-        lTelefono.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lTelefono.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lTelefono.setText("Telefono");
 
-        tTelefono.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tTelefono.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTelefono.setPreferredSize(new java.awt.Dimension(4, 30));
 
         lDPI.setBackground(new java.awt.Color(255, 255, 255));
-        lDPI.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lDPI.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lDPI.setText("DPI");
 
-        tDPI.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tDPI.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tDPI.setPreferredSize(new java.awt.Dimension(4, 30));
 
         lCorreo.setBackground(new java.awt.Color(255, 255, 255));
-        lCorreo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lCorreo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lCorreo.setText("e-mail");
 
-        tCorreo.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tCorreo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tCorreo.setPreferredSize(new java.awt.Dimension(4, 30));
 
         lDireccion.setBackground(new java.awt.Color(255, 255, 255));
-        lDireccion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lDireccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lDireccion.setText("Direccion");
 
-        tDireccion.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tDireccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tDireccion.setPreferredSize(new java.awt.Dimension(4, 30));
 
-        tTitulo.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        tTitulo.setText("Ingreso");
-
-        bIngresar.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        bIngresar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         bIngresar.setText("Ingresar");
         bIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,68 +138,77 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
         });
 
         lNombre.setBackground(new java.awt.Color(255, 255, 255));
-        lNombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lNombre.setText("Nombre");
 
-        tNombre.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        tNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tNombre.setToolTipText("");
+        tNombre.setPreferredSize(new java.awt.Dimension(4, 30));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(281, Short.MAX_VALUE)
+                .addComponent(bIngresar)
+                .addGap(66, 66, 66))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lTelefono)
+                    .addComponent(lNombre)
+                    .addComponent(lDPI)
+                    .addComponent(lCorreo)
+                    .addComponent(lDireccion))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tDPI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lNombre)
+                    .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lTelefono)
+                    .addComponent(tTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lDPI)
+                    .addComponent(tDPI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lCorreo)
+                    .addComponent(tCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lDireccion)
+                    .addComponent(tDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(bIngresar)
+                .addGap(20, 20, 20))
+        );
+
+        jPanel1.add(jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lTelefono)
-                            .addComponent(lNombre)
-                            .addComponent(lDPI)
-                            .addComponent(lCorreo)
-                            .addComponent(lDireccion))
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tNombre)
-                            .addComponent(tTelefono)
-                            .addComponent(tDPI)
-                            .addComponent(tCorreo)
-                            .addComponent(tDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(tTitulo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(bIngresar)))
-                .addContainerGap(125, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(tTitulo)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lNombre)
-                    .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lTelefono)
-                    .addComponent(tTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lDPI)
-                    .addComponent(tDPI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lCorreo)
-                    .addComponent(tCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lDireccion)
-                    .addComponent(tDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(bIngresar)
-                .addContainerGap(28, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
         );
 
         pack();
@@ -355,9 +402,24 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
         }
         
     }    
+    
+    
+    public void setIcon(Icon anIcon){
+        setFrameIcon(anIcon);
+    }
+     
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(new Color(100, 0, 4, 85));
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bIngresar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lCorreo;
     private javax.swing.JLabel lDPI;
     private javax.swing.JLabel lDireccion;
