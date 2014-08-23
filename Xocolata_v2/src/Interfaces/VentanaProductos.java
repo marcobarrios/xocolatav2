@@ -31,7 +31,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
      */
     public VentanaProductos() {
         initComponents();
-        /*cargarCodigoPedidos();
+        cargarCodigoPedidos();
         cargarMarcas();
         cargarTipos();
         cargarTallas();
@@ -42,7 +42,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         cbMarca.setRenderer(dlcr);
         cbTipoProducto.setRenderer(dlcr);
         cbTalla.setRenderer(dlcr);
-        cbGenero.setRenderer(dlcr);*/
+        cbGenero.setRenderer(dlcr);
     }
     
     private void cargarCodigoPedidos() {

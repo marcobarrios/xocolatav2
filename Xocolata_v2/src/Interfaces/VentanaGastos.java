@@ -32,7 +32,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
      */
     public VentanaGastos() {
         initComponents();
-        //cargarTipoGastos();
+        cargarTipoGastos();
     }
 
     /**
