@@ -8,9 +8,12 @@ package Interfaces;
 
 import Clases.Pedidos;
 import Querys.PedidoQuerys;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.Icon;
 
 /**
  *
@@ -37,7 +40,6 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         pPrincipal = new javax.swing.JPanel();
         pTitulo = new javax.swing.JPanel();
@@ -67,6 +69,7 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         pPrincipal.setLayout(new javax.swing.BoxLayout(pPrincipal, javax.swing.BoxLayout.Y_AXIS));
 
         pTitulo.setBackground(new java.awt.Color(0, 102, 255));
+        pTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pTitulo.setPreferredSize(new java.awt.Dimension(390, 40));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -80,7 +83,7 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
             .addGroup(pTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
         pTituloLayout.setVerticalGroup(
             pTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +150,9 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel9.setText("Cantidad de Productos");
 
+        Btn_Ingresar_Pedido.setBackground(new java.awt.Color(0, 102, 255));
         Btn_Ingresar_Pedido.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        Btn_Ingresar_Pedido.setForeground(new java.awt.Color(255, 255, 255));
         Btn_Ingresar_Pedido.setText("Ingresar Datos de Pedido");
         Btn_Ingresar_Pedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,7 +248,7 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
                 .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(tCambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(Btn_Ingresar_Pedido)
                 .addGap(21, 21, 21))
         );
@@ -258,7 +263,7 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+            .addComponent(pPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
 
         pack();
@@ -331,6 +336,16 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
                 }
             }
         }
+    }
+    
+    public void setIcon(Icon anIcon){
+        setFrameIcon(anIcon);
+    }
+     
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(new Color(100, 0, 4, 85));
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -129,7 +129,9 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
         tDireccion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tDireccion.setPreferredSize(new java.awt.Dimension(4, 30));
 
+        bIngresar.setBackground(new java.awt.Color(153, 0, 153));
         bIngresar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bIngresar.setForeground(new java.awt.Color(255, 255, 255));
         bIngresar.setText("Ingresar");
         bIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

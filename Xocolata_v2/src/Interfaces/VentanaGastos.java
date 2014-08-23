@@ -9,11 +9,14 @@ package Interfaces;
 import Clases.Gastos;
 import ContenedorComboBox.Item;
 import Querys.GastoQuerys;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import xocolata_v2.ConexionDB;
 
@@ -29,7 +32,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
      */
     public VentanaGastos() {
         initComponents();
-        cargarTipoGastos();
+        //cargarTipoGastos();
     }
 
     /**
@@ -60,6 +63,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         pPrincipal.setLayout(new javax.swing.BoxLayout(pPrincipal, javax.swing.BoxLayout.Y_AXIS));
 
         pTitulo.setBackground(new java.awt.Color(0, 153, 102));
+        pTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pTitulo.setPreferredSize(new java.awt.Dimension(490, 40));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -73,7 +77,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
             .addGroup(pTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(319, Short.MAX_VALUE))
+                .addContainerGap(315, Short.MAX_VALUE))
         );
         pTituloLayout.setVerticalGroup(
             pTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +93,9 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
 
         calendario.setPreferredSize(new java.awt.Dimension(83, 30));
 
+        IngresarGasto.setBackground(new java.awt.Color(0, 153, 102));
         IngresarGasto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        IngresarGasto.setForeground(new java.awt.Color(255, 255, 255));
         IngresarGasto.setText("Ingresar Gasto");
         IngresarGasto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +132,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
                 .addContainerGap(327, Short.MAX_VALUE)
                 .addComponent(IngresarGasto)
-                .addGap(25, 25, 25))
+                .addContainerGap(25, Short.MAX_VALUE))
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pContenedorLayout.createSequentialGroup()
                     .addGap(44, 44, 44)
@@ -246,6 +252,16 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
             {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
+    }
+    
+    public void setIcon(Icon anIcon){
+        setFrameIcon(anIcon);
+    }
+     
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(new Color(100, 0, 4, 85));
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
