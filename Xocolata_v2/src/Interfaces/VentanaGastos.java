@@ -209,9 +209,9 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
             Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
-                Statement comando = (Statement)conexion.createStatement();
-                comando.execute("insert into tbltipogasto values('0','" + tipogasto + "')");
-                comando.close();
+                try (Statement comando = (Statement)conexion.createStatement()) {
+                    comando.execute("insert into tbltipogasto values('0','" + tipogasto + "')");
+                }
                 conexion.close();
             }
             catch (SQLException ex)
@@ -237,7 +237,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
-                Statement comando = (Statement)conexion.createStatement();
+            try (Statement comando = (Statement)conexion.createStatement()) {
                 dato = comando.executeQuery("Select idTipoGasto, TipoGasto from tbltipogasto ORDER BY TipoGasto");
                 while(dato.next())
                 {
@@ -245,7 +245,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
                     jComboBox1.addItem(vendedor);
                 }
                 dato.close();
-                comando.close();
+            }
                 conexion.close();
             }
             catch (SQLException ex)

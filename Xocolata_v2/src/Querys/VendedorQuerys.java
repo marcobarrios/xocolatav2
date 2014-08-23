@@ -25,14 +25,14 @@ public class VendedorQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblVendedores values('0','" + vendedor.getCodigo() + "','" + vendedor.getNombre() + "','" + vendedor.getDpi() + "','" + vendedor.getDireccion() + "','" + vendedor.getSaldo() + "')");
-            ResultSet dato = comando.executeQuery("select MAX(idVendedor) from tblVendedores"); 
-            dato.next();
-            String id = dato.getString("MAX(idVendedor)");
-            comando.execute("insert into tblContactoVendedor values('0','" + vendedor.getTelefono() + "','" + id + "')");
-            JOptionPane.showMessageDialog(null, "Vendedor Ingresado Correctamente", "Ingreso Exitoso", 1);
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblVendedores values('0','" + vendedor.getCodigo() + "','" + vendedor.getNombre() + "','" + vendedor.getDpi() + "','" + vendedor.getDireccion() + "','" + vendedor.getSaldo() + "')");
+                ResultSet dato = comando.executeQuery("select MAX(idVendedor) from tblVendedores");
+                dato.next();
+                String id = dato.getString("MAX(idVendedor)");
+                comando.execute("insert into tblContactoVendedor values('0','" + vendedor.getTelefono() + "','" + id + "')");
+                JOptionPane.showMessageDialog(null, "Vendedor Ingresado Correctamente", "Ingreso Exitoso", 1);
+            }
             conexion.close();
         }
         catch (HeadlessException ex)
@@ -48,14 +48,14 @@ public class VendedorQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            ResultSet dato = comando.executeQuery("select idVendedor from tblVendedores where nombreVendedor='"+ p.getNombre() + "'"); 
-            dato.next();
-            int id = dato.getInt("idVendedor");
-            comando.execute("Update tblVendedores SET dpi='" + p.getDpi() + "', direccionVendedor='" + p.getDireccion()+"' where idVendedor='" + id + "'");
-            comando.execute("Update tblcontactovendedor SET contacto = '" + p.getTelefono() + "' where idvendedor = '" + id + "' AND idcontacto = '1'");
-            JOptionPane.showMessageDialog(null, "Edición Exitoso", "Cambio Exitoso", 1);
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                ResultSet dato = comando.executeQuery("select idVendedor from tblVendedores where nombreVendedor='"+ p.getNombre() + "'");
+                dato.next();
+                int id = dato.getInt("idVendedor");
+                comando.execute("Update tblVendedores SET dpi='" + p.getDpi() + "', direccionVendedor='" + p.getDireccion()+"' where idVendedor='" + id + "'");
+                comando.execute("Update tblcontactovendedor SET contacto = '" + p.getTelefono() + "' where idvendedor = '" + id + "' AND idcontacto = '1'");
+                JOptionPane.showMessageDialog(null, "Edición Exitoso", "Cambio Exitoso", 1);
+            }
             conexion.close();
         }
         catch (HeadlessException ex)

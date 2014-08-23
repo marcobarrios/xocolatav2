@@ -7,7 +7,6 @@
 package Querys;
 
 import Clases.Clientes;
-import Clases.Vendedores;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,10 +25,10 @@ public class ClienteQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblClientes values('0','" + cliente.getNombre() + "','" + cliente.getDpi() + "','" + cliente.getDireccion() + "','" + cliente.getTelefono() + "','" + cliente.getSaldo() + "')");
-            JOptionPane.showMessageDialog(null, "Cliente Ingresado Correctamente", "Ingreso Exitoso", 1);
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblClientes values('0','" + cliente.getNombre() + "','" + cliente.getDpi() + "','" + cliente.getDireccion() + "','" + cliente.getTelefono() + "','" + cliente.getSaldo() + "')");
+                JOptionPane.showMessageDialog(null, "Cliente Ingresado Correctamente", "Ingreso Exitoso", 1);
+            }
             conexion.close();
         }
         catch (HeadlessException ex)
@@ -45,13 +44,13 @@ public class ClienteQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            ResultSet dato = comando.executeQuery("select idCliente from tblClientes where nombreCliente='"+ p.getNombre() + "'"); 
-            dato.next();
-            int id = dato.getInt("idCliente");
-            comando.execute("Update tblClientes SET dpi='" + p.getDpi() + "', telefonoCliente = '" + p.getTelefono() + "', direccionCliente = '" + p.getDireccion() + "' where idCliente='" + id + "'");
-            JOptionPane.showMessageDialog(null, "Edición Exitoso", "Cambio Exitoso", 1);
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                ResultSet dato = comando.executeQuery("select idCliente from tblClientes where nombreCliente='"+ p.getNombre() + "'");
+                dato.next();
+                int id = dato.getInt("idCliente");
+                comando.execute("Update tblClientes SET dpi='" + p.getDpi() + "', telefonoCliente = '" + p.getTelefono() + "', direccionCliente = '" + p.getDireccion() + "' where idCliente='" + id + "'");
+                JOptionPane.showMessageDialog(null, "Edición Exitoso", "Cambio Exitoso", 1);
+            }
             conexion.close();
         }
         catch (HeadlessException ex)

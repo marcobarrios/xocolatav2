@@ -6,9 +6,7 @@
 
 package Querys;
 
-import Clases.Abonos;
 import Clases.Gastos;
-import static Querys.AbonoQuerys.actualizarSaldoVendedor;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.SQLException;

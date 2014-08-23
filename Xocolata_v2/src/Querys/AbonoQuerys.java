@@ -27,10 +27,10 @@ public class AbonoQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblAbonoVendedores values('0','" + abono.getFechaAbono() + "','" + abono.getMontoAbono() + "','" + abono.getIdPersona() + "')");
-            JOptionPane.showMessageDialog(null, "Abono cargado correctamente", "Abono Exitoso", 1);
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblAbonoVendedores values('0','" + abono.getFechaAbono() + "','" + abono.getMontoAbono() + "','" + abono.getIdPersona() + "')");
+                JOptionPane.showMessageDialog(null, "Abono cargado correctamente", "Abono Exitoso", 1);
+            }
             conexion.close();
             actualizarSaldoVendedor(abono.getMontoAbono(), abono.getIdPersona());
         }
@@ -75,10 +75,10 @@ public class AbonoQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblAbonoClientes values('0','" + abono.getFechaAbono() + "','" + abono.getMontoAbono() + "','" + abono.getIdPersona() + "')");
-            JOptionPane.showMessageDialog(null, "Abono cargado correctamente", "Abono Exitoso", 1);
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblAbonoClientes values('0','" + abono.getFechaAbono() + "','" + abono.getMontoAbono() + "','" + abono.getIdPersona() + "')");
+                JOptionPane.showMessageDialog(null, "Abono cargado correctamente", "Abono Exitoso", 1);
+            }
             conexion.close();
             actualizarSaldoCliente(abono.getMontoAbono(), abono.getIdPersona());
         }

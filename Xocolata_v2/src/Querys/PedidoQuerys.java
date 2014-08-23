@@ -50,7 +50,7 @@ public class PedidoQuerys {
         {
             Statement comando = (Statement)conexion.createStatement();
             ResultSet dato = comando.executeQuery("select idPedido, impuestoUnitario, envioUnitario, tipoCambio, envioGuate from tblPedidos where codigoPedido = '" + codigo + "'"); 
-            if (dato!=null)
+            if (dato != null)
             {
                 dato.next();
                 datosPedido = new String[5];
