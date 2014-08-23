@@ -91,6 +91,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
 
         pContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
+        calendario.setMinimumSize(new java.awt.Dimension(273, 19));
         calendario.setPreferredSize(new java.awt.Dimension(83, 30));
 
         IngresarGasto.setBackground(new java.awt.Color(0, 153, 102));
@@ -110,6 +111,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         jLabel2.setText("Monto del Gasto");
 
         tMontoGasto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tMontoGasto.setMinimumSize(new java.awt.Dimension(273, 21));
         tMontoGasto.setPreferredSize(new java.awt.Dimension(4, 30));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -144,7 +146,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(pContenedorLayout.createSequentialGroup()
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton2))
                         .addComponent(calendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -154,7 +156,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         pContenedorLayout.setVerticalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
-                .addContainerGap(184, Short.MAX_VALUE)
+                .addContainerGap(180, Short.MAX_VALUE)
                 .addComponent(IngresarGasto)
                 .addGap(24, 24, 24))
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,9 +166,9 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
                         .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1))
                     .addGap(18, 18, 18)
-                    .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
-                        .addComponent(tMontoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tMontoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
@@ -201,6 +203,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         GastoQuerys.ingresarGasto(nuevogasto);
         tMontoGasto.setText("");
         cargarTipoGastos();
+        
     }//GEN-LAST:event_IngresarGastoActionPerformed
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
