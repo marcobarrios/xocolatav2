@@ -247,6 +247,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
 
         pContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
+        cbCodigoPedido.setBackground(new java.awt.Color(255, 255, 255));
         cbCodigoPedido.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
         cbCodigoPedido.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -267,6 +268,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblProductosPedido);
 
+        cbMarca.setBackground(new java.awt.Color(255, 255, 255));
         cbMarca.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbMarca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Marca" }));
         cbMarca.setPreferredSize(new java.awt.Dimension(71, 30));
@@ -276,6 +278,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        cbTipoProducto.setBackground(new java.awt.Color(255, 255, 255));
         cbTipoProducto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo de Producto" }));
         cbTipoProducto.setPreferredSize(new java.awt.Dimension(148, 30));
@@ -285,6 +288,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        cbTalla.setBackground(new java.awt.Color(255, 255, 255));
         cbTalla.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbTalla.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Talla" }));
         cbTalla.setPreferredSize(new java.awt.Dimension(60, 30));
@@ -294,6 +298,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        cbGenero.setBackground(new java.awt.Color(255, 255, 255));
         cbGenero.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Género" }));
         cbGenero.setPreferredSize(new java.awt.Dimension(81, 30));
@@ -356,38 +361,36 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             .addGroup(pContenedorLayout.createSequentialGroup()
                 .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pContenedorLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pContenedorLayout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(4, 4, 4)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pContenedorLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jButton5))
+                    .addGroup(pContenedorLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cbMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbTalla, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pContenedorLayout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(pContenedorLayout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel8)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pContenedorLayout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(jButton5))
-                            .addGroup(pContenedorLayout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cbMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbTalla, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(jButton2)
-                                    .addComponent(jButton3)
-                                    .addComponent(jButton4))))
-                        .addGap(99, 99, 99))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
+                            .addComponent(jButton1)
+                            .addComponent(jButton2)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)))
+                    .addGroup(pContenedorLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel2)
-                        .addGap(6, 6, 6)
-                        .addComponent(cbCodigoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbCodigoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
@@ -397,10 +400,11 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pContenedorLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbCodigoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
+                            .addComponent(cbCodigoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(cbMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -426,7 +430,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5)
-                        .addContainerGap(36, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pContenedorLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                         .addGap(20, 20, 20))))
