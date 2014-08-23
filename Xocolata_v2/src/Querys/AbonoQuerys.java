@@ -114,7 +114,52 @@ public class AbonoQuerys {
         catch (NumberFormatException | SQLException ex)
         {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        }   
+    }
+    
+    public static double consultarSaldoVendedor(int idVendedor) {
+        double saldo = 0.0;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            ResultSet dato = comando.executeQuery("select saldoVendedor from tblVendedores where idVendedor = '" + idVendedor + "'"); 
+            if (dato!=null)
+            {
+                dato.next();
+                saldo = Double.parseDouble(dato.getString("saldoVendedor"));
+                comando.close();
+                conexion.close();
+            }
         }
-        
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.toString());
+            return 0.0;
+        }
+        return saldo;
+    }
+    
+    public static double consultarSaldoCliente(int idCliente) {
+        double saldo = 0.0;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            ResultSet dato = comando.executeQuery("select saldoCliente from tblClientes where idCliente = '" + idCliente + "'"); 
+            if (dato!=null)
+            {
+                dato.next();
+                saldo = Double.parseDouble(dato.getString("saldoCliente"));
+                comando.close();
+                conexion.close();
+            }
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.toString());
+            return 0.0;
+        }
+        return saldo;
     }
 }

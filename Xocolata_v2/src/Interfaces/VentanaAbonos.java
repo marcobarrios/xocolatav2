@@ -6,19 +6,91 @@
 
 package Interfaces;
 
+import Clases.Abonos;
+import ContenedorComboBox.Item;
+import Querys.AbonoQuerys;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
+import xocolata_v2.ConexionDB;
+
 /**
  *
  * @author Marco
  */
 public class VentanaAbonos extends javax.swing.JInternalFrame {
 
+    String tipoPersona = "";
+    String fechaActual = "";
     /**
      * Creates new form VentanaAbonos
      */
-    public VentanaAbonos() {
+    public VentanaAbonos(String persona) {
         initComponents();
+        this.tipoPersona = persona;
+        cargarDatosPersona();
+        Calendar fecha = new GregorianCalendar();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int año = fecha.get(Calendar.YEAR);
+        fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
     }
 
+    private void cargarDatosPersona() {
+        if (this.tipoPersona.equals("Vendedor")) 
+        {
+            cbPersona.removeAllItems();
+            ResultSet dato = null;
+            Connection conexion = ConexionDB.ObtenerConexion();
+            try
+            {
+                Statement comando = (Statement)conexion.createStatement();
+                dato = comando.executeQuery("Select idVendedor, nombreVendedor from tblVendedores ORDER BY nombreVendedor");
+                while(dato.next())
+                {
+                    Item vendedor = new Item(dato.getString("idVendedor"), dato.getString("nombreVendedor"));
+                    cbPersona.addItem(vendedor);
+                }
+                dato.close();
+                comando.close();
+                conexion.close();
+            }
+            catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+        else
+        {
+            cbPersona.removeAllItems();
+            ResultSet dato = null;
+            Connection conexion = ConexionDB.ObtenerConexion();
+            try
+            {
+                Statement comando = (Statement)conexion.createStatement();
+                dato = comando.executeQuery("Select idCliente, nombreCliente from tblClientes ORDER BY nombreCliente");
+                while(dato.next())
+                {
+                    Item vendedor = new Item(dato.getString("idCliente"), dato.getString("nombreCliente"));
+                    cbPersona.addItem(vendedor);
+                }
+                dato.close();
+                comando.close();
+                conexion.close();
+            }
+            catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+        jLabel5.setText("Abono de " + this.tipoPersona);
+        jLabel1.setText(this.tipoPersona + ":");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,21 +100,165 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cbPersona = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        bConsultarSaldo = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        lSaldoActual = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        tMontoAbono = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        lNuevoSaldo = new javax.swing.JLabel();
+
+        setClosable(true);
+        setIconifiable(true);
+
+        jLabel1.setText("Persona:");
+
+        bConsultarSaldo.setText("Consultar Saldo");
+        bConsultarSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bConsultarSaldoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("Saldo Actual: Q.");
+
+        lSaldoActual.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lSaldoActual.setText("0");
+
+        jLabel4.setText("Monto del Abono:");
+
+        jLabel5.setText("Abono de");
+
+        jButton1.setText("Abonar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setText("Nuevo Saldo Q.");
+
+        lNuevoSaldo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lNuevoSaldo.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lSaldoActual)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lNuevoSaldo))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(cbPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(bConsultarSaldo)
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(9, 9, 9)
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tMontoAbono, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(bConsultarSaldo))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lSaldoActual)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(lNuevoSaldo)))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tMontoAbono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jButton1))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bConsultarSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarSaldoActionPerformed
+        Item persona = (Item)cbPersona.getSelectedItem();
+        int id = Integer.parseInt(persona.getId());
+        if (this.tipoPersona.equals("Vendedor"))
+        {
+            lSaldoActual.setText(String.valueOf(AbonoQuerys.consultarSaldoVendedor(id)));
+        }
+        else
+        {
+            lSaldoActual.setText(String.valueOf(AbonoQuerys.consultarSaldoCliente(id)));
+        }
+        lNuevoSaldo.setText("0");
+    }//GEN-LAST:event_bConsultarSaldoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Item persona = (Item)cbPersona.getSelectedItem();
+        int id = Integer.parseInt(persona.getId());
+        Abonos abono = new Abonos();
+        abono.setFechaAbono(fechaActual);
+        abono.setMontoAbono(Double.parseDouble(tMontoAbono.getText()));
+        abono.setIdPersona(id);
+        if (tipoPersona.equals("Vendedor"))
+        {
+            AbonoQuerys.cargarAbonoVendedor(abono);
+        }
+        else
+        {
+            AbonoQuerys.cargarAbonoCliente(abono);
+        }
+        lNuevoSaldo.setText(String.valueOf(Double.parseDouble(lSaldoActual.getText())-Double.parseDouble(tMontoAbono.getText())));
+        tMontoAbono.setText("");
+        lSaldoActual.setText("0.0");
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bConsultarSaldo;
+    private javax.swing.JComboBox cbPersona;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lNuevoSaldo;
+    private javax.swing.JLabel lSaldoActual;
+    private javax.swing.JTextField tMontoAbono;
     // End of variables declaration//GEN-END:variables
 }
