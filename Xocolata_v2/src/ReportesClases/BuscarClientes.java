@@ -29,6 +29,7 @@ public class BuscarClientes {
         String[] titulos={"Nombres Clientes"};
         Object[] registros = new Object[1];
         DefaultTableModel model= new DefaultTableModel(null,titulos){public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
+        
         Connection conexion = ConexionDB.ObtenerConexion(); 
         if(conexion!=null)
         {
