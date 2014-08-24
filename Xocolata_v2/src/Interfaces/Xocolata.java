@@ -179,6 +179,11 @@ public class Xocolata extends javax.swing.JFrame {
         jMenu7.add(jMenuItem8);
 
         jMenuItem9.setText("Venta Directa");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem9);
 
         jMenuItem10.setText("Gastos");
@@ -290,7 +295,13 @@ public class Xocolata extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
+        VentanaSalidaProducto ventana = new VentanaSalidaProducto();
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
@@ -352,6 +363,16 @@ public class Xocolata extends javax.swing.JFrame {
         jDesktopPane1.add(ventana);
         ventana.show();
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        VentanaVentaDirecta ventana = new VentanaVentaDirecta();
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
