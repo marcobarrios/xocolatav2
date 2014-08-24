@@ -26,43 +26,43 @@ public class ProductoQuerys {
     public static void insertarProducto(Productos producto)
     {
         try {
-            Connection conexion = ConexionDB.ObtenerConexion();
-            PreparedStatement ps = null;
-            ps = conexion.prepareStatement("INSERT INTO `tblproductos`(`idProducto`, `codigoProducto`, `idMarca`, `idTipoProducto`, `idTalla`, `idGenero`, `colorProducto`, `descripcionProducto`, `costoDolares`, `impuestoProducto`, `envioProducto`, `totalDolares`, `tipoCambio`, `costoQuetzaltes`, `envioGuate`, `totalQuetzales`, `porcentajeGanacia`, `gananciaEstimada`, `precioVenta`, `porcentajeGananciaSugerida`, `gananciaSugerida`, `precioSugerido`, `idEstadoProducto`, `idPedido`, `porcentajeOferta`, `descuentoOferta`, `precioOfertado`, `precioOfertadoSugerido`, `porcentajeOfertaVenta`, `descuentoVenta`, `precioVentaFinal`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            ps.setInt(1, 0);
-            ps.setString(2, "0");
-            ps.setInt(3, producto.getMarca());
-            ps.setInt(4, producto.getTipoProducto());
-            ps.setInt(5, producto.getTalla());
-            ps.setInt(6, producto.getGenero());
-            ps.setString(7, producto.getColor());
-            ps.setString(8, producto.getDescripcion());
-            ps.setDouble(9, producto.getPrecioDolar());
-            ps.setDouble(10, producto.getImpuestoProducto());
-            ps.setDouble(11, producto.getEnvioProducto());
-            ps.setDouble(12, producto.getPrecioCostoDolar());
-            ps.setDouble(13, producto.getTipoCambio());
-            ps.setDouble(14, producto.getPrecioCostoDolar() * producto.getTipoCambio());
-            ps.setDouble(15, producto.getEnvioGt());
-            ps.setDouble(16, producto.getPrecioCostoQuetzal());
-            ps.setDouble(17, producto.getPorcentajeGanancia());
-            ps.setDouble(18, producto.getGananciaEstimada());
-            ps.setDouble(19, producto.getPrecioVenta());
-            ps.setDouble(20, producto.getPorcentajeGananciaSugerida());
-            ps.setDouble(21, producto.getGananciaSugerida());
-            ps.setDouble(22, producto.getPrecioSugeridoVendedor());
-            ps.setInt(23, producto.getEstadoProducto());
-            ps.setInt(24, producto.getIdPedido());
-            ps.setDouble(25, producto.getPorcentajeOferta());
-            ps.setDouble(26, producto.getDescuentoOferta());
-            ps.setDouble(27, producto.getPrecioOfertado());
-            ps.setDouble(28, producto.getPrecioOfertadoSugerido());
-            ps.setDouble(29, producto.getPorcentajeOfertaVenta());
-            ps.setDouble(30, producto.getDescuentoVenta());
-            ps.setDouble(31, producto.getPrecioVentaFinal());
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
-            conexion.close();
+            try (Connection conexion = ConexionDB.ObtenerConexion()) {
+                PreparedStatement ps = null;
+                ps = conexion.prepareStatement("INSERT INTO `tblproductos`(`idProducto`, `codigoProducto`, `idMarca`, `idTipoProducto`, `idTalla`, `idGenero`, `colorProducto`, `descripcionProducto`, `costoDolares`, `impuestoProducto`, `envioProducto`, `totalDolares`, `tipoCambio`, `costoQuetzaltes`, `envioGuate`, `totalQuetzales`, `porcentajeGanacia`, `gananciaEstimada`, `precioVenta`, `porcentajeGananciaSugerida`, `gananciaSugerida`, `precioSugerido`, `idEstadoProducto`, `idPedido`, `porcentajeOferta`, `descuentoOferta`, `precioOfertado`, `precioOfertadoSugerido`, `porcentajeOfertaVenta`, `descuentoVenta`, `precioVentaFinal`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                ps.setInt(1, 0);
+                ps.setString(2, "0");
+                ps.setInt(3, producto.getMarca());
+                ps.setInt(4, producto.getTipoProducto());
+                ps.setInt(5, producto.getTalla());
+                ps.setInt(6, producto.getGenero());
+                ps.setString(7, producto.getColor());
+                ps.setString(8, producto.getDescripcion());
+                ps.setDouble(9, producto.getPrecioDolar());
+                ps.setDouble(10, producto.getImpuestoProducto());
+                ps.setDouble(11, producto.getEnvioProducto());
+                ps.setDouble(12, producto.getPrecioCostoDolar());
+                ps.setDouble(13, producto.getTipoCambio());
+                ps.setDouble(14, producto.getPrecioCostoDolar() * producto.getTipoCambio());
+                ps.setDouble(15, producto.getEnvioGt());
+                ps.setDouble(16, producto.getPrecioCostoQuetzal());
+                ps.setDouble(17, producto.getPorcentajeGanancia());
+                ps.setDouble(18, producto.getGananciaEstimada());
+                ps.setDouble(19, producto.getPrecioVenta());
+                ps.setDouble(20, producto.getPorcentajeGananciaSugerida());
+                ps.setDouble(21, producto.getGananciaSugerida());
+                ps.setDouble(22, producto.getPrecioSugeridoVendedor());
+                ps.setInt(23, producto.getEstadoProducto());
+                ps.setInt(24, producto.getIdPedido());
+                ps.setDouble(25, producto.getPorcentajeOferta());
+                ps.setDouble(26, producto.getDescuentoOferta());
+                ps.setDouble(27, producto.getPrecioOfertado());
+                ps.setDouble(28, producto.getPrecioOfertadoSugerido());
+                ps.setDouble(29, producto.getPorcentajeOfertaVenta());
+                ps.setDouble(30, producto.getDescuentoVenta());
+                ps.setDouble(31, producto.getPrecioVentaFinal());
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ProductoQuerys.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,14 +73,14 @@ public class ProductoQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblMarcas values('0','" + marca + "')");
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblMarcas values('0','" + marca + "')");
+            }
             conexion.close();
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
@@ -89,14 +89,14 @@ public class ProductoQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblTipoProductos values('0','" + tipo + "')");
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblTipoProductos values('0','" + tipo + "')");
+            }
             conexion.close();
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
         
@@ -105,14 +105,14 @@ public class ProductoQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblTallas values('0','" + talla + "')");
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblTallas values('0','" + talla + "')");
+            }
             conexion.close();
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
@@ -121,14 +121,14 @@ public class ProductoQuerys {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            comando.execute("insert into tblGenero values('0','" + genero + "')");
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.execute("insert into tblGenero values('0','" + genero + "')");
+            }
             conexion.close();
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
@@ -140,6 +140,7 @@ public class ProductoQuerys {
         {
             Statement comando = (Statement)conexion.createStatement();
             ResultSet dato = comando.executeQuery("select tblProductos.idProducto from tblProductos where tblProductos.idMarca = '" + producto.getMarca() + "' AND tblProductos.idTipoProducto = '" + producto.getTipoProducto() + "' AND tblProductos.idTalla = '" + producto.getTalla() + "' AND tblProductos.idGenero = '" + producto.getGenero() + "'"); 
+            dato = comando.getResultSet();
             while (dato.next())
             {
                 dato.next();
