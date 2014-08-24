@@ -207,7 +207,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_IngresarGastoActionPerformed
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String tipogasto = JOptionPane.showInputDialog(null, "Ingrese Fabricante: ", "Fabricante", 1);
+        String tipogasto = JOptionPane.showInputDialog(null, "Ingrese Gasto: ", "Gastos", 1);
         if(tipogasto!=null)
         {
             Connection conexion = ConexionDB.ObtenerConexion();

@@ -370,7 +370,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                     {
                         try
                         {
-                            lTotal.setText(df.format(Double.parseDouble(lTotal.getText())*(100-Double.parseDouble(tOferta.getText()))/100));
+                            lTotal.setText(df.format(Double.parseDouble(lSubtotal.getText())*(100-Double.parseDouble(tOferta.getText()))/100));
                             total = Double.parseDouble(lTotal.getText());
                         }
                         catch(NumberFormatException exp)

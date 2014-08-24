@@ -6,7 +6,6 @@
 
 package Interfaces;
 
-import Clases.Productos;
 import ContenedorComboBox.Item;
 import Querys.ProductoQuerys;
 import java.awt.Color;
@@ -16,6 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListCellRenderer;
@@ -513,7 +513,8 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         
         String[] titulos={"Código","Marca","Tipo Producto","Talla","Genero", "Color", "Descripción", "Precio en Dolares", "Precio Venta", "Precio Sugerido"};
         String[] registros=new String[10];      
-        DefaultTableModel model= new DefaultTableModel(null,titulos){public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
+        DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
+        public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
         Connection conexion = ConexionDB.ObtenerConexion();            
         if(conexion!=null)
         {
@@ -563,11 +564,11 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
     
     private void buscarProducto() {
         
+        ArrayList<Integer> productos = new ArrayList<>();        
         if(cbMarca.getSelectedItem() != cbMarca.getItemAt(0)  && cbTipoProducto.getSelectedItem() != cbTipoProducto.getItemAt(0) && cbTalla.getSelectedItem() != cbTalla.getItemAt(0) && cbGenero.getSelectedItem()!= cbGenero.getItemAt(0)) 
         {
             try 
             {
-                Productos producto = new Productos();
                 Item auxiliar = (Item)cbMarca.getSelectedItem();
                 String marca = auxiliar.getId();
                 auxiliar = (Item)cbTipoProducto.getSelectedItem();
@@ -577,20 +578,38 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                 auxiliar = (Item)cbGenero.getSelectedItem();
                 String genero = auxiliar.getId();
 
-                producto.setMarca(Integer.parseInt(marca));
-                producto.setTalla(Integer.parseInt(tipo));
-                producto.setTipoProducto(Integer.parseInt(talla));
-                producto.setGenero(Integer.parseInt(genero));
-                
-                JOptionPane.showMessageDialog(null, "MANDE " + producto.getMarca() + ", " + producto.getTipoProducto() + ", " + producto.getTalla() + ", " + producto.getGenero());
-                idProducto = ProductoQuerys.buscarIDProducto(producto);
-                JOptionPane.showMessageDialog(null, "ENCONTRE " + idProducto);
-
+                ResultSet dato = null;
+                Connection conexion = ConexionDB.ObtenerConexion();
+                try
+                {
+                    try (Statement comando = (Statement)conexion.createStatement()) {
+                        dato = comando.executeQuery("SELECT idProducto FROM tblProductos WHERE idMarca = '" + marca + "' AND idTipoProducto = '" + tipo + "' AND idTalla = '" + talla + "' AND idGenero = '" + genero + "'");
+                        while (dato.next())
+                        {
+                            idProducto = Integer.parseInt(dato.getString("idProducto"));
+                            productos.add(idProducto);
+                        }
+                        dato.close();
+                        comando.close();
+                    }
+                conexion.close();
+                }
+                catch (SQLException ex)
+                {
+                   JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
             catch(HeadlessException | NumberFormatException exo) {
                 System.out.println(exo.toString());
             }
-        }    
+        if (productos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay elementos");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Encontre " + productos.size() + " elementos");
+        }
+        }
     }
         
     public class hiloProducto implements Runnable
@@ -618,8 +637,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                 }
             }
         }
-        
-        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

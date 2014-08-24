@@ -9,7 +9,6 @@ package Querys;
 import Clases.Productos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -131,30 +130,4 @@ public class ProductoQuerys {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
-    
-    public static int buscarIDProducto(Productos producto) {
-        JOptionPane.showMessageDialog(null, "RECIBI " + producto.getMarca() + ", " + producto.getTipoProducto() + ", " + producto.getTalla() + ", " + producto.getGenero());
-        ResultSet dato = null;
-        int id = -1;
-        Connection conexion = ConexionDB.ObtenerConexion();
-        try
-        {
-            try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("SELECT idProducto FROM tblProductos WHERE idMarca = '" + producto.getMarca() + "' AND idTipoProducto = '" + producto.getTipoProducto() + "' AND idTalla = '" + producto.getTalla() + "' AND idGenero = '" + producto.getGenero() + "'");
-                while(dato.next())
-                {
-                    id = Integer.parseInt(dato.getString("idProducto"));
-                }
-                dato.close();
-            }
-        conexion.close();
-        }
-        catch (SQLException ex)
-        {
-           JOptionPane.showMessageDialog(null, ex.getMessage());
-           return id;
-        }
-        return id;
-    }
-    
 }

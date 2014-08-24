@@ -86,7 +86,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         tProducto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        lTotal = new javax.swing.JLabel();
+        lSubTotal = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lCantidad = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -94,7 +94,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         tOferta = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        lTotalFinal = new javax.swing.JLabel();
+        lTotal = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         rContado1 = new javax.swing.JRadioButton();
         rCredito1 = new javax.swing.JRadioButton();
@@ -137,12 +137,11 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         pContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Cliente");
 
-        cbCliente.setBackground(new java.awt.Color(255, 255, 255));
         cbCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbCliente.setMinimumSize(new java.awt.Dimension(32, 30));
 
@@ -273,8 +272,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Codigo de producto");
 
-        lTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lTotal.setText("0.00");
+        lSubTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lSubTotal.setText("0.0");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("SubTotal: Q. ");
@@ -294,14 +293,14 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 477, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 495, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lCantidad)
                 .addGap(63, 63, 63)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lTotal)
+                .addComponent(lSubTotal)
                 .addGap(22, 22, 22))
         );
         jPanel2Layout.setVerticalGroup(
@@ -311,7 +310,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(lTotal)
+                    .addComponent(lSubTotal)
                     .addComponent(jLabel5)
                     .addComponent(lCantidad)
                     .addComponent(jLabel7))
@@ -330,25 +329,26 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         tOferta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tOferta.setText("0");
 
-        jLabel6.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Arial Black", 1, 13)); // NOI18N
         jLabel6.setText("TOTAL: Q.");
 
-        lTotalFinal.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        lTotalFinal.setText("0");
+        lTotal.setFont(new java.awt.Font("Arial Black", 1, 13)); // NOI18N
+        lTotal.setText("0.0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addComponent(tOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lTotalFinal))
+                .addComponent(lTotal)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,8 +358,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(tOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(lTotalFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(lTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -431,10 +431,10 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         pContenedorLayout.setVerticalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
-                .addContainerGap(397, Short.MAX_VALUE)
-                .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(401, Short.MAX_VALUE)
+                .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pContenedorLayout.createSequentialGroup()
@@ -443,7 +443,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                     .addGap(18, 18, 18)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(pContenedorLayout.createSequentialGroup()
@@ -531,7 +531,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                     {
                         try
                         {
-                            lTotal.setText(df.format(Double.parseDouble(lTotal.getText())*(100-Double.parseDouble(tOferta.getText()))/100));
+                            lTotal.setText(df.format(Double.parseDouble(lSubTotal.getText())*(100-Double.parseDouble(tOferta.getText()))/100));
                             total = Double.parseDouble(lTotal.getText());
                         }
                         catch(NumberFormatException exp)
@@ -580,9 +580,9 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lCantidad;
+    private javax.swing.JLabel lSubTotal;
     private javax.swing.JLabel lTitulo;
     private javax.swing.JLabel lTotal;
-    private javax.swing.JLabel lTotalFinal;
     private javax.swing.JPanel pContenedor;
     private javax.swing.JPanel pPrincipal;
     private javax.swing.JPanel pTitulo;
