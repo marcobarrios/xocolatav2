@@ -162,7 +162,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                  cbGenero.addItem("- - - Género - - -");
             try ( //MARCA
                     Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("Select idGenero, Genero from tblGenero ORDER BY Genero");
+                dato = comando.executeQuery("Select idGenero, Genero from tblGeneros ORDER BY Genero");
                 while(dato.next())
                 {
                     Item tipos = new Item(dato.getString("idGenero"), dato.getString("Genero"));
@@ -521,6 +521,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             producto.setDescripcion(tDescripcion.getText());
             auxiliar = (Item)cbCodigoPedido.getSelectedItem();
             int pedido = Integer.parseInt(auxiliar.getId());
+            producto.setIdPedido(pedido);
             
             idProducto = Integer.parseInt(ProductoQuerys.insertarProducto(producto));
             
@@ -562,11 +563,11 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGenero.Genero, tblProductos.colorProducto, tblProductos.descripcionProducto, tblProductos.costoDolares, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.descripcionProducto, tblProductos.costoDolares, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
                         + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
                         + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
                         + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
-                        + "INNER JOIN tblGenero on tblProductos.idGenero = tblGenero.idGenero "
+                        + "INNER JOIN tblGeneros on tblProductos.idGenero = tblGeneros.idGenero "
                         + "WHERE tblProductos.idPedido = '" + id + "' ORDER BY tblProductos.codigoProducto ASC");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
@@ -575,7 +576,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                     registros[1]=Datos.getString("tblMarcas.Marca");
                     registros[2]=Datos.getString("tblTipoProductos.TipoProducto");
                     registros[3]=Datos.getString("tblTallas.Talla");
-                    registros[4]=Datos.getString("tblGenero.Genero");
+                    registros[4]=Datos.getString("tblGeneros.Genero");
                     registros[5]=Datos.getString("tblProductos.colorProducto");
                     registros[6]=Datos.getString("tblProductos.descripcionProducto");
                     registros[7]=Datos.getString("tblProductos.costoDolares");

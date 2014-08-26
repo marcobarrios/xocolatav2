@@ -6,11 +6,13 @@
 
 package Interfaces;
 
-import ContenedorComboBox.Item;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
@@ -25,6 +27,12 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
     String marca, tipo, talla, genero;
     /**
      * Creates new form VentanaIngresoPreciosProducto
+     * @param idPedido
+     * @param idProducto
+     * @param marca
+     * @param tipo
+     * @param talla
+     * @param genero
      */
     public VentanaIngresoPreciosProducto(int idPedido, int idProducto, String marca, String tipo, String talla, String genero) {
         initComponents();
@@ -50,8 +58,8 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT descipcionProducto, costoDolares, totalDolares, totalQuetzales, precioVenta, gananciaSugerida "
-                        + "FROM tblProductos WHERE idMarca = '" + this.marca + "' AND idTipoProducto = '" + this.tipo + "' AND idTalla = '" + this.talla + "' AND idGenero = '" + this.genero + "'");
+                ResultSet Datos = Query.executeQuery("SELECT descripcionProducto, costoDolares, totalDolares, totalQuetzales, precioVenta, precioSugerido "
+                        + "FROM tblProductos WHERE idMarca = '" + this.marca + "' AND idTipoProducto = '" + this.tipo + "' AND idTalla = '" + this.talla + "' AND idGenero = '" + this.genero + "' AND costoDolares > 0");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
@@ -449,6 +457,15 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void setIcon(Icon anIcon){
+        setFrameIcon(anIcon);
+    }
+     
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(new Color(100, 0, 4, 85));
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

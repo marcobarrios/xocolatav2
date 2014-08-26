@@ -29,7 +29,7 @@ public class ProductoQuerys {
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
                 PreparedStatement ps = null;
-                ps = conexion.prepareStatement("INSERT INTO `tblproductos`(`idProducto`, `codigoProducto`, `idMarca`, `idTipoProducto`, `idTalla`, `idGenero`, `colorProducto`, `descripcionProducto`) VALUES (?,?,?,?,?,?,?,?)");
+                ps = conexion.prepareStatement("INSERT INTO `tblproductos`(`idProducto`, `codigoProducto`, `idMarca`, `idTipoProducto`, `idTalla`, `idGenero`, `colorProducto`, `descripcionProducto`, `idEstadoProducto`, `idPedido`) VALUES (?,?,?,?,?,?,?,?,?,?)");
                 ps.setInt(1, 0);
                 ps.setString(2, "0");
                 ps.setInt(3, producto.getMarca());
@@ -38,11 +38,13 @@ public class ProductoQuerys {
                 ps.setInt(6, producto.getGenero());
                 ps.setString(7, producto.getColor());
                 ps.setString(8, producto.getDescripcion());
+                ps.setString(9, "1");
+                ps.setInt(10, producto.getIdPedido());
                 ps.executeUpdate();
                 //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
-                ResultSet dato = ps.executeQuery("select MAX(idTransaccion) from tblTransacciones"); 
+                ResultSet dato = ps.executeQuery("select MAX(idProducto) from tblProductos"); 
                 dato.next();
-                idProducto = dato.getString("MAX(idTransaccion)");
+                idProducto = dato.getString("MAX(idProducto)");
                 dato.close();
                 ps.close();
                 conexion.close();
@@ -107,7 +109,7 @@ public class ProductoQuerys {
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                comando.execute("insert into tblGenero values('0','" + genero + "')");
+                comando.execute("insert into tblGeneros values('0','" + genero + "')");
             }
             conexion.close();
         }
