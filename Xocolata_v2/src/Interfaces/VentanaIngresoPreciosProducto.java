@@ -6,24 +6,72 @@
 
 package Interfaces;
 
+import ContenedorComboBox.Item;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import xocolata_v2.ConexionDB;
+
 /**
  *
  * @author Marco
  */
 public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
+    int idPedido, idProducto;
     String marca, tipo, talla, genero;
     /**
      * Creates new form VentanaIngresoPreciosProducto
      */
-    public VentanaIngresoPreciosProducto(String marca, String tipo, String talla, String genero) {
+    public VentanaIngresoPreciosProducto(int idPedido, int idProducto, String marca, String tipo, String talla, String genero) {
         initComponents();
+        this.idPedido = idPedido;
+        this.idProducto = idProducto;
         this.marca = marca;
         this.tipo = tipo;
         this.talla = talla;
         this.genero = genero;
+        cargarTablaPrecios();
     }
 
+    private void cargarTablaPrecios() {
+        this.setVisible(true);
+        
+        String[] titulos={"Descripcion","Precio Dolar","Costo Dolar","Costo Quetzal","Precio Venta","Precio Sugerido"};
+        String[] registros=new String[6];      
+        DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
+        public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
+        Connection conexion = ConexionDB.ObtenerConexion();            
+        if(conexion!=null)
+        {
+            try
+            {
+                Statement Query = conexion.createStatement();            
+                ResultSet Datos = Query.executeQuery("SELECT descipcionProducto, costoDolares, totalDolares, totalQuetzales, precioVenta, gananciaSugerida "
+                        + "FROM tblProductos WHERE idMarca = '" + this.marca + "' AND idTipoProducto = '" + this.tipo + "' AND idTalla = '" + this.talla + "' AND idGenero = '" + this.genero + "'");
+                Datos = Query.getResultSet();                    
+                while (Datos.next()) 
+                {
+                    registros[0]=Datos.getString("descripcionProducto");
+                    registros[1]=Datos.getString("costoDolares");
+                    registros[2]=Datos.getString("totalDolares");
+                    registros[3]=Datos.getString("totalQuetzales");
+                    registros[4]=Datos.getString("precioVenta");
+                    registros[5]=Datos.getString("precioSugerido");
+                    model.addRow(registros);
+                }
+                tblPreciosProducto.setModel(model);
+            }
+            catch (SQLException exp) 
+            {
+                JOptionPane.showMessageDialog(null, exp.toString());
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,13 +90,9 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         tPrecioCostoDolar = new javax.swing.JTextField();
         tPrecioCostoQuetzal = new javax.swing.JTextField();
         tPrecioDolar = new javax.swing.JTextField();
-        tEnviogt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        tTipoCambio = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         tGananciaAproxV = new javax.swing.JTextField();
@@ -59,7 +103,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         tPorcentajeGananciaV = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPreciosProducto = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         tGananciaAprox = new javax.swing.JTextField();
         tPorcentajeGanancia = new javax.swing.JTextField();
@@ -90,7 +134,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
             .addGroup(pTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addContainerGap(800, Short.MAX_VALUE))
+                .addContainerGap(766, Short.MAX_VALUE))
         );
         pTituloLayout.setVerticalGroup(
             pTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,28 +177,14 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         tPrecioDolar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tPrecioDolar.setPreferredSize(new java.awt.Dimension(4, 30));
 
-        tEnviogt.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tEnviogt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tEnviogt.setPreferredSize(new java.awt.Dimension(4, 30));
-
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Precio Costo $");
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Precio Dolar");
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel3.setText("Tipo de Cambio ");
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("Envio Guatemala");
-
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Precio Costo Q.");
-
-        tTipoCambio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tTipoCambio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tTipoCambio.setPreferredSize(new java.awt.Dimension(4, 30));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -169,14 +199,10 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tPrecioCostoDolar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tTipoCambio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tPrecioCostoDolar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                             .addComponent(tPrecioDolar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tPrecioCostoQuetzal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tEnviogt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -186,15 +212,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tPrecioDolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tTipoCambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tEnviogt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tPrecioCostoDolar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,14 +220,14 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tPrecioCostoQuetzal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Ganancia Vendedor"));
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel11.setText("Precio Aproximado");
+        jLabel11.setText("Precio Aprox.");
 
         tGananciaAproxV.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tGananciaAproxV.setForeground(new java.awt.Color(255, 153, 0));
@@ -224,14 +242,14 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         tPrecioAproxV.setPreferredSize(new java.awt.Dimension(4, 30));
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel10.setText("Porcentaje Ganancia");
+        jLabel10.setText("% Ganancia");
 
         tPrecioSugerido.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPrecioSugerido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tPrecioSugerido.setPreferredSize(new java.awt.Dimension(4, 30));
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel12.setText("Ganancia Aproximada");
+        jLabel12.setText("Ganancia Aprox.");
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setText("Precio Sugerido");
@@ -249,7 +267,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel13)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 2, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(tPrecioSugerido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -280,10 +298,10 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tPrecioSugerido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPreciosProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -291,7 +309,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblPreciosProducto);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ganancia"));
@@ -321,16 +339,16 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         tPrecioAprox.setPreferredSize(new java.awt.Dimension(4, 30));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel7.setText("Porcentaje Ganancia");
+        jLabel7.setText("% Ganancia");
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel8.setText("Ganancia Aproximada");
+        jLabel8.setText("Ganancia Aprox.");
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel9.setText("Precio Aproximado");
+        jLabel9.setText("Precio Aprox.");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel6.setText("Precio de Venta");
+        jLabel6.setText("Precio Venta");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -375,7 +393,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         pContenedor.setLayout(pContenedorLayout);
         pContenedorLayout.setHorizontalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 993, Short.MAX_VALUE)
+            .addGap(0, 957, Short.MAX_VALUE)
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pContenedorLayout.createSequentialGroup()
                     .addGap(16, 16, 16)
@@ -391,11 +409,11 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(53, Short.MAX_VALUE)))
         );
         pContenedorLayout.setVerticalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+            .addGap(0, 432, Short.MAX_VALUE)
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pContenedorLayout.createSequentialGroup()
                     .addGap(19, 19, 19)
@@ -408,7 +426,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(20, Short.MAX_VALUE)))
+                    .addContainerGap(23, Short.MAX_VALUE)))
         );
 
         pPrincipal.add(pContenedor);
@@ -417,7 +435,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 957, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,8 +459,6 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -452,11 +468,9 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pContenedor;
     private javax.swing.JPanel pPrincipal;
     private javax.swing.JPanel pTitulo;
-    private javax.swing.JTextField tEnviogt;
     private javax.swing.JTextField tGananciaAprox;
     private javax.swing.JTextField tGananciaAproxV;
     private javax.swing.JTextField tPorcentajeGanancia;
@@ -468,6 +482,6 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tPrecioDolar;
     private javax.swing.JTextField tPrecioSugerido;
     private javax.swing.JTextField tPrecioVenta;
-    private javax.swing.JTextField tTipoCambio;
+    private javax.swing.JTable tblPreciosProducto;
     // End of variables declaration//GEN-END:variables
 }

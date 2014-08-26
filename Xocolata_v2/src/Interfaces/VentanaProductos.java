@@ -6,21 +6,21 @@
 
 package Interfaces;
 
+import Clases.Productos;
 import ContenedorComboBox.Item;
 import Querys.ProductoQuerys;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
 
@@ -30,9 +30,9 @@ import xocolata_v2.ConexionDB;
  */
 public class VentanaProductos extends javax.swing.JInternalFrame {
 
-    hiloProducto hilo;
     boolean modificado;
     int idProducto;
+    boolean nuevoProducto;
     /**
      * Creates new form VentanaProductos
      */
@@ -50,9 +50,9 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         cbTipoProducto.setRenderer(dlcr);
         cbTalla.setRenderer(dlcr);
         cbGenero.setRenderer(dlcr);
-        hilo = new hiloProducto();
         modificado = false;
         idProducto = 0;
+        nuevoProducto = false;
     }
     
     private void cargarCodigoPedidos() {
@@ -203,10 +203,10 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        tColor = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        tDescripcion = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
 
@@ -247,7 +247,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
 
         pContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
-        cbCodigoPedido.setBackground(new java.awt.Color(255, 255, 255));
         cbCodigoPedido.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
         cbCodigoPedido.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -268,7 +267,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblProductosPedido);
 
-        cbMarca.setBackground(new java.awt.Color(255, 255, 255));
         cbMarca.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbMarca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Marca" }));
         cbMarca.setPreferredSize(new java.awt.Dimension(71, 30));
@@ -278,7 +276,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        cbTipoProducto.setBackground(new java.awt.Color(255, 255, 255));
         cbTipoProducto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbTipoProducto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo de Producto" }));
         cbTipoProducto.setPreferredSize(new java.awt.Dimension(148, 30));
@@ -288,7 +285,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        cbTalla.setBackground(new java.awt.Color(255, 255, 255));
         cbTalla.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbTalla.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Talla" }));
         cbTalla.setPreferredSize(new java.awt.Dimension(60, 30));
@@ -298,7 +294,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        cbGenero.setBackground(new java.awt.Color(255, 255, 255));
         cbGenero.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Género" }));
         cbGenero.setPreferredSize(new java.awt.Dimension(81, 30));
@@ -336,15 +331,15 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(4, 30));
+        tColor.setPreferredSize(new java.awt.Dimension(4, 30));
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Descripción");
 
-        jTextArea1.setColumns(15);
-        jTextArea1.setRows(5);
-        jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jScrollPane2.setViewportView(jTextArea1);
+        tDescripcion.setColumns(15);
+        tDescripcion.setRows(5);
+        tDescripcion.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jScrollPane2.setViewportView(tDescripcion);
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel9.setText("Color");
@@ -353,6 +348,11 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         jButton5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Ingresar Precios");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pContenedorLayout = new javax.swing.GroupLayout(pContenedor);
         pContenedor.setLayout(pContenedorLayout);
@@ -366,7 +366,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                             .addGroup(pContenedorLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addGap(4, 4, 4)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel8)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pContenedorLayout.createSequentialGroup()
@@ -422,7 +422,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                             .addComponent(cbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
@@ -491,20 +491,61 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbCodigoPedidoItemStateChanged
 
     private void cbMarcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMarcaItemStateChanged
-        modificado = true;
     }//GEN-LAST:event_cbMarcaItemStateChanged
 
     private void cbTipoProductoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoProductoItemStateChanged
-        modificado = true;
     }//GEN-LAST:event_cbTipoProductoItemStateChanged
 
     private void cbTallaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTallaItemStateChanged
-        modificado = true;
     }//GEN-LAST:event_cbTallaItemStateChanged
 
     private void cbGeneroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbGeneroItemStateChanged
-        modificado = true;
     }//GEN-LAST:event_cbGeneroItemStateChanged
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+            Productos producto = new Productos();
+            Item auxiliar = (Item)cbMarca.getSelectedItem();
+            String marca = auxiliar.getId();
+            producto.setMarca(Integer.parseInt(marca));
+            auxiliar = (Item)cbTipoProducto.getSelectedItem();
+            String tipo = auxiliar.getId();
+            producto.setTipoProducto(Integer.parseInt(tipo));
+            auxiliar = (Item)cbTalla.getSelectedItem();
+            String talla = auxiliar.getId();
+            producto.setTalla(Integer.parseInt(talla));
+            auxiliar = (Item)cbGenero.getSelectedItem();
+            String genero = auxiliar.getId();
+            producto.setGenero(Integer.parseInt(genero));
+            producto.setColor(tColor.getText());
+            producto.setDescripcion(tDescripcion.getText());
+            auxiliar = (Item)cbCodigoPedido.getSelectedItem();
+            int pedido = Integer.parseInt(auxiliar.getId());
+            
+            idProducto = Integer.parseInt(ProductoQuerys.insertarProducto(producto));
+            
+            VentanaIngresoPreciosProducto ventana = new VentanaIngresoPreciosProducto(pedido, idProducto, marca, tipo, talla, genero);
+            Dimension desktopSize = this.getParent().getSize();
+            Dimension jInternalFrameSize = ventana.getSize();
+            ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                                (desktopSize.height- jInternalFrameSize.height)/2);
+            this.getParent().add(ventana);
+            ventana.show();
+            this.setVisible(false);
+            ventana.addInternalFrameListener(new InternalFrameListener() {
+			@Override
+			public void internalFrameClosing(InternalFrameEvent arg0) {}
+			@Override public void internalFrameOpened(InternalFrameEvent arg0)      {}
+			@Override public void internalFrameIconified(InternalFrameEvent arg0)   {}
+			@Override public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+			@Override public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+			@Override public void internalFrameClosed(InternalFrameEvent arg0)      
+                        {
+                            cargarTablaProductosPedido();
+                        }
+			@Override public void internalFrameActivated(InternalFrameEvent arg0)   {}
+		});
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void cargarTablaProductosPedido() {
         this.setVisible(true);
@@ -543,7 +584,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
                     model.addRow(registros);
                 }
                 tblProductosPedido.setModel(model);
-
             }
             catch (SQLException exp) 
             {
@@ -560,83 +600,6 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
     protected void paintComponent(Graphics g) {
         g.setColor(new Color(100, 0, 4, 85));
         g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
-    }
-    
-    private void buscarProducto() {
-        
-        ArrayList<Integer> productos = new ArrayList<>();        
-        if(cbMarca.getSelectedItem() != cbMarca.getItemAt(0)  && cbTipoProducto.getSelectedItem() != cbTipoProducto.getItemAt(0) && cbTalla.getSelectedItem() != cbTalla.getItemAt(0) && cbGenero.getSelectedItem()!= cbGenero.getItemAt(0)) 
-        {
-            try 
-            {
-                Item auxiliar = (Item)cbMarca.getSelectedItem();
-                String marca = auxiliar.getId();
-                auxiliar = (Item)cbTipoProducto.getSelectedItem();
-                String tipo = auxiliar.getId();
-                auxiliar = (Item)cbTalla.getSelectedItem();
-                String talla = auxiliar.getId();
-                auxiliar = (Item)cbGenero.getSelectedItem();
-                String genero = auxiliar.getId();
-
-                ResultSet dato = null;
-                Connection conexion = ConexionDB.ObtenerConexion();
-                try
-                {
-                    try (Statement comando = (Statement)conexion.createStatement()) {
-                        dato = comando.executeQuery("SELECT idProducto FROM tblProductos WHERE idMarca = '" + marca + "' AND idTipoProducto = '" + tipo + "' AND idTalla = '" + talla + "' AND idGenero = '" + genero + "'");
-                        while (dato.next())
-                        {
-                            idProducto = Integer.parseInt(dato.getString("idProducto"));
-                            productos.add(idProducto);
-                        }
-                        dato.close();
-                        comando.close();
-                    }
-                conexion.close();
-                }
-                catch (SQLException ex)
-                {
-                   JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-            }
-            catch(HeadlessException | NumberFormatException exo) {
-                System.out.println(exo.toString());
-            }
-        if (productos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay elementos");
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Encontre " + productos.size() + " elementos");
-        }
-        }
-    }
-        
-    public class hiloProducto implements Runnable
-    {
-        private final Thread t;
-        public hiloProducto() 
-        {
-            t = new Thread(this);
-            t.start();
-        }
-        @Override
-        public void run() 
-        {
-            while(true)
-            {
-                try {
-                    if(modificado)
-                    {
-                       buscarProducto();
-                       modificado = false;
-                    }
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(VentanaProductos.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -656,11 +619,11 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pContenedor;
     private javax.swing.JPanel pPrincipal;
     private javax.swing.JPanel pTitulo;
+    private javax.swing.JTextField tColor;
+    private javax.swing.JTextArea tDescripcion;
     private javax.swing.JTable tblProductosPedido;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,7 +20,7 @@ public class ConexionDB {
        try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection ("jdbc:mysql://localhost/Xocolata","root", "dsoftxela");
+            conexion = DriverManager.getConnection ("jdbc:mysql://localhost/Xocolatav2","root", "dsoftxela");
         } catch (Exception e)
             {
                 JOptionPane.showMessageDialog(null, e.toString(), "Error de Conexion", 2);
