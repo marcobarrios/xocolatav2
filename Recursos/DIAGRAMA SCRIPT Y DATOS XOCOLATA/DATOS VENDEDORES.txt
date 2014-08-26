@@ -1,0 +1,28 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.9
+-- http://www.phpmyadmin.net
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-08-2014 a las 03:39:23
+-- Versión del servidor: 5.6.14
+-- Versión de PHP: 5.5.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `xocolata`
+--
+
+--
+-- Volcado de datos para la tabla `tblvendedores`
+--
+
+INSERT INTO `tblvendedores` (`idVendedor`, `codigoVendedor`, `nombreVendedor`, `DPI`, `direccionVendedor`, `saldoVendedor`) VALUES
+(1, 'V301', 'Sergio Santiago', '', '', 930),
+(2, 'V302', 'Allan Sac', '', '', 27175),
+(3, 'V303', 'Andrea Fleischhaker', '', '7ma av 1-81 zona 1 la esperanza', 9905),
+(4, 'V304', 'Silvana Girón Reyes', '', '', 735),
+(5, 'V305', 'Boris Nufio', '', '', 780),
+(6, 'V306', 'Ethel Katherine Girón', '', '', 1600),
+(7, 'V307', 'Claudia Tirado', '', '0 calle 4-39 zona 9 Condominio Villa Andrea c', 2390);

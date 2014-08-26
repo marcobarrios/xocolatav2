@@ -1,0 +1,307 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+CREATE SCHEMA IF NOT EXISTS `Xocolatav2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `Xocolatav2` ;
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblTipoPersonas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblTipoPersonas` (
+  `idTipoPersona` INT NOT NULL AUTO_INCREMENT,
+  `TipoPersona` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idTipoPersona`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblPersonas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblPersonas` (
+  `idPersona` INT NOT NULL AUTO_INCREMENT,
+  `nombrePersona` VARCHAR(45) NOT NULL,
+  `dpiPersona` VARCHAR(45) NULL,
+  `direccionPersona` VARCHAR(45) NULL,
+  `correoPersona` VARCHAR(45) NULL,
+  `saldoPersona` DOUBLE NULL,
+  `idTipoPersona` INT NOT NULL,
+  PRIMARY KEY (`idPersona`),
+  INDEX `fk_tblPersonas_tblTipoPersonas_idx` (`idTipoPersona` ASC),
+  CONSTRAINT `fk_tblPersonas_tblTipoPersonas`
+    FOREIGN KEY (`idTipoPersona`)
+    REFERENCES `Xocolatav2`.`tblTipoPersonas` (`idTipoPersona`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblPedidos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblPedidos` (
+  `idPedido` INT NOT NULL AUTO_INCREMENT,
+  `codigoPedido` VARCHAR(45) NULL,
+  `subTotalPedido` DOUBLE NULL,
+  `impuestoPedido` DOUBLE NULL,
+  `envioPedido` DOUBLE NULL,
+  `cantidadProductos` INT(11) NULL,
+  `impuestoUnitario` DOUBLE NULL,
+  `envioUnitario` DOUBLE NULL,
+  `fechaIngreso` DATE NULL,
+  `tipoCambio` DOUBLE NULL,
+  `envioGuate` DOUBLE NULL,
+  PRIMARY KEY (`idPedido`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblMarcas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblMarcas` (
+  `idMarca` INT NOT NULL AUTO_INCREMENT,
+  `Marca` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idMarca`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblTipoProductos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblTipoProductos` (
+  `idTipoProducto` INT NOT NULL AUTO_INCREMENT,
+  `TipoProducto` VARCHAR(45) NULL,
+  PRIMARY KEY (`idTipoProducto`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblTallas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblTallas` (
+  `idTalla` INT NOT NULL AUTO_INCREMENT,
+  `Talla` VARCHAR(45) NULL,
+  PRIMARY KEY (`idTalla`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblGeneros`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblGeneros` (
+  `idGenero` INT NOT NULL AUTO_INCREMENT,
+  `Genero` VARCHAR(45) NULL,
+  PRIMARY KEY (`idGenero`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblEstadoProductos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblEstadoProductos` (
+  `idEstadoProducto` INT NOT NULL AUTO_INCREMENT,
+  `estadoProducto` VARCHAR(45) NULL,
+  PRIMARY KEY (`idEstadoProducto`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblProductos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblProductos` (
+  `idProducto` INT NOT NULL AUTO_INCREMENT,
+  `codigoProducto` VARCHAR(45) NULL,
+  `idMarca` INT NOT NULL,
+  `idTipoProducto` INT NOT NULL,
+  `idTalla` INT NOT NULL,
+  `idGenero` INT NOT NULL,
+  `colorProducto` VARCHAR(45) NULL,
+  `descripcionProducto` VARCHAR(45) NULL,
+  `costoDolares` DOUBLE NULL,
+  `impuestoProducto` DOUBLE NULL,
+  `envioProducto` DOUBLE NULL,
+  `totalDolares` DOUBLE NULL,
+  `tipoCambio` DOUBLE NULL,
+  `costoQuetzaltes` DOUBLE NULL,
+  `envioGuate` DOUBLE NULL,
+  `totalQuetzaltes` DOUBLE NULL,
+  `porcentajeGanancia` DOUBLE NULL,
+  `gananciaEstimada` DOUBLE NULL,
+  `percioVenta` DOUBLE NULL,
+  `porcentajeGananciaSugerida` DOUBLE NULL,
+  `gananciaSugerida` DOUBLE NULL,
+  `precioSugerido` DOUBLE NULL,
+  `idEstadoProducto` INT NOT NULL,
+  `idPedido` INT NOT NULL,
+  `porcentajeOferta` DOUBLE NULL,
+  `descuentoOferta` DOUBLE NULL,
+  `precioOfertado` DOUBLE NULL,
+  `precioOfertadoSugerido` DOUBLE NULL,
+  `porcentajeOfertaVenta` DOUBLE NULL,
+  `descuentoVenta` DOUBLE NULL,
+  `precioVentaFinal` DOUBLE NULL,
+  `activo` TINYINT(1) NULL,
+  PRIMARY KEY (`idProducto`),
+  INDEX `fk_tblProductos_tblMarcas1_idx` (`idMarca` ASC),
+  INDEX `fk_tblProductos_tblTallas1_idx` (`idTalla` ASC),
+  INDEX `fk_tblProductos_tblTipoProductos1_idx` (`idTipoProducto` ASC),
+  INDEX `fk_tblProductos_tblGeneros1_idx` (`idGenero` ASC),
+  INDEX `fk_tblProductos_tblEstadoProductos1_idx` (`idEstadoProducto` ASC),
+  INDEX `fk_tblProductos_tblPedidos1_idx` (`idPedido` ASC),
+  CONSTRAINT `fk_tblProductos_tblMarcas1`
+    FOREIGN KEY (`idMarca`)
+    REFERENCES `Xocolatav2`.`tblMarcas` (`idMarca`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tblProductos_tblTallas1`
+    FOREIGN KEY (`idTalla`)
+    REFERENCES `Xocolatav2`.`tblTallas` (`idTalla`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tblProductos_tblTipoProductos1`
+    FOREIGN KEY (`idTipoProducto`)
+    REFERENCES `Xocolatav2`.`tblTipoProductos` (`idTipoProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tblProductos_tblGeneros1`
+    FOREIGN KEY (`idGenero`)
+    REFERENCES `Xocolatav2`.`tblGeneros` (`idGenero`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tblProductos_tblEstadoProductos1`
+    FOREIGN KEY (`idEstadoProducto`)
+    REFERENCES `Xocolatav2`.`tblEstadoProductos` (`idEstadoProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tblProductos_tblPedidos1`
+    FOREIGN KEY (`idPedido`)
+    REFERENCES `Xocolatav2`.`tblPedidos` (`idPedido`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblAbonoPersonas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblAbonoPersonas` (
+  `idAbonoPersona` INT NOT NULL AUTO_INCREMENT,
+  `montoAbono` DOUBLE NULL,
+  `fechaAbono` DATE NULL,
+  `idPersona` INT NOT NULL,
+  PRIMARY KEY (`idAbonoPersona`),
+  INDEX `fk_tblAbonoPersonas_tblPersonas1_idx` (`idPersona` ASC),
+  CONSTRAINT `fk_tblAbonoPersonas_tblPersonas1`
+    FOREIGN KEY (`idPersona`)
+    REFERENCES `Xocolatav2`.`tblPersonas` (`idPersona`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblContactoPersonas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblContactoPersonas` (
+  `idContactoPersona` INT NOT NULL AUTO_INCREMENT,
+  `contactoPersona` VARCHAR(45) NULL,
+  `idPersona` INT NOT NULL,
+  PRIMARY KEY (`idContactoPersona`),
+  INDEX `fk_tblContactoPersonas_tblPersonas1_idx` (`idPersona` ASC),
+  CONSTRAINT `fk_tblContactoPersonas_tblPersonas1`
+    FOREIGN KEY (`idPersona`)
+    REFERENCES `Xocolatav2`.`tblPersonas` (`idPersona`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblUsuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblUsuarios` (
+  `idUsuario` INT NOT NULL AUTO_INCREMENT,
+  `Usuario` VARCHAR(45) NULL,
+  PRIMARY KEY (`idUsuario`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblTipoGastos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblTipoGastos` (
+  `idTipoGasto` INT NOT NULL AUTO_INCREMENT,
+  `TipoGasto` VARCHAR(45) NULL,
+  PRIMARY KEY (`idTipoGasto`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblGastos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblGastos` (
+  `idGasto` INT NOT NULL AUTO_INCREMENT,
+  `montoGasto` DOUBLE NULL,
+  `fechaGasto` DATE NULL,
+  `idTipoGasto` INT NOT NULL,
+  PRIMARY KEY (`idGasto`),
+  INDEX `fk_tblGastos_tblTipoGastos1_idx` (`idTipoGasto` ASC),
+  CONSTRAINT `fk_tblGastos_tblTipoGastos1`
+    FOREIGN KEY (`idTipoGasto`)
+    REFERENCES `Xocolatav2`.`tblTipoGastos` (`idTipoGasto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblTransacciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblTransacciones` (
+  `idTransaccion` INT NOT NULL AUTO_INCREMENT,
+  `codigoTransaccion` VARCHAR(45) NULL,
+  `idPersona` INT NOT NULL,
+  `fechaTransaccion` DATE NULL,
+  `fechaDevolucion` DATE NULL,
+  `cantidadProductos` INT(11) NULL,
+  `subtotalTransaccion` DOUBLE NULL,
+  `porcentajeOferta` DOUBLE NULL,
+  `descuentoTransaccion` DOUBLE NULL,
+  `totalTransaccion` DOUBLE NULL,
+  PRIMARY KEY (`idTransaccion`),
+  INDEX `fk_tblTransacciones_tblPersonas1_idx` (`idPersona` ASC),
+  CONSTRAINT `fk_tblTransacciones_tblPersonas1`
+    FOREIGN KEY (`idPersona`)
+    REFERENCES `Xocolatav2`.`tblPersonas` (`idPersona`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Xocolatav2`.`tblDetalleTransacciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xocolatav2`.`tblDetalleTransacciones` (
+  `idDetalleTransaccion` INT NOT NULL AUTO_INCREMENT,
+  `idTransaccion` INT NOT NULL,
+  `idProducto` INT NOT NULL,
+  `fechaDetalle` DATE NULL,
+  PRIMARY KEY (`idDetalleTransaccion`),
+  INDEX `fk_tblDetalleTransacciones_tblTransacciones1_idx` (`idTransaccion` ASC),
+  INDEX `fk_tblDetalleTransacciones_tblProductos1_idx` (`idProducto` ASC),
+  CONSTRAINT `fk_tblDetalleTransacciones_tblTransacciones1`
+    FOREIGN KEY (`idTransaccion`)
+    REFERENCES `Xocolatav2`.`tblTransacciones` (`idTransaccion`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tblDetalleTransacciones_tblProductos1`
+    FOREIGN KEY (`idProducto`)
+    REFERENCES `Xocolatav2`.`tblProductos` (`idProducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

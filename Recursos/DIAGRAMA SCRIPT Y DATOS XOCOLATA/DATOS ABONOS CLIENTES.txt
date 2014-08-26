@@ -1,0 +1,40 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.9
+-- http://www.phpmyadmin.net
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-08-2014 a las 03:40:47
+-- Versión del servidor: 5.6.14
+-- Versión de PHP: 5.5.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `xocolata`
+--
+
+--
+-- Volcado de datos para la tabla `tblabonoclientes`
+--
+
+INSERT INTO `tblabonoclientes` (`idAbonoCliente`, `fechaAbono`, `AbonoCliente`, `idCliente`) VALUES
+(1, '2014-04-05', 0, 1),
+(2, '2014-04-07', 0, 1),
+(3, '2014-04-07', 0, 1),
+(4, '2014-04-11', 0, 2),
+(5, '2014-04-11', 0, 3),
+(6, '2014-04-11', 0, 2),
+(7, '2014-04-11', 480, 2),
+(8, '2014-04-12', 730, 1),
+(9, '2014-04-13', 0, 4),
+(10, '2014-04-13', 0, 4),
+(11, '2014-04-13', 0, 4),
+(12, '2014-04-13', 0, 2),
+(13, '2014-04-13', 200, 4),
+(14, '2014-05-31', 420, 1),
+(15, '2014-05-31', 140, 1),
+(16, '2014-06-06', 300, 4),
+(17, '2014-06-06', 425, 2),
+(18, '2014-07-05', 15, 1),
+(19, '2014-08-02', 70, 1);

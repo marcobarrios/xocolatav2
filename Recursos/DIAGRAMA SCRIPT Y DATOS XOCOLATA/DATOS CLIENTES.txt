@@ -1,0 +1,25 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.9
+-- http://www.phpmyadmin.net
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-08-2014 a las 03:35:06
+-- Versión del servidor: 5.6.14
+-- Versión de PHP: 5.5.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `xocolata`
+--
+
+--
+-- Volcado de datos para la tabla `tblclientes`
+--
+
+INSERT INTO `tblclientes` (`idCliente`, `nombreCliente`, `DPI`, `direccionCliente`, `telefonoCliente`, `saldoCliente`) VALUES
+(1, 'Familia Ochoa Bautista', '1811 87396 0901', '12 avenida 1-90 zona 3', '77654289', 0),
+(2, 'Familia Girón Reyes', '', '', '40455444', 0),
+(3, 'Sergio Santiago', '', '', '55108137', 700),
+(4, 'Beronica Boj', '', '20av 0-28 zona 7', '51464524', 160);

@@ -1,0 +1,40 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.9
+-- http://www.phpmyadmin.net
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-08-2014 a las 03:38:38
+-- Versión del servidor: 5.6.14
+-- Versión de PHP: 5.5.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `xocolata`
+--
+
+--
+-- Volcado de datos para la tabla `tbltipoproductos`
+--
+
+INSERT INTO `tbltipoproductos` (`idTipoProducto`, `TipoProducto`) VALUES
+(1, 'Playera'),
+(2, 'Sueter'),
+(3, 'Sudadero'),
+(4, 'Pantalon'),
+(5, 'Pantaloneta'),
+(6, 'Camisa'),
+(7, 'Blusa'),
+(8, 'Crema'),
+(9, 'Brillo'),
+(10, 'Splash'),
+(11, 'Suéter'),
+(12, 'Polo'),
+(13, 'Top'),
+(14, 'Chaqueta'),
+(15, 'Abrigo'),
+(16, 'Chumpa'),
+(17, 'Chaleco'),
+(18, 'Billetera'),
+(19, 'Bolsa');

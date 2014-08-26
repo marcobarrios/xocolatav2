@@ -1,0 +1,24 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.9
+-- http://www.phpmyadmin.net
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-08-2014 a las 03:36:19
+-- Versión del servidor: 5.6.14
+-- Versión de PHP: 5.5.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `xocolata`
+--
+
+--
+-- Volcado de datos para la tabla `tblestadoproductos`
+--
+
+INSERT INTO `tblestadoproductos` (`idEstadoProducto`, `EstadoProducto`) VALUES
+(1, 'Bodega'),
+(2, 'Pendiente'),
+(3, 'Vendido');
