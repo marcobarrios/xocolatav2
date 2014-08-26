@@ -53,6 +53,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         modificado = false;
         idProducto = 0;
         nuevoProducto = false;
+        cbCodigoPedido.requestFocus();
     }
     
     private void cargarCodigoPedidos() {

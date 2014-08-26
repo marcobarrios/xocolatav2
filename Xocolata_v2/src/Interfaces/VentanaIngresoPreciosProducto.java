@@ -6,12 +6,15 @@
 
 package Interfaces;
 
+import Clases.Pedidos;
+import Querys.PedidoQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +28,9 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
     int idPedido, idProducto;
     String marca, tipo, talla, genero;
+    Pedidos pedido = null;
+    HiloCalculos hilo;
+
     /**
      * Creates new form VentanaIngresoPreciosProducto
      * @param idPedido
@@ -42,7 +48,10 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         this.tipo = tipo;
         this.talla = talla;
         this.genero = genero;
+        hilo = new HiloCalculos();
+        pedido = new Pedidos();
         cargarTablaPrecios();
+        buscarPedido();
     }
 
     private void cargarTablaPrecios() {
@@ -77,6 +86,21 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
             {
                 JOptionPane.showMessageDialog(null, exp.toString());
             }
+        }
+    }
+    
+    public void buscarPedido() {
+        String[] datos = PedidoQuerys.buscarDatosPedido(String.valueOf(idPedido));
+        if (datos != null)
+        {
+            pedido.setImpuestoUnitario(Double.parseDouble(datos[0]));
+            pedido.setEnvioUSAUnitario(Double.parseDouble(datos[1]));
+            pedido.setTipoCambio(Double.parseDouble(datos[2]));
+            pedido.setEnvioGTUnitario(Double.parseDouble(datos[3]));
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Pedido no Encontrado");
         }
     }
     
@@ -457,6 +481,137 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public class HiloCalculos implements Runnable {
+        private Thread t;
+        DecimalFormat df = new DecimalFormat("0.00");
+        public HiloCalculos() 
+        {
+            t = new Thread(this);
+            t.start();
+        }
+
+        @Override
+        public void run() 
+        {
+            while(true)
+            {
+                try {
+                    if (tPrecioDolar.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tPrecioCostoDolar.setText(String.valueOf(df.format(Double.parseDouble(tPrecioDolar.getText()) * (1 + pedido.getImpuestoUnitario() / 100) + pedido.getEnvioUSAUnitario())));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tPrecioDolar.getText().length() - 1;
+                            String resultado = tPrecioDolar.getText().substring(0, hasta);
+                            tPrecioDolar.setText(resultado);
+                            tPrecioDolar.setCaretPosition(hasta);
+                        }
+                    }
+                    if (tPrecioCostoDolar.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tPrecioCostoQuetzal.setText(String.valueOf(df.format(Double.parseDouble(tPrecioCostoDolar.getText()) * (pedido.getTipoCambio()))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+    
+                        }
+                    }
+                    if (tPrecioCostoDolar.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tPrecioCostoQuetzal.setText(String.valueOf(df.format(Double.parseDouble(tPrecioCostoDolar.getText()) * pedido.getTipoCambio() + pedido.getEnvioGTUnitario())));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+
+                        }
+                    }
+                    if (tPrecioCostoQuetzal.getText().length() != 0 && tPorcentajeGanancia.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tGananciaAprox.setText(String.valueOf(df.format(Double.parseDouble(tPrecioCostoQuetzal.getText()) * Double.parseDouble(tPorcentajeGanancia.getText()) / 100)));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tPorcentajeGanancia.getText().length() - 1;
+                            String resultado = tPorcentajeGanancia.getText().substring(0, hasta);
+                            tPorcentajeGanancia.setText(resultado);
+                            tPorcentajeGanancia.setCaretPosition(hasta);
+                        }
+                    }
+                    if (tGananciaAprox.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tPrecioAprox.setText(String.valueOf(df.format(Double.parseDouble(tPrecioCostoQuetzal.getText()) + Double.parseDouble(tGananciaAprox.getText()))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tGananciaAprox.getText().length() - 1;
+                            String resultado = tGananciaAprox.getText().substring(0, hasta);
+                            tGananciaAprox.setText(resultado);
+                            tGananciaAprox.setCaretPosition(hasta);
+                        }
+                    }
+                    if (tPrecioVenta.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tPrecioAproxV.setText(String.valueOf(df.format(Double.parseDouble(tPrecioVenta.getText()))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tPrecioVenta.getText().length() - 1;
+                            String resultado = tPrecioVenta.getText().substring(0, hasta);
+                            tPrecioVenta.setText(resultado);
+                            tPrecioVenta.setCaretPosition(hasta);
+                        }
+                    }
+                    if (tPrecioVenta.getText().length() != 0 && tPorcentajeGananciaV.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tPrecioAproxV.setText(String.valueOf(df.format(Double.parseDouble(tPrecioVenta.getText()) * (1 + Double.parseDouble(tPorcentajeGananciaV.getText()) / 100))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tPorcentajeGananciaV.getText().length() - 1;
+                            String resultado = tPorcentajeGananciaV.getText().substring(0, hasta);
+                            tPorcentajeGananciaV.setText(resultado);
+                            tPorcentajeGananciaV.setCaretPosition(hasta);
+                        }
+                    }
+                    if (tPrecioVenta.getText().length() != 0 && tPorcentajeGananciaV.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tGananciaAproxV.setText(String.valueOf(df.format(Double.parseDouble(tPrecioAproxV.getText())-Double.parseDouble(tPrecioVenta.getText()))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tPorcentajeGananciaV.getText().length() - 1;
+                            String resultado = tPorcentajeGananciaV.getText().substring(0, hasta);
+                            tPorcentajeGananciaV.setText(resultado);
+                            tPorcentajeGananciaV.setCaretPosition(hasta);
+                        }
+                    }
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    
+                }
+            }
+        }
+        
+        
+    }
+    
     public void setIcon(Icon anIcon){
         setFrameIcon(anIcon);
     }

@@ -55,6 +55,10 @@ public class ProductoQuerys {
         return idProducto;
     }
     
+    public static void actualizarPreciosProducto(Productos producto) {
+        
+    }
+    
     public static void insertarMarca(String marca)
     {
         Connection conexion = ConexionDB.ObtenerConexion();

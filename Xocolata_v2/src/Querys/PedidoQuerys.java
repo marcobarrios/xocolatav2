@@ -43,31 +43,33 @@ public class PedidoQuerys {
          }
     }
     
-     public static String[] buscarDatosPedido(String codigo) {
+     public static String[] buscarDatosPedido(String idPedido) {
         Connection conexion = ConexionDB.ObtenerConexion();
         String datosPedido[] = null;
         try
         {
             Statement comando = (Statement)conexion.createStatement();
-            ResultSet dato = comando.executeQuery("select idPedido, impuestoUnitario, envioUnitario, tipoCambio, envioGuate from tblPedidos where codigoPedido = '" + codigo + "'"); 
+            ResultSet dato = comando.executeQuery("select impuestoUnitario, envioUnitario, tipoCambio, envioGuate from tblPedidos where idPedido = '" + idPedido + "'"); 
             if (dato != null)
             {
                 dato.next();
-                datosPedido = new String[5];
-                datosPedido[0] = dato.getString("idPedido");
-                datosPedido[1] = dato.getString("impuestoUnitario");
-                datosPedido[2] = dato.getString("envioUnitario");
-                datosPedido[3] = dato.getString("tipocambioPedido");
-                datosPedido[4] = dato.getString("enviogtPedido");
-                comando.close();
-                conexion.close();
+                datosPedido = new String[4];
+                datosPedido[0] = dato.getString("impuestoUnitario");
+                datosPedido[1] = dato.getString("envioUnitario");
+                datosPedido[2] = dato.getString("tipocambio");
+                datosPedido[3] = dato.getString("envioGuate");
+                
             }
+            dato.close();
+            comando.close();
+            conexion.close();
+            return datosPedido;
         }
         catch (SQLException ex)
         {
             JOptionPane.showMessageDialog(null, ex.toString());
-            return null;
+            return datosPedido;
         }
-        return datosPedido;
+        
      }
 }
