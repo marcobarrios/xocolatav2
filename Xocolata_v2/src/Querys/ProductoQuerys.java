@@ -7,6 +7,7 @@
 package Querys;
 
 import Clases.Productos;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,7 +57,25 @@ public class ProductoQuerys {
     }
     
     public static void actualizarPreciosProducto(Productos producto) {
-        
+    Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+        try (Statement comando = (Statement)conexion.createStatement()) {
+            comando.execute("Update tblProductos SET costoDolares = '" + producto.getPrecioDolar() + "', impuestoProducto = '" + producto.getImpuestoProducto() + "', envioProducto = '" + producto.getEnvioProducto() + "', totalDolares = '" + producto.getPrecioCostoDolar() + "', "
+                    + "tipoCambio = '" + producto.getTipoCambio() + "', costoQuetzales = '" + producto.getPrecioCostoDolar() * producto.getTipoCambio() + "', envioGuate = '" + producto.getEnvioGt() + "', totalQuetzales = '" + producto.getPrecioCostoQuetzal() + "', porcentajeGanancia = '" + producto.getPorcentajeGanancia() + "', "
+                    + "gananciaEstimada = '" + producto.getGananciaEstimada() + "', precioVenta = '" + producto.getPrecioVenta() + "', porcentajeGananciaSugerida = '" + producto.getPorcentajeGananciaSugerida() + "', gananciaSugerida = '" + producto.getGananciaSugerida() + "', precioSugerido = '" + producto.getPrecioSugeridoVendedor() + "', "
+                    + "porcentajeOferta = '" + producto.getPorcentajeOferta() + "', descuentoOferta = '" + producto.getDescuentoOferta() + "', precioOfertado = '" + producto.getPrecioOfertado() + "', precioOfertadoSugerido = '" + producto.getPrecioOfertadoSugerido() + "', porcentajeOfertaVenta = '" + producto.getPorcentajeOfertaVenta() + "', "
+                    + "descuentoVenta = '" + producto.getDescuentoVenta() + "', precioVentaFinal = '" + producto.getPrecioVentaFinal() + "', activo = '0' WHERE idProducto = '" + producto.getCodigo() + "'");
+            JOptionPane.showMessageDialog(null, "Producto Ingresado Correctamente", "Ingreso Exitoso", 1);
+            comando.close();
+        }
+            conexion.close();
+        }
+        catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }    
     }
     
     public static void insertarMarca(String marca)

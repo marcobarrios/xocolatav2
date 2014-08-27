@@ -7,7 +7,9 @@
 package Interfaces;
 
 import Clases.Pedidos;
+import Clases.Productos;
 import Querys.PedidoQuerys;
+import Querys.ProductoQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.sql.Connection;
@@ -148,6 +150,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
 
         pPrincipal.setLayout(new javax.swing.BoxLayout(pPrincipal, javax.swing.BoxLayout.Y_AXIS));
 
@@ -440,25 +443,26 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                             .addGap(6, 6, 6)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(53, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         pContenedorLayout.setVerticalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 432, Short.MAX_VALUE)
+            .addGap(0, 435, Short.MAX_VALUE)
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pContenedorLayout.createSequentialGroup()
                     .addGap(19, 19, 19)
-                    .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1)
                         .addGroup(pContenedorLayout.createSequentialGroup()
                             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(23, Short.MAX_VALUE)))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 15, Short.MAX_VALUE)))
+                    .addContainerGap()))
         );
 
         pPrincipal.add(pContenedor);
@@ -478,7 +482,32 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        DecimalFormat df = new DecimalFormat("0.00");
+        Productos producto = new Productos();
+        producto.setCodigo(String.valueOf(idProducto));
+        producto.setPrecioDolar(Double.parseDouble(df.format(Double.parseDouble(tPrecioDolar.getText()))));
+        producto.setImpuestoProducto(Double.parseDouble(df.format(pedido.getImpuestoUnitario())));
+        producto.setEnvioProducto(Double.parseDouble(df.format(pedido.getEnvioUSAUnitario())));
+        producto.setPrecioCostoDolar(Double.parseDouble(df.format(Double.parseDouble(tPrecioCostoDolar.getText()))));
+        producto.setTipoCambio(Double.parseDouble(df.format(pedido.getTipoCambio())));
+        producto.setPrecioCostoQuetzal(Double.parseDouble(df.format(Double.parseDouble(tPrecioCostoQuetzal.getText()))));
+        producto.setEnvioGt(Double.parseDouble(df.format(pedido.getEnvioGTUnitario())));
+        producto.setPorcentajeGanancia(Double.parseDouble(df.format((Double.parseDouble(tPrecioVenta.getText())*100/Double.parseDouble(tPrecioCostoQuetzal.getText()))-100)));
+        producto.setGananciaEstimada(Double.parseDouble(df.format(Double.parseDouble(tPrecioVenta.getText())-Double.parseDouble(tPrecioCostoQuetzal.getText()))));
+        producto.setPrecioVenta(Double.parseDouble(df.format(Double.parseDouble(tPrecioVenta.getText()))));
+        producto.setPorcentajeGananciaSugerida(Double.parseDouble(df.format((Double.parseDouble(tPrecioSugerido.getText())*100/Double.parseDouble(tPrecioVenta.getText()))-100)));
+        producto.setGananciaSugerida(Double.parseDouble(df.format(Double.parseDouble(tPrecioSugerido.getText())-Double.parseDouble(tPrecioVenta.getText()))));
+        producto.setPrecioSugeridoVendedor(Double.parseDouble(df.format(Double.parseDouble(tPrecioSugerido.getText()))));
+        producto.setPorcentajeOferta(0.0);
+        producto.setDescuentoOferta(0.0);
+        producto.setPrecioOfertado(Double.parseDouble(df.format(Double.parseDouble(tPrecioVenta.getText()))));
+        producto.setPrecioOfertadoSugerido(Double.parseDouble(df.format(Double.parseDouble(tPrecioSugerido.getText()))));
+        producto.setPorcentajeOfertaVenta(0.0);
+        producto.setDescuentoVenta(0.0);
+        producto.setPrecioVentaFinal(0.0);
+        
+        ProductoQuerys.actualizarPreciosProducto(producto);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public class HiloCalculos implements Runnable {
