@@ -6,8 +6,11 @@
 
 package Interfaces;
 
+import Clases.Transacciones;
 import ContenedorComboBox.Item;
+import Querys.TransaccionQuerys;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -15,8 +18,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
 
 /**
@@ -35,6 +42,9 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         initComponents();
         hilo = new HiloCalculos();
         cargarDatosCliente();
+        DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+        dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+        cbCliente.setRenderer(dlcr);
     }
     
     private void cargarDatosCliente() {
@@ -59,6 +69,49 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
             }
     }
 
+    private void cargarTablaProductosTransaccion() {
+        this.setVisible(true);
+        
+        String[] titulos={"Codigo","Marca","Tipo Producto","Talla","Genero","Color","Precio Venta","Precio Sugerido"};
+        String[] registros=new String[8];      
+        DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
+        public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
+        Connection conexion = ConexionDB.ObtenerConexion();            
+        if(conexion!=null)
+        {
+            try
+            {
+                Statement Query = conexion.createStatement();            
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                        + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
+                        + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
+                        + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
+                        + "INNER JOIN tblGeneros on tblProductos.idGenero = tblGeneros.idGenero "
+                        + "INNER JOIN tblDetalleTransacciones on tblDetalleTransacciones.idProducto = tblProductos.idProducto "
+                        + "INNER JOIN tblTransacciones on tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
+                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
+                Datos = Query.getResultSet();                    
+                while (Datos.next()) 
+                {
+                    registros[0]=Datos.getString("tblProductos.codigoProducto");
+                    registros[1]=Datos.getString("tblMarcas.Marca");
+                    registros[2]=Datos.getString("tblTipoProductos.TipoProducto");
+                    registros[3]=Datos.getString("tblTallas.Talla");
+                    registros[4]=Datos.getString("tblGeneros.Genero");
+                    registros[5]=Datos.getString("tblProductos.colorProducto");
+                    registros[6]=Datos.getString("tblProductos.precioVenta");
+                    registros[7]=Datos.getString("tblProductos.precioSugerido");
+                    model.addRow(registros);
+                }
+                tblProductosTransaccion.setModel(model);
+            }
+            catch (SQLException exp) 
+            {
+                JOptionPane.showMessageDialog(null, exp.toString());
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,7 +132,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProductosTransaccion = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         rContado = new javax.swing.JRadioButton();
         rCredito = new javax.swing.JRadioButton();
@@ -139,8 +192,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Cliente");
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel2.setText("Cliente:");
 
         cbCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbCliente.setMinimumSize(new java.awt.Dimension(32, 30));
@@ -148,7 +201,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         bIniciarTransaccion.setBackground(new java.awt.Color(0, 153, 204));
         bIniciarTransaccion.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         bIniciarTransaccion.setForeground(new java.awt.Color(255, 255, 255));
-        bIniciarTransaccion.setText("Aceptar");
+        bIniciarTransaccion.setText("Crear Venta");
         bIniciarTransaccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bIniciarTransaccionActionPerformed(evt);
@@ -199,8 +252,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductosTransaccion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tblProductosTransaccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -208,12 +261,12 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblProductosTransaccion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tblProductosTransaccionMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProductosTransaccion);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Venta"));
@@ -471,9 +524,44 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bIniciarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIniciarTransaccionActionPerformed
+        Item persona = (Item)cbCliente.getSelectedItem();
+        int id =  Integer.parseInt(persona.getId());
+
+        Calendar fecha = new GregorianCalendar();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int año = fecha.get(Calendar.YEAR);
+        String fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
+
+        Transacciones transaccion = new Transacciones();
+
+        transaccion.setIdTransaccion(0);
+        transaccion.setCodigoTransaccion("0");
+        transaccion.setIdPersona(id);
+        transaccion.setFechaTransaccion(fechaActual);
+        transaccion.setFechaDevolucion(fechaActual);
+        transaccion.setCantidadPRoductos(0);
+        transaccion.setSubtotalTransaccion(0.0);
+        transaccion.setPorcentajeOferta(0.0);
+        transaccion.setDescuentoTransaccion(0.0);
+        transaccion.setTotalTransccion(0.0);
+        transaccion.setTipoTransccion(2);
+        idTransaccion = TransaccionQuerys.insertarTransaccion(transaccion);
+
+        habilitarPanel(false);
+        cargarTablaProductosTransaccion();
         tProducto.requestFocus();
     }//GEN-LAST:event_bIniciarTransaccionActionPerformed
 
+    private void habilitarPanel(boolean cambio) {
+
+            Component[] lista = jPanel1.getComponents();
+            for(int i = 0; i < jPanel1.getComponents().length; i++)
+            {
+                lista[i].setEnabled(cambio);
+            }
+        }
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -482,9 +570,9 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void tblProductosTransaccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosTransaccionMouseClicked
 
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tblProductosTransaccionMouseClicked
 
     private void rContadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rContadoActionPerformed
         rContado.setSelected(true);
@@ -580,7 +668,6 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lCantidad;
     private javax.swing.JLabel lSubTotal;
     private javax.swing.JLabel lTitulo;
@@ -594,5 +681,6 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rPrecioVenta;
     private javax.swing.JTextField tOferta;
     private javax.swing.JTextField tProducto;
+    private javax.swing.JTable tblProductosTransaccion;
     // End of variables declaration//GEN-END:variables
 }

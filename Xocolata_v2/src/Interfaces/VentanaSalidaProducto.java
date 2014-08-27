@@ -6,8 +6,11 @@
 
 package Interfaces;
 
+import Clases.Transacciones;
 import ContenedorComboBox.Item;
+import Querys.TransaccionQuerys;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -15,8 +18,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
 
 /**
@@ -39,6 +46,10 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         rNuevaTransaccion.setSelected(true);
         rReusarTransaccion.setSelected(false);
         cbTransaccion.setVisible(false);
+        DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+        dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+        cbTransaccion.setRenderer(dlcr);
+        cbVendedor.setRenderer(dlcr);
     }
     
     private void cargarDatosVendedor() {
@@ -71,7 +82,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             try
             {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("Select idTransaccion, codigoTransaccion from tblTransacciones WHERE idPersona = '" + id + "' ORDER BY codigoTransaccion DESC");
+                dato = comando.executeQuery("Select idTransaccion, codigoTransaccion from tblTransacciones WHERE idPersona = '" + id + "' ORDER BY idTransaccion DESC");
                 while(dato.next())
                 {
                     Item transaccion = new Item(dato.getString("idTransaccion"), dato.getString("codigoTransaccion"));
@@ -87,6 +98,49 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             }
     }
 
+    private void cargarTablaProductosTransaccion() {
+        this.setVisible(true);
+        
+        String[] titulos={"Codigo","Marca","Tipo Producto","Talla","Genero","Color","Precio Venta","Precio Sugerido"};
+        String[] registros=new String[8];      
+        DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
+        public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
+        Connection conexion = ConexionDB.ObtenerConexion();            
+        if(conexion!=null)
+        {
+            try
+            {
+                Statement Query = conexion.createStatement();            
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                        + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
+                        + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
+                        + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
+                        + "INNER JOIN tblGeneros on tblProductos.idGenero = tblGeneros.idGenero "
+                        + "INNER JOIN tblDetalleTransacciones on tblDetalleTransacciones.idProducto = tblProductos.idProducto "
+                        + "INNER JOIN tblTransacciones on tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
+                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
+                Datos = Query.getResultSet();                    
+                while (Datos.next()) 
+                {
+                    registros[0]=Datos.getString("tblProductos.codigoProducto");
+                    registros[1]=Datos.getString("tblMarcas.Marca");
+                    registros[2]=Datos.getString("tblTipoProductos.TipoProducto");
+                    registros[3]=Datos.getString("tblTallas.Talla");
+                    registros[4]=Datos.getString("tblGeneros.Genero");
+                    registros[5]=Datos.getString("tblProductos.colorProducto");
+                    registros[6]=Datos.getString("tblProductos.precioVenta");
+                    registros[7]=Datos.getString("tblProductos.precioSugerido");
+                    model.addRow(registros);
+                }
+                tblProductosTrasaccion.setModel(model);
+            }
+            catch (SQLException exp) 
+            {
+                JOptionPane.showMessageDialog(null, exp.toString());
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,9 +155,9 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         pContenedor = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tProducto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProductosTrasaccion = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -118,7 +172,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cbVendedor = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        bTransaccion = new javax.swing.JButton();
         rNuevaTransaccion = new javax.swing.JRadioButton();
         rReusarTransaccion = new javax.swing.JRadioButton();
         cbTransaccion = new javax.swing.JComboBox();
@@ -163,16 +217,16 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setText("Producto:");
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField1.setMinimumSize(new java.awt.Dimension(4, 30));
-        jTextField1.setPreferredSize(new java.awt.Dimension(4, 30));
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        tProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tProducto.setMinimumSize(new java.awt.Dimension(4, 30));
+        tProducto.setPreferredSize(new java.awt.Dimension(4, 30));
+        tProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField1KeyPressed(evt);
+                tProductoKeyPressed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductosTrasaccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -180,7 +234,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProductosTrasaccion);
 
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -251,7 +305,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Vendedor:");
 
         cbVendedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -262,13 +316,13 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 204, 0));
-        jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bTransaccion.setBackground(new java.awt.Color(255, 204, 0));
+        bTransaccion.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        bTransaccion.setForeground(new java.awt.Color(255, 255, 255));
+        bTransaccion.setText("Crear Transacción");
+        bTransaccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bTransaccionActionPerformed(evt);
             }
         });
 
@@ -283,6 +337,12 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         rReusarTransaccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rReusarTransaccionActionPerformed(evt);
+            }
+        });
+
+        cbTransaccion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTransaccionItemStateChanged(evt);
             }
         });
 
@@ -302,7 +362,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(bTransaccion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -315,7 +375,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                     .addComponent(rNuevaTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rReusarTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(jButton1))
+                    .addComponent(bTransaccion))
                 .addContainerGap())
         );
 
@@ -336,7 +396,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                         .addGroup(pContenedorLayout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 427, Short.MAX_VALUE)
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -365,7 +425,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
                         .addComponent(jLabel3)
                         .addComponent(lCantidad)
@@ -396,24 +456,59 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+    private void tProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tProductoKeyPressed
         if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
         {
             
         }
-    }//GEN-LAST:event_jTextField1KeyPressed
+    }//GEN-LAST:event_tProductoKeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTransaccionActionPerformed
         if (rNuevaTransaccion.isSelected())
         {
+            Item persona = (Item)cbVendedor.getSelectedItem();
+            int id =  Integer.parseInt(persona.getId());
             
+            Calendar fecha = new GregorianCalendar();
+            int dia = fecha.get(Calendar.DAY_OF_MONTH);
+            int mes = fecha.get(Calendar.MONTH)+1;
+            int año = fecha.get(Calendar.YEAR);
+            String fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
+            
+            Transacciones transaccion = new Transacciones();
+            
+            transaccion.setIdTransaccion(0);
+            transaccion.setCodigoTransaccion("0");
+            transaccion.setIdPersona(id);
+            transaccion.setFechaTransaccion(fechaActual);
+            transaccion.setFechaDevolucion(fechaActual);
+            transaccion.setCantidadPRoductos(0);
+            transaccion.setSubtotalTransaccion(0.0);
+            transaccion.setPorcentajeOferta(0.0);
+            transaccion.setDescuentoTransaccion(0.0);
+            transaccion.setTotalTransccion(0.0);
+            transaccion.setTipoTransccion(1);
+            idTransaccion = TransaccionQuerys.insertarTransaccion(transaccion);
         }
         else if (rReusarTransaccion.isSelected())
         {
-            
+            Item transaccion = (Item)cbTransaccion.getSelectedItem();
+            idTransaccion =  Integer.parseInt(transaccion.getId());            
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        habilitarPanel(false);
+        cargarTablaProductosTransaccion();
+        tProducto.requestFocus();
+    }//GEN-LAST:event_bTransaccionActionPerformed
 
+    private void habilitarPanel(boolean cambio) {
+
+            Component[] lista = jPanel2.getComponents();
+            for(int i = 0; i < jPanel2.getComponents().length; i++)
+            {
+                lista[i].setEnabled(cambio);
+            }
+        }
+    
     private void cbVendedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbVendedorItemStateChanged
         cargarDatosTransaccion();
     }//GEN-LAST:event_cbVendedorItemStateChanged
@@ -422,13 +517,21 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         rNuevaTransaccion.setSelected(true);
         rReusarTransaccion.setSelected(false);
         cbTransaccion.setVisible(false);
+        bTransaccion.setText("Crear Transacción");
     }//GEN-LAST:event_rNuevaTransaccionActionPerformed
 
     private void rReusarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rReusarTransaccionActionPerformed
         rNuevaTransaccion.setSelected(false);
         rReusarTransaccion.setSelected(true);
         cbTransaccion.setVisible(true);
+        bTransaccion.setText("Cargar Transacción");
     }//GEN-LAST:event_rReusarTransaccionActionPerformed
+
+    private void cbTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTransaccionItemStateChanged
+        Item persona = (Item)cbTransaccion.getSelectedItem();
+        idTransaccion =  Integer.parseInt(persona.getId());
+        cargarTablaProductosTransaccion();
+    }//GEN-LAST:event_cbTransaccionItemStateChanged
 
     public class HiloCalculos implements Runnable {
         private Thread t;
@@ -481,9 +584,9 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bTransaccion;
     private javax.swing.JComboBox cbTransaccion;
     private javax.swing.JComboBox cbVendedor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -496,8 +599,6 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lCantidad;
     private javax.swing.JLabel lSubtotal;
     private javax.swing.JLabel lTotal;
@@ -507,5 +608,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rNuevaTransaccion;
     private javax.swing.JRadioButton rReusarTransaccion;
     private javax.swing.JTextField tOferta;
+    private javax.swing.JTextField tProducto;
+    private javax.swing.JTable tblProductosTrasaccion;
     // End of variables declaration//GEN-END:variables
 }
