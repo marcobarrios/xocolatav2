@@ -36,6 +36,9 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         total = 0.0;
         hilo = new HiloCalculos();
         cargarDatosVendedor();
+        rNuevaTransaccion.setSelected(true);
+        rReusarTransaccion.setSelected(false);
+        cbTransaccion.setVisible(false);
     }
     
     private void cargarDatosVendedor() {
@@ -44,11 +47,35 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             try
             {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("Select idVendedor, nombreVendedor from tblVendedores ORDER BY nombreVendedor");
+                dato = comando.executeQuery("Select idPersona, nombrePersona from tblPersonas WHERE idTipoPersona = '1' ORDER BY nombrePersona");
                 while(dato.next())
                 {
-                    Item vendedor = new Item(dato.getString("idVendedor"), dato.getString("nombreVendedor"));
+                    Item vendedor = new Item(dato.getString("idPersona"), dato.getString("nombrePersona"));
                     cbVendedor.addItem(vendedor);
+                }
+                dato.close();
+            }
+            conexion.close();
+            }
+            catch (SQLException ex)
+            {
+               JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+    }
+    
+    private void cargarDatosTransaccion() {
+        Item gasto = (Item)cbVendedor.getSelectedItem();
+        int id = Integer.parseInt(gasto.getId());
+        ResultSet dato = null;
+        Connection conexion = ConexionDB.ObtenerConexion();
+            try
+            {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                dato = comando.executeQuery("Select idTransaccion, codigoTransaccion from tblTransacciones WHERE idPersona = '" + id + "' ORDER BY codigoTransaccion DESC");
+                while(dato.next())
+                {
+                    Item transaccion = new Item(dato.getString("idTransaccion"), dato.getString("codigoTransaccion"));
+                    cbTransaccion.addItem(transaccion);
                 }
                 dato.close();
             }
@@ -92,6 +119,9 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cbVendedor = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
+        rNuevaTransaccion = new javax.swing.JRadioButton();
+        rReusarTransaccion = new javax.swing.JRadioButton();
+        cbTransaccion = new javax.swing.JComboBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -224,9 +254,13 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Vendedor:");
 
-        cbVendedor.setBackground(new java.awt.Color(255, 255, 255));
         cbVendedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbVendedor.setPreferredSize(new java.awt.Dimension(32, 30));
+        cbVendedor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbVendedorItemStateChanged(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(255, 204, 0));
         jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -238,26 +272,49 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             }
         });
 
+        rNuevaTransaccion.setText("Nueva Transacción");
+        rNuevaTransaccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rNuevaTransaccionActionPerformed(evt);
+            }
+        });
+
+        rReusarTransaccion.setText("Reusar Transacción");
+        rReusarTransaccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rReusarTransaccionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(279, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rNuevaTransaccion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rReusarTransaccion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cbVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rNuevaTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rReusarTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
@@ -267,7 +324,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         pContenedorLayout.setHorizontalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
-                .addContainerGap(580, Short.MAX_VALUE)
+                .addContainerGap(590, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(209, 209, 209))
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +337,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 427, Short.MAX_VALUE)
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(lCantidad)
@@ -299,7 +356,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         pContenedorLayout.setVerticalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
-                .addContainerGap(383, Short.MAX_VALUE)
+                .addContainerGap(386, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,7 +372,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5)
                         .addComponent(lSubtotal))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -347,8 +404,31 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (rNuevaTransaccion.isSelected())
+        {
+            
+        }
+        else if (rReusarTransaccion.isSelected())
+        {
+            
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cbVendedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbVendedorItemStateChanged
+        cargarDatosTransaccion();
+    }//GEN-LAST:event_cbVendedorItemStateChanged
+
+    private void rNuevaTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rNuevaTransaccionActionPerformed
+        rNuevaTransaccion.setSelected(true);
+        rReusarTransaccion.setSelected(false);
+        cbTransaccion.setVisible(false);
+    }//GEN-LAST:event_rNuevaTransaccionActionPerformed
+
+    private void rReusarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rReusarTransaccionActionPerformed
+        rNuevaTransaccion.setSelected(false);
+        rReusarTransaccion.setSelected(true);
+        cbTransaccion.setVisible(true);
+    }//GEN-LAST:event_rReusarTransaccionActionPerformed
 
     public class HiloCalculos implements Runnable {
         private Thread t;
@@ -401,6 +481,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cbTransaccion;
     private javax.swing.JComboBox cbVendedor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -423,6 +504,8 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pContenedor;
     private javax.swing.JPanel pPrincipal;
     private javax.swing.JPanel pTitulo;
+    private javax.swing.JRadioButton rNuevaTransaccion;
+    private javax.swing.JRadioButton rReusarTransaccion;
     private javax.swing.JTextField tOferta;
     // End of variables declaration//GEN-END:variables
 }

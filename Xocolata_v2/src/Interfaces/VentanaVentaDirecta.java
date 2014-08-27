@@ -43,11 +43,11 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
             try
             {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("SELECT idCliente, nombreCliente FROM tblClientes ORDER BY nombreCliente");
+                dato = comando.executeQuery("SELECT idPersona, nombrePersona FROM tblPersonas WHERE idTipoPersona = '2' ORDER BY nombrePersona");
                 while(dato.next())
                 {
-                    Item vendedor = new Item(dato.getString("idCliente"), dato.getString("nombreCliente"));
-                    cbCliente.addItem(vendedor);
+                    Item cliente = new Item(dato.getString("idPersona"), dato.getString("nombrePersona"));
+                    cbCliente.addItem(cliente);
                 }
                 dato.close();
             }
@@ -96,8 +96,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         lTotal = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        rContado1 = new javax.swing.JRadioButton();
-        rCredito1 = new javax.swing.JRadioButton();
+        rPrecioVenta = new javax.swing.JRadioButton();
+        rPrecioSugerido = new javax.swing.JRadioButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -366,19 +366,19 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Precio a Usar"));
         jPanel5.setMaximumSize(new java.awt.Dimension(288, 71));
 
-        rContado1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        rContado1.setText("Precio de Venta");
-        rContado1.addActionListener(new java.awt.event.ActionListener() {
+        rPrecioVenta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        rPrecioVenta.setText("Precio de Venta");
+        rPrecioVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rContado1ActionPerformed(evt);
+                rPrecioVentaActionPerformed(evt);
             }
         });
 
-        rCredito1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        rCredito1.setText("Precio Sugerido");
-        rCredito1.addActionListener(new java.awt.event.ActionListener() {
+        rPrecioSugerido.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        rPrecioSugerido.setText("Precio Sugerido");
+        rPrecioSugerido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rCredito1ActionPerformed(evt);
+                rPrecioSugeridoActionPerformed(evt);
             }
         });
 
@@ -388,9 +388,9 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rContado1)
+                .addComponent(rPrecioVenta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rCredito1)
+                .addComponent(rPrecioSugerido)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -398,8 +398,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rContado1)
-                    .addComponent(rCredito1))
+                    .addComponent(rPrecioVenta)
+                    .addComponent(rPrecioSugerido))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -503,13 +503,15 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tProductoKeyPressed
 
-    private void rContado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rContado1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rContado1ActionPerformed
+    private void rPrecioVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rPrecioVentaActionPerformed
+        rPrecioVenta.setSelected(true);
+        rPrecioSugerido.setSelected(false);
+    }//GEN-LAST:event_rPrecioVentaActionPerformed
 
-    private void rCredito1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rCredito1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rCredito1ActionPerformed
+    private void rPrecioSugeridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rPrecioSugeridoActionPerformed
+        rPrecioVenta.setSelected(false);
+        rPrecioSugerido.setSelected(true);
+    }//GEN-LAST:event_rPrecioSugeridoActionPerformed
 
     public class HiloCalculos implements Runnable {
         private Thread t;
@@ -587,9 +589,9 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pPrincipal;
     private javax.swing.JPanel pTitulo;
     private javax.swing.JRadioButton rContado;
-    private javax.swing.JRadioButton rContado1;
     private javax.swing.JRadioButton rCredito;
-    private javax.swing.JRadioButton rCredito1;
+    private javax.swing.JRadioButton rPrecioSugerido;
+    private javax.swing.JRadioButton rPrecioVenta;
     private javax.swing.JTextField tOferta;
     private javax.swing.JTextField tProducto;
     // End of variables declaration//GEN-END:variables

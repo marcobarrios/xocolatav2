@@ -45,24 +45,49 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
 
     private void cargarDatosPersona() {
             cbPersona.removeAllItems();
-            ResultSet dato = null;
-            Connection conexion = ConexionDB.ObtenerConexion();
-            try
+            if (this.tipoPersona.equals("Vendedor"))
             {
-                Statement comando = (Statement)conexion.createStatement();
-                dato = comando.executeQuery("Select idVendedor, nombreVendedor from tblVendedores ORDER BY nombreVendedor");
-                while(dato.next())
+                ResultSet dato = null;
+                Connection conexion = ConexionDB.ObtenerConexion();
+                try
                 {
-                    Item vendedor = new Item(dato.getString("idVendedor"), dato.getString("nombreVendedor"));
-                    cbPersona.addItem(vendedor);
+                    Statement comando = (Statement)conexion.createStatement();
+                    dato = comando.executeQuery("Select idPersona, nombrePersona from tblPersonas WHERE idTipoPersona = '1' ORDER BY nombrePersona");
+                    while(dato.next())
+                    {
+                        Item persona = new Item(dato.getString("idPersona"), dato.getString("nombrePersona"));
+                        cbPersona.addItem(persona);
+                    }
+                    dato.close();
+                    comando.close();
+                    conexion.close();
                 }
-                dato.close();
-                comando.close();
-                conexion.close();
+                catch (SQLException ex)
+                {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
-            catch (SQLException ex)
+            else
             {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
+                ResultSet dato = null;
+                Connection conexion = ConexionDB.ObtenerConexion();
+                try
+                {
+                    Statement comando = (Statement)conexion.createStatement();
+                    dato = comando.executeQuery("Select idPersona, nombrePersona from tblPersonas WHERE idTipoPersona = '2' ORDER BY nombrePersona");
+                    while(dato.next())
+                    {
+                        Item persona = new Item(dato.getString("idPersona"), dato.getString("nombrePersona"));
+                        cbPersona.addItem(persona);
+                    }
+                    dato.close();
+                    comando.close();
+                    conexion.close();
+                }
+                catch (SQLException ex)
+                {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
         
         jLabel5.setText("Abono de " + this.tipoPersona);

@@ -586,9 +586,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="rContado1" min="-2" max="-2" attributes="0"/>
+                          <Component id="rPrecioVenta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="rCredito1" min="-2" max="-2" attributes="0"/>
+                          <Component id="rPrecioSugerido" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -598,8 +598,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="rContado1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="rCredito1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rPrecioVenta" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rPrecioSugerido" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="16" max="32767" attributes="0"/>
                       </Group>
@@ -607,7 +607,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JRadioButton" name="rContado1">
+                <Component class="javax.swing.JRadioButton" name="rPrecioVenta">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="14" style="0"/>
@@ -615,10 +615,10 @@
                     <Property name="text" type="java.lang.String" value="Precio de Venta"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rContado1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rPrecioVentaActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="rCredito1">
+                <Component class="javax.swing.JRadioButton" name="rPrecioSugerido">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="14" style="0"/>
@@ -626,7 +626,7 @@
                     <Property name="text" type="java.lang.String" value="Precio Sugerido"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rCredito1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rPrecioSugeridoActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
