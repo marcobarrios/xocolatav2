@@ -6,10 +6,8 @@
 
 package Interfaces;
 
-import Clases.Clientes;
-import Clases.Vendedores;
-import Querys.ClienteQuerys;
-import Querys.VendedorQuerys;
+import Clases.Personas;
+import Querys.PersonaQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.Icon;
@@ -244,46 +242,49 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bIngresarActionPerformed
 
     public void ingresarVendedor() {
-        Vendedores vendedor = new Vendedores();
-        vendedor.setCodigo("0");
-        vendedor.setNombre(tNombre.getText());
-        vendedor.setTelefono(tTelefono.getText());
-        vendedor.setDpi(tDPI.getText());
-        //vendedor.setCorreo(tCorreo.getText());
-        vendedor.setDireccion(tDireccion.getText());
-        VendedorQuerys.insertarVendedor(vendedor);
+        Personas persona = new Personas();
+        persona.setNombre(tNombre.getText());
+        persona.setTelefono(tTelefono.getText());
+        persona.setDpi(tDPI.getText());
+        persona.setCorreo(tCorreo.getText());
+        persona.setDireccion(tDireccion.getText());
+        persona.setIdTipoPersona(1);
+        PersonaQuerys.insertarPersona(persona);
     }
     
     public void ingresarCliente() {
-        Clientes cliente = new Clientes();
-        cliente.setNombre(tNombre.getText());
-        cliente.setTelefono(tTelefono.getText());
-        cliente.setDpi(tDPI.getText());
-        //cliente.setCorreo(tCorreo.getText());
-        cliente.setDireccion(tDireccion.getText());
-        ClienteQuerys.insertarCliente(cliente);        
+        Personas persona = new Personas();
+        persona.setNombre(tNombre.getText());
+        persona.setTelefono(tTelefono.getText());
+        persona.setDpi(tDPI.getText());
+        persona.setCorreo(tCorreo.getText());
+        persona.setDireccion(tDireccion.getText());
+        persona.setIdTipoPersona(2);
+        PersonaQuerys.insertarPersona(persona);        
     }
     
     public void editarPersona(int tipo) {
         if(tipo == 1)
         {
-            Vendedores vendedor = new Vendedores();
-            vendedor.setNombre(tNombre.getText());
-            vendedor.setTelefono(tTelefono.getText());
-            vendedor.setDpi(tDPI.getText());
-            //vendedor.setCorreo(tCorreo.getText());
-            vendedor.setDireccion(tDireccion.getText());
-            VendedorQuerys.editarVendedor(vendedor);
+            Personas persona = new Personas();
+            persona.setNombre(tNombre.getText());
+            persona.setTelefono(tTelefono.getText());
+            persona.setDpi(tDPI.getText());
+            persona.setCorreo(tCorreo.getText());
+            persona.setDireccion(tDireccion.getText());
+            persona.setIdTipoPersona(1);
+            PersonaQuerys.editarPersona(persona);
         }
         else
         {
-            Clientes cliente = new Clientes();
-            cliente.setNombre(tNombre.getText());
-            cliente.setTelefono(tTelefono.getText());
-            cliente.setDpi(tDPI.getText());
-            //vendedor.setCorreo(tCorreo.getText());
-            cliente.setDireccion(tDireccion.getText());
-            ClienteQuerys.editarClientes(cliente);
+            Personas persona = new Personas();
+            persona.setNombre(tNombre.getText());
+            persona.setTelefono(tTelefono.getText());
+            persona.setDpi(tDPI.getText());
+            persona.setCorreo(tCorreo.getText());
+            persona.setDireccion(tDireccion.getText());
+            persona.setIdTipoPersona(2);
+            PersonaQuerys.editarPersona(persona);
         }
         limpiarT();
         
@@ -298,18 +299,9 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
         tTelefono.setText("");
     }
     
-    private void actualizarDatosVendedor(Vendedores p)
+    private void actualizarDatosPersona(Personas p)
     {
-        //tCorreo.setText(p.getCorreo());
-        tDPI.setText(p.getDpi());
-        tDireccion.setText(p.getDireccion());
-        tTelefono.setText(p.getTelefono());
-        
-    }
-    
-    private void actualizarDatosCliente(Clientes p)
-    {
-        //tCorreo.setText(p.getCorreo());
+        tCorreo.setText(p.getCorreo());
         tDPI.setText(p.getDpi());
         tDireccion.setText(p.getDireccion());
         tTelefono.setText(p.getTelefono());
@@ -364,13 +356,13 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
     {
         if(this.persona.equals("Vendedor"))
         {
-            Vendedores p = VendedorQuerys.consultarVendedor(tNombre.getText());
+            Personas p = PersonaQuerys.consultarPersona(tNombre.getText(), "1");
             
             if(p!=null)
             {
                 this.estado = false;
                 bIngresar.setText("Editar " + persona);
-                actualizarDatosVendedor(p);
+                actualizarDatosPersona(p);
             }
             else
             {
@@ -384,13 +376,13 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
         }
         else
         {
-            Clientes p = ClienteQuerys.consultarVendedor(tNombre.getText());
+            Personas p = PersonaQuerys.consultarPersona(tNombre.getText(), "2");
             
             if(p!=null)
             {
                 this.estado = false;
                 bIngresar.setText("Editar "+ persona);
-                actualizarDatosCliente(p);
+                actualizarDatosPersona(p);
             }
             else
             {

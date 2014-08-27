@@ -44,8 +44,6 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
     }
 
     private void cargarDatosPersona() {
-        if (this.tipoPersona.equals("Vendedor")) 
-        {
             cbPersona.removeAllItems();
             ResultSet dato = null;
             Connection conexion = ConexionDB.ObtenerConexion();
@@ -66,30 +64,7 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
             {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-        }
-        else
-        {
-            cbPersona.removeAllItems();
-            ResultSet dato = null;
-            Connection conexion = ConexionDB.ObtenerConexion();
-            try
-            {
-                Statement comando = (Statement)conexion.createStatement();
-                dato = comando.executeQuery("Select idCliente, nombreCliente from tblClientes ORDER BY nombreCliente");
-                while(dato.next())
-                {
-                    Item vendedor = new Item(dato.getString("idCliente"), dato.getString("nombreCliente"));
-                    cbPersona.addItem(vendedor);
-                }
-                dato.close();
-                comando.close();
-                conexion.close();
-            }
-            catch (SQLException ex)
-            {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
-        }
+        
         jLabel5.setText("Abono de " + this.tipoPersona);
         jLabel1.setText(this.tipoPersona + ":");
     }
@@ -275,14 +250,8 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
     private void bConsultarSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarSaldoActionPerformed
         Item persona = (Item)cbPersona.getSelectedItem();
         int id = Integer.parseInt(persona.getId());
-        if (this.tipoPersona.equals("Vendedor"))
-        {
-            lSaldoActual.setText(String.valueOf(AbonoQuerys.consultarSaldoVendedor(id)));
-        }
-        else
-        {
-            lSaldoActual.setText(String.valueOf(AbonoQuerys.consultarSaldoCliente(id)));
-        }
+        
+        lSaldoActual.setText(String.valueOf(AbonoQuerys.consultarSaldo(id)));
         lNuevoSaldo.setText("0");
     }//GEN-LAST:event_bConsultarSaldoActionPerformed
 
@@ -293,14 +262,8 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
         abono.setFechaAbono(fechaActual);
         abono.setMontoAbono(Double.parseDouble(tMontoAbono.getText()));
         abono.setIdPersona(id);
-        if (tipoPersona.equals("Vendedor"))
-        {
-            AbonoQuerys.cargarAbonoVendedor(abono);
-        }
-        else
-        {
-            AbonoQuerys.cargarAbonoCliente(abono);
-        }
+            
+        AbonoQuerys.cargarAbono(abono);
         lNuevoSaldo.setText(String.valueOf(Double.parseDouble(lSaldoActual.getText())-Double.parseDouble(tMontoAbono.getText())));
         tMontoAbono.setText("");
         lSaldoActual.setText("0.0");
