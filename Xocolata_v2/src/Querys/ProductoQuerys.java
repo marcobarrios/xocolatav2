@@ -160,4 +160,19 @@ public class ProductoQuerys {
         }
     }
     
+    public static void cambiarEstadoProducto(int idProducto, int estado) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement(); 
+            comando.executeUpdate("UPDATE tblProductos SET idEstadoProducto = '" + estado + "' where idProducto = '" + idProducto + "'");
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
 }

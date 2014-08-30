@@ -26,7 +26,7 @@ public class TransaccionQuerys {
         int idTransaccion = 0;
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
-                PreparedStatement ps = null;
+                PreparedStatement ps;
                 ps = conexion.prepareStatement("INSERT INTO `tblTransacciones`(`idTransaccion`,`codigoTransaccion`,`idPersona`,`fechaTransaccion`,`fechaDevolucion`,`cantidadProductos`,`subtotalTransaccion`,`porcentajeOferta`,`descuentoTransaccion`,`totalTransaccion`,`tipoTransaccion`) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
                 ps.setInt(1, 0);
                 ps.setString(2, "0");
@@ -40,11 +40,11 @@ public class TransaccionQuerys {
                 ps.setDouble(10, transaccion.getTotalTransccion());
                 ps.setInt(11, transaccion.getTipoTransccion());
                 ps.executeUpdate();
-                //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
-                ResultSet dato = ps.executeQuery("select MAX(idTransaccion) from tblTransacciones"); 
-                dato.next();
-                idTransaccion = dato.getInt("MAX(idTransaccion)");
-                dato.close();
+                try ( //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
+                        ResultSet dato = ps.executeQuery("select MAX(idTransaccion) from tblTransacciones")) {
+                    dato.next();
+                    idTransaccion = dato.getInt("MAX(idTransaccion)");
+                }
                 ps.close();
                 conexion.close();
                 return idTransaccion;
@@ -59,7 +59,7 @@ public class TransaccionQuerys {
     public static void ingresarDetalleTransaccion(int idTransaccion, int idProducto, String fecha) {
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
-                PreparedStatement ps = null;
+                PreparedStatement ps;
                 ps = conexion.prepareStatement("INSERT INTO `tblDetalleTransacciones`(`idTransaccion`,`idProducto`,`fechaDetalle`) VALUES (?,?,?)");
                 ps.setInt(1, idTransaccion);
                 ps.setInt(2, idProducto);
@@ -91,7 +91,6 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, "Producto no Disponible");
             return cantidad;
         }
     }
@@ -114,7 +113,6 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, "Producto no Disponible");
             return precio;
         }
     }
@@ -137,8 +135,22 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, "Producto no Disponible");
             return precio;
+        }
+    }
+    
+    public static void agregarPreciosTransaccion(int idTransaccion, int cantidad, double subtotal, double porcentaje, double descuento, double total) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("UPDATE tblTransacciones SET cantidadProductos = '" + cantidad + "', subtotalTransaccion = '" + subtotal + "', porcentajeOferta = '" + porcentaje + "', descuentoTransaccion = '" + descuento +"', totalTransaccion = '" + total + "' WHERE idTransaccion = '" + idTransaccion + "'");
+            }
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 }

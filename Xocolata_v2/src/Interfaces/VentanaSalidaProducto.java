@@ -152,9 +152,10 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     
     private void cargarProducto(String codigo) {
         int idProducto = ProductoQuerys.buscarIdProducto(codigo);
-        if (idProducto != 0)
+        if (idProducto != 0) {
             TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto, fechaActual);
-        
+            ProductoQuerys.cambiarEstadoProducto(idProducto, 2);
+        }
         cargarTablaProductosTransaccion();
     }
     
@@ -236,6 +237,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
         tProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tProducto.setEnabled(false);
         tProducto.setMinimumSize(new java.awt.Dimension(4, 30));
         tProducto.setPreferredSize(new java.awt.Dimension(4, 30));
         tProducto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -263,6 +265,11 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jButton3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Aceptar Transacción");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Cantidad de Productos:");
@@ -512,6 +519,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         habilitarPanel(false);
         cargarTablaProductosTransaccion();
         hilo = new HiloCalculos();
+        tProducto.setEnabled(true);
         tProducto.requestFocus();
     }//GEN-LAST:event_bTransaccionActionPerformed
 
@@ -548,6 +556,10 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         idTransaccion =  Integer.parseInt(persona.getId());
         }
     }//GEN-LAST:event_cbTransaccionItemStateChanged
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubtotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubtotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public class HiloCalculos implements Runnable {
         private Thread t;

@@ -57,7 +57,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     }
     
     private void cargarDatosCliente() {
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
@@ -323,6 +323,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
         tProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tProducto.setEnabled(false);
         tProducto.setMinimumSize(new java.awt.Dimension(4, 30));
         tProducto.setPreferredSize(new java.awt.Dimension(4, 30));
         tProducto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -554,6 +555,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         habilitarPanel(false);
         cargarTablaProductosTransaccion();
         hilo = new HiloCalculos();
+        tProducto.setEnabled(true);
         tProducto.requestFocus();
     }//GEN-LAST:event_bIniciarTransaccionActionPerformed
 
@@ -567,7 +569,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubTotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubTotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -590,9 +592,10 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
     private void cargarProducto(String codigo) {
         int idProducto = ProductoQuerys.buscarIdProducto(codigo);
-        if (idProducto != 0)
+        if (idProducto != 0) {
             TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto, fechaActual);
-        
+            ProductoQuerys.cambiarEstadoProducto(idProducto, 3);
+        }
         cargarTablaProductosTransaccion();
     }
     
