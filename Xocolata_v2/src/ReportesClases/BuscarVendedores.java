@@ -36,11 +36,11 @@ public class BuscarVendedores {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("select nombreVendedor from tblvendedores order by nombreVendedor");
+                ResultSet Datos = Query.executeQuery("select nombrePersona from tblPersonas WHERE idTipoPersona = '1' order by nombrePersona");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
-                    registros[0]=Datos.getString("nombreVendedor");
+                    registros[0]=Datos.getString("nombrePersona");
                     model.addRow(registros);                  
                 }       
                 VentanaDatosVendedores.tblNombres.setModel(model);
@@ -57,7 +57,7 @@ public class BuscarVendedores {
          try
             {
                  Statement Query = conexion.createStatement();
-                 ResultSet dato = Query.executeQuery("select codigoVendedor, nombreVendedor, DPI, direccionVendedor from tblvendedores where nombreVendedor = '" + nombre + "'");
+                 ResultSet dato = Query.executeQuery("select codigoPersona, nombrePersona, dpiPersona, direccionPersona from tblPersona where nombrePersona = '" + nombre + "'");
                  dato = Query.getResultSet();
                 while (dato.next()) 
                 {

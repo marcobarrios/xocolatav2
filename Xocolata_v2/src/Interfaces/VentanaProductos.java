@@ -524,9 +524,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
             int pedido = Integer.parseInt(auxiliar.getId());
             producto.setIdPedido(pedido);
             
-            idProducto = Integer.parseInt(ProductoQuerys.insertarProducto(producto));
-            
-            VentanaIngresoPreciosProducto ventana = new VentanaIngresoPreciosProducto(pedido, idProducto, marca, tipo, talla, genero);
+            VentanaIngresoPreciosProducto ventana = new VentanaIngresoPreciosProducto(pedido, producto);
             Dimension desktopSize = this.getParent().getSize();
             Dimension jInternalFrameSize = ventana.getSize();
             ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,

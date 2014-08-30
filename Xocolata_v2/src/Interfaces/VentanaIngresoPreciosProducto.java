@@ -28,28 +28,19 @@ import xocolata_v2.ConexionDB;
  */
 public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
-    int idPedido, idProducto;
-    String marca, tipo, talla, genero;
+    int idPedido;
     Pedidos pedido = null;
     HiloCalculos hilo;
+    Productos producto;
 
     /**
      * Creates new form VentanaIngresoPreciosProducto
      * @param idPedido
-     * @param idProducto
-     * @param marca
-     * @param tipo
-     * @param talla
-     * @param genero
      */
-    public VentanaIngresoPreciosProducto(int idPedido, int idProducto, String marca, String tipo, String talla, String genero) {
+    public VentanaIngresoPreciosProducto(int idPedido, Productos producto) {
         initComponents();
         this.idPedido = idPedido;
-        this.idProducto = idProducto;
-        this.marca = marca;
-        this.tipo = tipo;
-        this.talla = talla;
-        this.genero = genero;
+        this.producto = producto;
         hilo = new HiloCalculos();
         pedido = new Pedidos();
         cargarTablaPrecios();
@@ -70,7 +61,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
             {
                 Statement Query = conexion.createStatement();            
                 ResultSet Datos = Query.executeQuery("SELECT descripcionProducto, costoDolares, totalDolares, totalQuetzales, precioVenta, precioSugerido "
-                        + "FROM tblProductos WHERE idMarca = '" + this.marca + "' AND idTipoProducto = '" + this.tipo + "' AND idTalla = '" + this.talla + "' AND idGenero = '" + this.genero + "' AND costoDolares > 0");
+                        + "FROM tblProductos WHERE idMarca = '" + producto.getMarca() + "' AND idTipoProducto = '" + producto.getTipoProducto() + "' AND idTalla = '" + producto.getTalla() + "' AND idGenero = '" + producto.getGenero() + "' AND costoDolares > 0");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
@@ -484,8 +475,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DecimalFormat df = new DecimalFormat("0.00");
-        Productos producto = new Productos();
-        producto.setCodigo(String.valueOf(idProducto));
+        producto.setCodigo("0");
         producto.setPrecioDolar(Double.parseDouble(df.format(Double.parseDouble(tPrecioDolar.getText()))));
         producto.setImpuestoProducto(Double.parseDouble(df.format(pedido.getImpuestoUnitario())));
         producto.setEnvioProducto(Double.parseDouble(df.format(pedido.getEnvioUSAUnitario())));
@@ -507,7 +497,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         producto.setDescuentoVenta(0.0);
         producto.setPrecioVentaFinal(0.0);
         
-        ProductoQuerys.actualizarPreciosProducto(producto);
+        ProductoQuerys.insertarProducto(producto);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

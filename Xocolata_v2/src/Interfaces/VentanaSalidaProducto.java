@@ -8,6 +8,7 @@ package Interfaces;
 
 import Clases.Transacciones;
 import ContenedorComboBox.Item;
+import Querys.ProductoQuerys;
 import Querys.TransaccionQuerys;
 import java.awt.Color;
 import java.awt.Component;
@@ -34,6 +35,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
     double total;
     int idTransaccion;
+    String fechaActual = "";
     HiloCalculos hilo;
     /**
      * Creates new form VentanaSalidaProducto
@@ -41,8 +43,14 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     public VentanaSalidaProducto() {
         initComponents();
         total = 0.0;
-        hilo = new HiloCalculos();
         cargarDatosVendedor();
+        
+        Calendar fecha = new GregorianCalendar();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int año = fecha.get(Calendar.YEAR);
+        fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
+        
         rNuevaTransaccion.setSelected(true);
         rReusarTransaccion.setSelected(false);
         cbTransaccion.setVisible(false);
@@ -77,6 +85,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private void cargarDatosTransaccion() {
         Item gasto = (Item)cbVendedor.getSelectedItem();
         int id = Integer.parseInt(gasto.getId());
+        cbTransaccion.removeAllItems();
         ResultSet dato = null;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
@@ -139,6 +148,14 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, exp.toString());
             }
         }
+    }
+    
+    private void cargarProducto(String codigo) {
+        int idProducto = ProductoQuerys.buscarIdProducto(codigo);
+        if (idProducto != 0)
+            TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto, fechaActual);
+        
+        cargarTablaProductosTransaccion();
     }
     
     /**
@@ -218,6 +235,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jLabel2.setText("Producto:");
 
         tProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tProducto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tProducto.setMinimumSize(new java.awt.Dimension(4, 30));
         tProducto.setPreferredSize(new java.awt.Dimension(4, 30));
         tProducto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -459,7 +477,9 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private void tProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tProductoKeyPressed
         if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
         {
-            
+            cargarProducto(tProducto.getText());
+            tProducto.setText("");
+            tProducto.requestFocus();
         }
     }//GEN-LAST:event_tProductoKeyPressed
 
@@ -468,12 +488,6 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         {
             Item persona = (Item)cbVendedor.getSelectedItem();
             int id =  Integer.parseInt(persona.getId());
-            
-            Calendar fecha = new GregorianCalendar();
-            int dia = fecha.get(Calendar.DAY_OF_MONTH);
-            int mes = fecha.get(Calendar.MONTH)+1;
-            int año = fecha.get(Calendar.YEAR);
-            String fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
             
             Transacciones transaccion = new Transacciones();
             
@@ -497,6 +511,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         }
         habilitarPanel(false);
         cargarTablaProductosTransaccion();
+        hilo = new HiloCalculos();
         tProducto.requestFocus();
     }//GEN-LAST:event_bTransaccionActionPerformed
 
@@ -528,9 +543,10 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rReusarTransaccionActionPerformed
 
     private void cbTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTransaccionItemStateChanged
+        if (cbTransaccion.getItemCount() > 0) {
         Item persona = (Item)cbTransaccion.getSelectedItem();
         idTransaccion =  Integer.parseInt(persona.getId());
-        cargarTablaProductosTransaccion();
+        }
     }//GEN-LAST:event_cbTransaccionItemStateChanged
 
     public class HiloCalculos implements Runnable {
@@ -564,6 +580,9 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                                     tOferta.setCaretPosition(hasta);
                                 }
                     }
+                    ////////////////////////////////////////////////////////////
+                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccion(idTransaccion)));
+                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccion(idTransaccion)));
                     Thread.sleep(100);
                 }
                 catch(InterruptedException exp) 

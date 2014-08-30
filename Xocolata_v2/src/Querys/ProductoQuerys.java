@@ -7,12 +7,12 @@
 package Querys;
 
 import Clases.Productos;
-import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,13 +24,13 @@ import xocolata_v2.ConexionDB;
  */
 public class ProductoQuerys {
     
-    public static String insertarProducto(Productos producto)
-    {
-        String idProducto = "";
+    public static void insertarProducto(Productos producto)
+    {DecimalFormat df = new DecimalFormat("0.00");
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
                 PreparedStatement ps = null;
-                ps = conexion.prepareStatement("INSERT INTO `tblproductos`(`idProducto`, `codigoProducto`, `idMarca`, `idTipoProducto`, `idTalla`, `idGenero`, `colorProducto`, `descripcionProducto`, `idEstadoProducto`, `idPedido`) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                ps = conexion.prepareStatement("INSERT INTO `tblproductos`(`idProducto`, `codigoProducto`, `idMarca`, `idTipoProducto`, `idTalla`, `idGenero`, `colorProducto`, `descripcionProducto`, `costoDolares`, `impuestoProducto`, `envioProducto`, `totalDolares`, `tipoCambio`, `costoQuetzales`, `envioGuate`, `totalQuetzales`, `porcentajeGanancia`, `gananciaEstimada`, `precioVenta`, `porcentajeGananciaSugerida`, `gananciaSugerida`, `precioSugerido`, `idEstadoProducto`, `idPedido`, `porcentajeOferta`, `descuentoOferta`, `precioOfertado`, `precioOfertadoSugerido`, `porcentajeOfertaVenta`, `descuentoVenta`, `precioVentaFinal`, `activo`) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 ps.setInt(1, 0);
                 ps.setString(2, "0");
                 ps.setInt(3, producto.getMarca());
@@ -39,45 +39,40 @@ public class ProductoQuerys {
                 ps.setInt(6, producto.getGenero());
                 ps.setString(7, producto.getColor());
                 ps.setString(8, producto.getDescripcion());
-                ps.setString(9, "1");
-                ps.setInt(10, producto.getIdPedido());
+                ps.setDouble(9, producto.getPrecioDolar());
+                ps.setDouble(10, producto.getImpuestoProducto());
+                ps.setDouble(11, producto.getEnvioProducto());
+                ps.setDouble(12, producto.getPrecioCostoDolar());
+                ps.setDouble(13, producto.getTipoCambio());
+                ps.setDouble(14, Double.parseDouble(df.format(producto.getPrecioCostoQuetzal() - producto.getEnvioGt())));
+                ps.setDouble(15, producto.getEnvioGt());
+                ps.setDouble(16, producto.getPrecioCostoQuetzal());
+                ps.setDouble(17, producto.getPorcentajeGanancia());
+                ps.setDouble(18, producto.getGananciaEstimada());
+                ps.setDouble(19, producto.getPrecioVenta());
+                ps.setDouble(20, producto.getPorcentajeGananciaSugerida());
+                ps.setDouble(21, producto.getGananciaSugerida());
+                ps.setDouble(22, producto.getPrecioSugeridoVendedor());
+                ps.setInt(23, producto.getEstadoProducto());
+                ps.setInt(24, producto.getIdPedido());
+                ps.setDouble(25, producto.getPorcentajeOferta());
+                ps.setDouble(26, producto.getDescuentoOferta());
+                ps.setDouble(27, producto.getPrecioOfertado());
+                ps.setDouble(28, producto.getPrecioOfertadoSugerido());
+                ps.setDouble(29, producto.getPorcentajeOfertaVenta());
+                ps.setDouble(30, producto.getDescuentoVenta());
+                ps.setDouble(31, producto.getPrecioVentaFinal());
+                ps.setInt(32, 1);
                 ps.executeUpdate();
-                //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
-                ResultSet dato = ps.executeQuery("select MAX(idProducto) from tblProductos"); 
-                dato.next();
-                idProducto = dato.getString("MAX(idProducto)");
-                dato.close();
+                JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
                 ps.close();
                 conexion.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductoQuerys.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return idProducto;
     }
-    
-    public static void actualizarPreciosProducto(Productos producto) {
-    Connection conexion = ConexionDB.ObtenerConexion();
-        try
-        {
-        try (Statement comando = (Statement)conexion.createStatement()) {
-            comando.execute("Update tblProductos SET costoDolares = '" + producto.getPrecioDolar() + "', impuestoProducto = '" + producto.getImpuestoProducto() + "', envioProducto = '" + producto.getEnvioProducto() + "', totalDolares = '" + producto.getPrecioCostoDolar() + "', "
-                    + "tipoCambio = '" + producto.getTipoCambio() + "', costoQuetzales = '" + producto.getPrecioCostoDolar() * producto.getTipoCambio() + "', envioGuate = '" + producto.getEnvioGt() + "', totalQuetzales = '" + producto.getPrecioCostoQuetzal() + "', porcentajeGanancia = '" + producto.getPorcentajeGanancia() + "', "
-                    + "gananciaEstimada = '" + producto.getGananciaEstimada() + "', precioVenta = '" + producto.getPrecioVenta() + "', porcentajeGananciaSugerida = '" + producto.getPorcentajeGananciaSugerida() + "', gananciaSugerida = '" + producto.getGananciaSugerida() + "', precioSugerido = '" + producto.getPrecioSugeridoVendedor() + "', "
-                    + "porcentajeOferta = '" + producto.getPorcentajeOferta() + "', descuentoOferta = '" + producto.getDescuentoOferta() + "', precioOfertado = '" + producto.getPrecioOfertado() + "', precioOfertadoSugerido = '" + producto.getPrecioOfertadoSugerido() + "', porcentajeOfertaVenta = '" + producto.getPorcentajeOfertaVenta() + "', "
-                    + "descuentoVenta = '" + producto.getDescuentoVenta() + "', precioVentaFinal = '" + producto.getPrecioVentaFinal() + "', activo = '0' WHERE idProducto = '" + producto.getCodigo() + "'");
-            JOptionPane.showMessageDialog(null, "Producto Ingresado Correctamente", "Ingreso Exitoso", 1);
-            comando.close();
-        }
-            conexion.close();
-        }
-        catch (HeadlessException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }    
-    }
-    
+        
     public static void insertarMarca(String marca)
     {
         Connection conexion = ConexionDB.ObtenerConexion();
@@ -141,4 +136,28 @@ public class ProductoQuerys {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
+    
+    public static int buscarIdProducto(String codigoProducto) {
+        int idProducto = 0;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT idProducto FROM tblProductos WHERE codigoProducto = '" + codigoProducto + "' AND idEstadoProducto = '1'")) {
+                    dato.next();
+                    idProducto = dato.getInt("idProducto");
+            dato.close();
+            comando.close();
+            conexion.close();
+            return idProducto;
+            }
+
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Producto no Disponible");
+            return idProducto;
+        }
+    }
+    
 }

@@ -214,7 +214,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
             try
             {
                 try (Statement comando = (Statement)conexion.createStatement()) {
-                    comando.execute("insert into tbltipogasto values('0','" + tipogasto + "')");
+                    comando.execute("insert into tbltipogastos values('0','" + tipogasto + "')");
                 }
                 conexion.close();
             }
@@ -242,7 +242,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
             try
             {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("Select idTipoGasto, TipoGasto from tbltipogasto ORDER BY TipoGasto");
+                dato = comando.executeQuery("Select idTipoGasto, TipoGasto from tbltipogastos ORDER BY TipoGasto");
                 while(dato.next())
                 {
                     Item vendedor = new Item(dato.getString("idTipoGasto"), dato.getString("TipoGasto"));

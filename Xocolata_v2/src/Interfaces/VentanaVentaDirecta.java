@@ -8,6 +8,7 @@ package Interfaces;
 
 import Clases.Transacciones;
 import ContenedorComboBox.Item;
+import Querys.ProductoQuerys;
 import Querys.TransaccionQuerys;
 import java.awt.Color;
 import java.awt.Component;
@@ -34,14 +35,22 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
     int idTransaccion;
     double total;
+    String fechaActual;
     HiloCalculos hilo;
     /**
      * Creates new form VentanaVentaDirecta
      */
     public VentanaVentaDirecta() {
         initComponents();
-        hilo = new HiloCalculos();
         cargarDatosCliente();
+        
+        Calendar fecha = new GregorianCalendar();
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
+        int año = fecha.get(Calendar.YEAR);
+        fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
+        
+        rPrecioVenta.setSelected(true);
         DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
         dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
         cbCliente.setRenderer(dlcr);
@@ -527,12 +536,6 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         Item persona = (Item)cbCliente.getSelectedItem();
         int id =  Integer.parseInt(persona.getId());
 
-        Calendar fecha = new GregorianCalendar();
-        int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        int mes = fecha.get(Calendar.MONTH)+1;
-        int año = fecha.get(Calendar.YEAR);
-        String fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
-
         Transacciones transaccion = new Transacciones();
 
         transaccion.setIdTransaccion(0);
@@ -550,6 +553,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
         habilitarPanel(false);
         cargarTablaProductosTransaccion();
+        hilo = new HiloCalculos();
         tProducto.requestFocus();
     }//GEN-LAST:event_bIniciarTransaccionActionPerformed
 
@@ -584,10 +588,20 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         rCredito.setSelected(true);
     }//GEN-LAST:event_rCreditoActionPerformed
 
+    private void cargarProducto(String codigo) {
+        int idProducto = ProductoQuerys.buscarIdProducto(codigo);
+        if (idProducto != 0)
+            TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto, fechaActual);
+        
+        cargarTablaProductosTransaccion();
+    }
+    
     private void tProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tProductoKeyPressed
         if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
         {
-            
+            cargarProducto(tProducto.getText());
+            tProducto.setText("");
+            tProducto.requestFocus();
         }
     }//GEN-LAST:event_tProductoKeyPressed
 
@@ -625,12 +639,17 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                             total = Double.parseDouble(lTotal.getText());
                         }
                         catch(NumberFormatException exp)
-                                {
-                                    int hasta = tOferta.getText().length() - 1;
-                                    String resultado = tOferta.getText().substring(0, hasta);
-                                    tOferta.setText(resultado);
-                                    tOferta.setCaretPosition(hasta);
-                                }
+                        {
+                            int hasta = tOferta.getText().length() - 1;
+                            String resultado = tOferta.getText().substring(0, hasta);
+                            tOferta.setText(resultado);
+                            tOferta.setCaretPosition(hasta);
+                        }
+                        lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccion(idTransaccion)));
+                        if (rPrecioVenta.isSelected())
+                            lSubTotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccion(idTransaccion)));
+                        else if (rPrecioSugerido.isSelected())
+                            lSubTotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioSugeridoTransaccion(idTransaccion)));
                     }
                     Thread.sleep(100);
                 }

@@ -36,11 +36,11 @@ public class BuscarClientes {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("select nombreCliente from tblClientes order by nombreCliente");
+                ResultSet Datos = Query.executeQuery("select nombrePersona from tblPersonas where idTipoPersona = '2' order by nombrePersona");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
-                    registros[0]=Datos.getString("nombreCliente");
+                    registros[0]=Datos.getString("nombrePersona");
                     model.addRow(registros);                  
                 }       
                 VentanaDatosClientes.tblNombres.setModel(model);
@@ -57,14 +57,14 @@ public class BuscarClientes {
          try
             {
                  Statement Query = conexion.createStatement();
-                 ResultSet dato = Query.executeQuery("select nombreCliente, DPI, direccionCliente, telefonoCliente from tblClientes where nombreCliente = '" + nombre + "'");
+                 ResultSet dato = Query.executeQuery("select nombrePersona, dpiPersona, direccionPersona from tblPersonas where nombrePersona = '" + nombre + "'");
                  dato = Query.getResultSet();
                 while (dato.next()) 
                 {
-                    VentanaDatosClientes.nombre.setText(dato.getString("nombreCliente"));
-                    VentanaDatosClientes.dpi.setText(dato.getString("DPI"));
-                    VentanaDatosClientes.direccion.setText(dato.getString("direccionCliente"));
-                    VentanaDatosClientes.telefono.setText(dato.getString("telefonoCliente"));
+                    VentanaDatosClientes.nombre.setText(dato.getString("nombrePersona"));
+                    VentanaDatosClientes.dpi.setText(dato.getString("dpiPersona"));
+                    VentanaDatosClientes.direccion.setText(dato.getString("direccionPersona"));
+                    //VentanaDatosClientes.telefono.setText(dato.getString("telefonoPersona"));
                 }
                  dato.close();
                  conexion.close();
