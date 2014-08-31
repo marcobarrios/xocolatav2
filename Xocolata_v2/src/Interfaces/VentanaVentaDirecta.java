@@ -82,7 +82,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         this.setVisible(true);
         
         String[] titulos={"Codigo","Marca","Tipo Producto","Talla","Genero","Color","Precio Venta","Precio Sugerido"};
-        String[] registros=new String[8];      
+        Object[] registros=new String[8];      
         DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
         public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
         Connection conexion = ConexionDB.ObtenerConexion();            
@@ -91,7 +91,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
                         + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
                         + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
                         + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
@@ -102,7 +102,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
-                    registros[0]=Datos.getString("tblProductos.codigoProducto");
+                    registros[0]=new Item(Datos.getString("tblProductos.idProducto"),Datos.getString("tblProductos.codigoProducto"));
                     registros[1]=Datos.getString("tblMarcas.Marca");
                     registros[2]=Datos.getString("tblTipoProductos.TipoProducto");
                     registros[3]=Datos.getString("tblTallas.Talla");
@@ -576,8 +576,21 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    int temporal=-1;
     private void tblProductosTransaccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosTransaccionMouseClicked
-
+        if(!evt.isMetaDown())
+        {
+            if(tblProductosTransaccion.getSelectedRow() == temporal)
+            {
+                Item idTransaccion = (Item)tblProductosTransaccion.getValueAt(temporal, 0);
+                //////IMPLEMENTAR CÓDIGO reporte Consulta cotizaciones.
+                JOptionPane.showMessageDialog(null, "ID seleccionado = " + idTransaccion.getId() );
+            }
+            else
+            {
+                temporal = tblProductosTransaccion.getSelectedRow();
+            }
+        }
     }//GEN-LAST:event_tblProductosTransaccionMouseClicked
 
     private void rContadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rContadoActionPerformed

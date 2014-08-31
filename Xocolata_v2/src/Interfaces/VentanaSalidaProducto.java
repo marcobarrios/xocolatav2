@@ -111,7 +111,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         this.setVisible(true);
         
         String[] titulos={"Codigo","Marca","Tipo Producto","Talla","Genero","Color","Precio Venta","Precio Sugerido"};
-        String[] registros=new String[8];      
+        Object[] registros=new String[8];      
         DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
         public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
         Connection conexion = ConexionDB.ObtenerConexion();            
@@ -120,7 +120,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
                         + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
                         + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
                         + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
@@ -131,7 +131,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
-                    registros[0]=Datos.getString("tblProductos.codigoProducto");
+                    registros[0]=new Item(Datos.getString("tblProductos.idProducto"),Datos.getString("tblProductos.codigoProducto"));
                     registros[1]=Datos.getString("tblMarcas.Marca");
                     registros[2]=Datos.getString("tblTipoProductos.TipoProducto");
                     registros[3]=Datos.getString("tblTallas.Talla");
@@ -254,6 +254,11 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
             }
         ));
+        tblProductosTrasaccion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductosTrasaccionMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProductosTrasaccion);
 
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
@@ -560,6 +565,24 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubtotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubtotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    int temporal=-1;
+    private void tblProductosTrasaccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosTrasaccionMouseClicked
+        // TODO add your handling code here:
+        if(!evt.isMetaDown())
+        {
+            if(tblProductosTrasaccion.getSelectedRow() == temporal)
+            {
+                Item idTransaccion = (Item)tblProductosTrasaccion.getValueAt(temporal, 0);
+                //////IMPLEMENTAR CÓDIGO reporte Consulta cotizaciones.
+                JOptionPane.showMessageDialog(null, "ID seleccionado = " + idTransaccion.getId() );
+            }
+            else
+            {
+                temporal = tblProductosTrasaccion.getSelectedRow();
+            }
+        }
+    }//GEN-LAST:event_tblProductosTrasaccionMouseClicked
 
     public class HiloCalculos implements Runnable {
         private Thread t;
