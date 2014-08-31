@@ -81,8 +81,8 @@ public static Personas consultarPersona(String nombrePersona, String tipoPersona
                 ResultSet dato = comando.executeQuery("select idPersona from tblPersonas where nombrePersona='"+ p.getNombre() +"' AND idTipoPersona='"+ p.getIdTipoPersona()+"'");
                 dato.next();
                 int id = dato.getInt("idPersona");
-                comando.execute("Update tblPersonas SET dpiPersona='"+p.getDpi()+"', correoPersona='"+p.getCorreo()+"', direccionPersona='"+p.getDireccion()+"' where idPersona='"+id+"'");
-                comando.execute("Update tblContactoPersonas SET contactoPersona='"+p.getTelefono()+"' where idPersona='"+id+"'");
+                comando.execute("Update tblPersonas SET dpiPersona = '" + p.getDpi() + "', correoPersona = '" + p.getCorreo() + "', direccionPersona = '" + p.getDireccion() + "' where idPersona = '" + id + "'");
+                comando.execute("Update tblContactoPersonas SET contactoPersona = '" + p.getTelefono() + "' where idPersona = '" + id + "'");
                 JOptionPane.showMessageDialog(null, "Edición Exitoso", "Cambio Exitoso", 1);
             }
             conexion.close();
@@ -100,7 +100,7 @@ public static Personas consultarPersona(String nombrePersona, String tipoPersona
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                comando.execute("insert into tblTelefonoPersonas values('0','" + idPersona + "', '" + telefono + "')");
+                comando.execute("insert into tblContactoPersonas values('0','" + telefono + "', '" + idPersona + "')");
                 JOptionPane.showMessageDialog(null, "Telefono Ingresado correctamente", "Ingreso Exitoso", 1);
             }
             conexion.close();
@@ -115,7 +115,7 @@ public static Personas consultarPersona(String nombrePersona, String tipoPersona
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                ResultSet dato = comando.executeQuery("select saldoPersona from tblPersonas where idPersona='"+ idPersona +"'");
+                ResultSet dato = comando.executeQuery("select saldoPersona from tblPersonas where idPersona = '" + idPersona + "'");
                 dato.next();
                 saldo = dato.getString("saldoPersona");
             }
@@ -127,74 +127,7 @@ public static Personas consultarPersona(String nombrePersona, String tipoPersona
         }
         return saldo;
     }
-    
-    public static void cargarAbono(Double abono,String fecha, String id)
-    {
-        Connection conexion = ConexionDB.ObtenerConexion();
-        try
-        {
-            try (Statement comando = (Statement)conexion.createStatement()) {
-                comando.execute("insert into tblAbonoPersonas values('0','" + abono + "','" + fecha + "','" + id + "')");
-                JOptionPane.showMessageDialog(null, "Abono cargado correctamente", "Abono Exitoso", 1);
-            }
-            conexion.close();
-        }
-        catch (HeadlessException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        actualizarSaldo(abono,id);
-    }
-    
-    public static void actualizarSaldo(Double abono, String idPersona)
-    {
-        Connection conexion = ConexionDB.ObtenerConexion();
-        String saldo;
-        try
-        {
-            DecimalFormat df;
-            double resta; 
-            try (Statement comando = (Statement)conexion.createStatement()) {
-                ResultSet dato = comando.executeQuery("select saldoPersona from tblPersonas where idPersona='"+ idPersona +"'");
-                dato.next();
-                saldo = dato.getString("saldoPersona");
-                df = new DecimalFormat("0.00");
-                resta = Double.parseDouble(saldo)-abono;
-            }
-            try (Statement comando2 = (Statement)conexion.createStatement()) {
-                comando2.executeUpdate("update tblPersonas SET saldoPersona ='"+df.format(resta)+"' where idPersona='"+idPersona+"'");
-            }
-            conexion.close();
-        }
-        catch (NumberFormatException | SQLException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        
-    }
-    
-    public static void cargarSaldo(String idPersona, Double cargo) {
-        Connection conexion = ConexionDB.ObtenerConexion();
-        int existencia = 0;
-        try
-        {
-            try (Statement comando = (Statement)conexion.createStatement(); 
-                    ResultSet dato = comando.executeQuery("select saldoPersona from tblPersonas where idPersona = '" + idPersona + "'")) {
-                dato.next();
-                Double saldo = dato.getDouble("saldoPersona");
-                DecimalFormat df = new DecimalFormat("0.00");
-                Double total = saldo + cargo;
-                comando.executeUpdate("UPDATE tblPersonas SET saldoPersona = '" + total + "' where idPersona = '" + idPersona + "'");
-            }
-            conexion.close();
-        }
-        catch (SQLException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }
+
 }
 
 

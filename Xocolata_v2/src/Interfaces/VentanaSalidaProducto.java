@@ -111,7 +111,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         this.setVisible(true);
         
         String[] titulos={"Codigo","Marca","Tipo Producto","Talla","Genero","Color","Precio Venta","Precio Sugerido"};
-        Object[] registros=new String[8];      
+        Object[] registros = new Object[8];      
         DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
         public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
         Connection conexion = ConexionDB.ObtenerConexion();            
