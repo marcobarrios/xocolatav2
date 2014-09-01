@@ -153,4 +153,65 @@ public class TransaccionQuerys {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
+    
+    public static void descontarProductoTransaccion(int idTransaccion, int idProducto) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "' AND idProducto = '" + idProducto + "'");
+            }
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    public static void cancelarUltimaTransaccion(int idTransaccion, String fecha) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "' AND fechaDetalle = '" + fecha + "'");
+            }
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+        public static void cancelarTransaccion(int idTransaccion) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
+                comando.executeUpdate("DELETE FROM tblTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
+            }
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+        
+        public static void ingresarFechaLimite(int idTransaccion, String fecha) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("UPDATE tblTransacciones  SET fechaDevolucion = '" + fecha +"' where idTransaccion = '" + idTransaccion + "'");
+            }
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+    }
 }

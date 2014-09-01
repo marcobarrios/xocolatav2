@@ -103,6 +103,8 @@ public class VentanaConsultaTransacciones extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
 
         setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         pPrincipal.setLayout(new javax.swing.BoxLayout(pPrincipal, javax.swing.BoxLayout.Y_AXIS));
 
@@ -142,7 +144,6 @@ public class VentanaConsultaTransacciones extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Seleccione Persona:");
 
-        cbPersona.setBackground(new java.awt.Color(255, 255, 255));
         cbPersona.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbPersona.setPreferredSize(new java.awt.Dimension(32, 30));
 

@@ -8,10 +8,12 @@ package Interfaces;
 
 import Clases.Transacciones;
 import ContenedorComboBox.Item;
+import Querys.PersonaQuerys;
 import Querys.ProductoQuerys;
 import Querys.TransaccionQuerys;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -24,6 +26,8 @@ import java.util.GregorianCalendar;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
 
@@ -570,10 +574,66 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubTotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubTotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
+        if (rContado.isSelected()) {
+            int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(resultado == JOptionPane.YES_OPTION) {
+                //REPORTE VENTA AL CONTADO CON PRECIO SUGERIDO
+            }
+            else {
+                //REPORTE VETNA AL CONTADO SIN PRECIO SUGERIDO
+            }
+        }
+        else if (rCredito.isSelected()) {
+            final Calendario ventana = new Calendario();
+            Dimension desktopSize = this.getParent().getSize();
+            Dimension jInternalFrameSize = ventana.getSize();
+            ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                                (desktopSize.height- jInternalFrameSize.height)/2);
+            this.getParent().add(ventana);
+            ventana.show();
+            ventana.addInternalFrameListener(new InternalFrameListener() {
+			@Override
+			public void internalFrameClosing(InternalFrameEvent arg0) {}
+			@Override public void internalFrameOpened(InternalFrameEvent arg0)      {}
+			@Override public void internalFrameIconified(InternalFrameEvent arg0)   {}
+			@Override public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+			@Override public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+			@Override public void internalFrameClosed(InternalFrameEvent arg0)      
+                        {
+                            String fecha = ventana.getFechaFinal();
+                            TransaccionQuerys.ingresarFechaLimite(idTransaccion, fecha);
+                            cargarAbono();
+                            /////////////////////////////////////////////////////////////////////////////////
+                            int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                            if(resultado == JOptionPane.YES_OPTION) {
+                                //REPORTE VENTA AL CREDITO CON PRECIO SUGERIDO
+                            }
+                            else {
+                                //REPORTE VENTA AL CREDITO SIN PRECIO SUGERIDO
+                            }
+                        }
+			@Override public void internalFrameActivated(InternalFrameEvent arg0)   {}
+		});
+
+        }
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void cargarAbono() {
+        Item persona = (Item)cbCliente.getSelectedItem();
+        int id =  Integer.parseInt(persona.getId());
+        String abono = JOptionPane.showInputDialog(null, "Ingrese Abono sobre: " + total, 0);
+        PersonaQuerys.cargarSaldo(id, total);
+        PersonaQuerys.cargarAbono(Double.parseDouble(abono), fechaActual, id);
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(resultado == JOptionPane.YES_OPTION)
+        {
+            TransaccionQuerys.cancelarTransaccion(idTransaccion);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     int temporal=-1;
@@ -582,9 +642,14 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         {
             if(tblProductosTransaccion.getSelectedRow() == temporal)
             {
-                Item idTransaccion = (Item)tblProductosTransaccion.getValueAt(temporal, 0);
-                //////IMPLEMENTAR CÓDIGO reporte Consulta cotizaciones.
-                JOptionPane.showMessageDialog(null, "ID seleccionado = " + idTransaccion.getId() );
+                int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea borrar este producto de la transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if(resultado == JOptionPane.YES_OPTION)
+                {
+                    Item idProducto = (Item)tblProductosTransaccion.getValueAt(temporal, 0);
+                    TransaccionQuerys.descontarProductoTransaccion(idTransaccion, Integer.parseInt(idProducto.getId()));
+                    ProductoQuerys.cambiarEstadoProducto(Integer.parseInt(idProducto.getId()), 1);
+                    cargarTablaProductosTransaccion();
+                }
             }
             else
             {

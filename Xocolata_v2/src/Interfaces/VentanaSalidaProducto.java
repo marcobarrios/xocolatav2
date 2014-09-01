@@ -8,6 +8,7 @@ package Interfaces;
 
 import Clases.Transacciones;
 import ContenedorComboBox.Item;
+import Querys.PersonaQuerys;
 import Querys.ProductoQuerys;
 import Querys.TransaccionQuerys;
 import java.awt.Color;
@@ -265,6 +266,11 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cancelar Transacción");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(0, 153, 51));
         jButton3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -564,6 +570,21 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubtotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubtotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
+
+        Item persona = (Item)cbVendedor.getSelectedItem();
+        int id =  Integer.parseInt(persona.getId());
+        PersonaQuerys.cargarSaldo(id, total);
+        
+        int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(resultado == JOptionPane.YES_OPTION)
+        {
+            //REPORTE CON PRECIO SUGERIDO
+        }
+        else
+        {
+            //REPORTE SIN PRECIO SUGERIDO
+        }
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     int temporal=-1;
@@ -573,9 +594,14 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         {
             if(tblProductosTrasaccion.getSelectedRow() == temporal)
             {
-                Item idTransaccion = (Item)tblProductosTrasaccion.getValueAt(temporal, 0);
-                //////IMPLEMENTAR CÓDIGO reporte Consulta cotizaciones.
-                JOptionPane.showMessageDialog(null, "ID seleccionado = " + idTransaccion.getId() );
+                int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea borrar este producto de la transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if(resultado == JOptionPane.YES_OPTION)
+                {
+                    Item idProducto = (Item)tblProductosTrasaccion.getValueAt(temporal, 0);
+                    TransaccionQuerys.descontarProductoTransaccion(idTransaccion, Integer.parseInt(idProducto.getId()));
+                    ProductoQuerys.cambiarEstadoProducto(Integer.parseInt(idProducto.getId()), 1);
+                    cargarTablaProductosTransaccion();
+                }
             }
             else
             {
@@ -583,6 +609,20 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblProductosTrasaccionMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(resultado == JOptionPane.YES_OPTION)
+        {        
+            if (rNuevaTransaccion.isSelected()) {
+                TransaccionQuerys.cancelarTransaccion(idTransaccion);
+            }
+            else if (rReusarTransaccion.isSelected()) {
+                TransaccionQuerys.cancelarUltimaTransaccion(idTransaccion, fechaActual);
+            }
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public class HiloCalculos implements Runnable {
         private Thread t;
