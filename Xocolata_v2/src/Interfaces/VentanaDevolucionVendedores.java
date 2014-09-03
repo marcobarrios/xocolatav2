@@ -46,7 +46,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }
 
     private void cargarDatosVendedor() {
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
@@ -71,7 +71,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         Item gasto = (Item)cbVendedor.getSelectedItem();
         int id = Integer.parseInt(gasto.getId());
         cbTransaccion.removeAllItems();
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
@@ -105,7 +105,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta FROM tblProductos "
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVentaFinal FROM tblProductos "
                         + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
                         + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
                         + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
@@ -122,7 +122,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                     registros[3]=Datos.getString("tblTallas.Talla");
                     registros[4]=Datos.getString("tblGeneros.Genero");
                     registros[5]=Datos.getString("tblProductos.colorProducto");
-                    registros[6]=Datos.getString("tblProductos.precioVenta");
+                    registros[6]=Datos.getString("tblProductos.precioVentaFinal");
                     model.addRow(registros);
                 }
                 tblProductosTransaccion.setModel(model);
@@ -327,7 +327,8 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        TransaccionQuerys.agregarProductosVendidos(idTransaccion);
+        JOptionPane.showMessageDialog(null, "Productos marcados como 'Vendidos'");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -348,7 +349,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }
     
     private void tProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tProductoKeyPressed
-               if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
+        if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
         {
             cargarProducto(tProducto.getText());
             tProducto.setText("");

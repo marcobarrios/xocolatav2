@@ -57,14 +57,14 @@ public class BuscarVendedores {
          try
             {
                  Statement Query = conexion.createStatement();
-                 ResultSet dato = Query.executeQuery("select codigoPersona, nombrePersona, dpiPersona, direccionPersona from tblPersona where nombrePersona = '" + nombre + "'");
+                 ResultSet dato = Query.executeQuery("select codigoPersona, nombrePersona, dpiPersona, direccionPersona from tblPersonas where nombrePersona = '" + nombre + "'");
                  dato = Query.getResultSet();
                 while (dato.next()) 
                 {
-                    VentanaDatosVendedores.codigo.setText(dato.getString("codigoVendedor"));
-                    VentanaDatosVendedores.nombre.setText(dato.getString("nombreVendedor"));
-                    VentanaDatosVendedores.dpi.setText(dato.getString("DPI"));
-                    VentanaDatosVendedores.direccion.setText(dato.getString("direccionVendedor"));
+                    VentanaDatosVendedores.codigo.setText(dato.getString("codigoPersona"));
+                    VentanaDatosVendedores.nombre.setText(dato.getString("nombrePersona"));
+                    VentanaDatosVendedores.dpi.setText(dato.getString("dpiPersona"));
+                    VentanaDatosVendedores.direccion.setText(dato.getString("direccionPersona"));
                 }
                  dato.close();
                  conexion.close();
@@ -86,13 +86,13 @@ public class BuscarVendedores {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("select contacto from tblContactoVendedor\n" +
-                                                     "inner join tblVendedores on tblContactoVendedor.idVendedor = tblVendedores.idVendedor\n" +
-                                                     "where tblVendedores.nombreVendedor = '" + nombre + "'");
+                ResultSet Datos = Query.executeQuery("select contactoPersona from tblContactoPersonas " +
+                                                     "inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona " +
+                                                     "where tblPersonas.nombrePersona = '" + nombre + "'");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
-                    registros[0]=Datos.getString("contacto");
+                    registros[0]=Datos.getString("contactoPersona");
                     model.addRow(registros);                  
                 }       
                 VentanaDatosVendedores.tblTelefonos.setModel(model);

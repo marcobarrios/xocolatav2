@@ -575,13 +575,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubTotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubTotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
         if (rContado.isSelected()) {
-            int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if(resultado == JOptionPane.YES_OPTION) {
-                //REPORTE VENTA AL CONTADO CON PRECIO SUGERIDO
-            }
-            else {
-                //REPORTE VETNA AL CONTADO SIN PRECIO SUGERIDO
-            }
+            //LLAMAR REPORTE VENTA DIRECTA AL CONTADO 
         }
         else if (rCredito.isSelected()) {
             final Calendario ventana = new Calendario();
@@ -603,14 +597,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                             String fecha = ventana.getFechaFinal();
                             TransaccionQuerys.ingresarFechaLimite(idTransaccion, fecha);
                             cargarAbono();
-                            /////////////////////////////////////////////////////////////////////////////////
-                            int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                            if(resultado == JOptionPane.YES_OPTION) {
-                                //REPORTE VENTA AL CREDITO CON PRECIO SUGERIDO
-                            }
-                            else {
-                                //REPORTE VENTA AL CREDITO SIN PRECIO SUGERIDO
-                            }
+                            //LLAMAR REPORTE VENTA DIRECTA AL CREDITO
                         }
 			@Override public void internalFrameActivated(InternalFrameEvent arg0)   {}
 		});

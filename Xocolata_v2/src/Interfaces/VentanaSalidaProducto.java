@@ -128,7 +128,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                         + "INNER JOIN tblGeneros on tblProductos.idGenero = tblGeneros.idGenero "
                         + "INNER JOIN tblDetalleTransacciones on tblDetalleTransacciones.idProducto = tblProductos.idProducto "
                         + "INNER JOIN tblTransacciones on tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
-                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
+                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' AND tblDetalleTransacciones.fechaDetalle = '" + fechaActual + "' ORDER BY tblProductos.codigoProducto ASC");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
@@ -578,11 +578,13 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if(resultado == JOptionPane.YES_OPTION)
         {
-            //REPORTE CON PRECIO SUGERIDO
+            //REPORTE CON PRECIO SUGERIDO 
+            //MANDAR TBLTRANSACCIONES.IDTRANSACCION Y TBLDETALLETRANSACCIONES.FECHADETALLE
         }
         else
         {
             //REPORTE SIN PRECIO SUGERIDO
+            //MANDAR TBLTRANSACCIONES.IDTRANSACCION Y TBLDETALLETRANSACCIONES.FECHADETALLE
         }
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -656,8 +658,8 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                                 }
                     }
                     ////////////////////////////////////////////////////////////
-                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccion(idTransaccion)));
-                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccion(idTransaccion)));
+                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccionUnica(idTransaccion, fechaActual)));
+                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccionUnica(idTransaccion, fechaActual)));
                     Thread.sleep(100);
                 }
                 catch(InterruptedException exp) 
