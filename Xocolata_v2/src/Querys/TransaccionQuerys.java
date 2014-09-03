@@ -154,7 +154,7 @@ public class TransaccionQuerys {
         }
     }
     
-    public static void descontarProductoTransaccion(int idTransaccion, int idProducto) {
+    public static void devolverProductoTransaccion(int idTransaccion, int idProducto) {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {

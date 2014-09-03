@@ -28,7 +28,7 @@ public class ProductoQuerys {
     {DecimalFormat df = new DecimalFormat("0.00");
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
-                PreparedStatement ps = null;
+                PreparedStatement ps;
                 ps = conexion.prepareStatement("INSERT INTO `tblproductos`(`idProducto`, `codigoProducto`, `idMarca`, `idTipoProducto`, `idTalla`, `idGenero`, `colorProducto`, `descripcionProducto`, `costoDolares`, `impuestoProducto`, `envioProducto`, `totalDolares`, `tipoCambio`, `costoQuetzales`, `envioGuate`, `totalQuetzales`, `porcentajeGanancia`, `gananciaEstimada`, `precioVenta`, `porcentajeGananciaSugerida`, `gananciaSugerida`, `precioSugerido`, `idEstadoProducto`, `idPedido`, `porcentajeOferta`, `descuentoOferta`, `precioOfertado`, `precioOfertadoSugerido`, `porcentajeOfertaVenta`, `descuentoVenta`, `precioVentaFinal`, `activo`) "
                         + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 ps.setInt(1, 0);
@@ -137,7 +137,7 @@ public class ProductoQuerys {
         }
     }
     
-    public static int buscarIdProducto(String codigoProducto) {
+    public static int buscarIdProductoDisponible(String codigoProducto) {
         int idProducto = 0;
         Connection conexion = ConexionDB.ObtenerConexion();
         try
@@ -160,13 +160,36 @@ public class ProductoQuerys {
         }
     }
     
+    public static int buscarIdProductoTransaccion(String codigoProducto) {
+        int idProducto = 0;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT idProducto FROM tblProductos WHERE codigoProducto = '" + codigoProducto + "'")) {
+                    dato.next();
+                    idProducto = dato.getInt("idProducto");
+            dato.close();
+            comando.close();
+            conexion.close();
+            return idProducto;
+            }
+
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Producto no Disponible");
+            return idProducto;
+        }
+    }
+    
     public static void cambiarEstadoProducto(int idProducto, int estado) {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement(); 
-            comando.executeUpdate("UPDATE tblProductos SET idEstadoProducto = '" + estado + "' where idProducto = '" + idProducto + "'");
-            comando.close();
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("UPDATE tblProductos SET idEstadoProducto = '" + estado + "' where idProducto = '" + idProducto + "'");
+            }
             conexion.close();
         }
         catch (SQLException ex)
@@ -175,4 +198,26 @@ public class ProductoQuerys {
         }
     }
     
+    public static double obtenerPrecioVentaProducto(int idProducto) {
+        double precio = 0;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT precioVentaFinal FROM tblProductos WHERE idProducto = '" + idProducto + "'")) {
+                    dato.next();
+                    precio = dato.getDouble("precioVentaFinal");
+            dato.close();
+            comando.close();
+            conexion.close();
+            return precio;
+            }
+
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Producto no Disponible");
+            return precio;
+        }
+    }
 }

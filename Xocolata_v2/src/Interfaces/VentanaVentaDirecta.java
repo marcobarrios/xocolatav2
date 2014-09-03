@@ -646,7 +646,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                 if(resultado == JOptionPane.YES_OPTION)
                 {
                     Item idProducto = (Item)tblProductosTransaccion.getValueAt(temporal, 0);
-                    TransaccionQuerys.descontarProductoTransaccion(idTransaccion, Integer.parseInt(idProducto.getId()));
+                    TransaccionQuerys.devolverProductoTransaccion(idTransaccion, Integer.parseInt(idProducto.getId()));
                     ProductoQuerys.cambiarEstadoProducto(Integer.parseInt(idProducto.getId()), 1);
                     cargarTablaProductosTransaccion();
                 }
@@ -669,7 +669,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rCreditoActionPerformed
 
     private void cargarProducto(String codigo) {
-        int idProducto = ProductoQuerys.buscarIdProducto(codigo);
+        int idProducto = ProductoQuerys.buscarIdProductoDisponible(codigo);
         if (idProducto != 0) {
             TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto, fechaActual);
             ProductoQuerys.cambiarEstadoProducto(idProducto, 3);

@@ -7,11 +7,19 @@
 package Interfaces;
 
 import ContenedorComboBox.Item;
+import Querys.PersonaQuerys;
+import Querys.ProductoQuerys;
+import Querys.TransaccionQuerys;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
@@ -23,6 +31,7 @@ import xocolata_v2.ConexionDB;
 public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
 
     int idTransaccion;
+    HiloCalculos hilo;
     /**
      * Creates new form VentanaDevolucionVendedores
      */
@@ -86,8 +95,8 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     private void cargarTablaProductosTransaccion() {
         this.setVisible(true);
         
-        String[] titulos={"Codigo","Marca","Tipo Producto","Talla","Genero","Color","Precio Venta","Precio Sugerido"};
-        Object[] registros = new Object[8];      
+        String[] titulos={"Codigo","Marca","Tipo Producto","Talla","Genero","Color","Precio Venta"};
+        Object[] registros = new Object[7];      
         DefaultTableModel model= new DefaultTableModel(null,titulos){@Override
         public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
         Connection conexion = ConexionDB.ObtenerConexion();            
@@ -96,7 +105,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta FROM tblProductos "
                         + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
                         + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
                         + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
@@ -114,7 +123,6 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                     registros[4]=Datos.getString("tblGeneros.Genero");
                     registros[5]=Datos.getString("tblProductos.colorProducto");
                     registros[6]=Datos.getString("tblProductos.precioVenta");
-                    registros[7]=Datos.getString("tblProductos.precioSugerido");
                     model.addRow(registros);
                 }
                 tblProductosTransaccion.setModel(model);
@@ -146,7 +154,15 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tProducto = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        lCantidad = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lSubtotal = new javax.swing.JLabel();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -182,7 +198,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                 .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,6 +239,25 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Código del Producto:");
 
+        tProducto.setEnabled(false);
+        tProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tProductoKeyPressed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setText("Cantidad de Productos:");
+
+        lCantidad.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lCantidad.setText("0");
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel5.setText("SubTotal: Q.");
+
+        lSubtotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lSubtotal.setText("0.0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -230,7 +265,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -240,8 +275,15 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lCantidad)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lSubtotal)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -251,15 +293,19 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(lCantidad)
+                    .addComponent(jLabel5)
+                    .addComponent(lSubtotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -273,6 +319,11 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         Item transaccion = (Item)cbTransaccion.getSelectedItem();
         idTransaccion =  Integer.parseInt(transaccion.getId());
         cargarTablaProductosTransaccion();
+        
+        tProducto.setEnabled(true);
+        tProducto.requestFocus();
+        
+        hilo = new HiloCalculos();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -283,6 +334,64 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cargarProducto(String codigo) {
+        int idProducto = ProductoQuerys.buscarIdProductoTransaccion(codigo);
+        if (idProducto != 0) {
+            TransaccionQuerys.devolverProductoTransaccion(idTransaccion, idProducto);
+            ProductoQuerys.cambiarEstadoProducto(idProducto, 1);
+            
+            Item transaccion = (Item)cbVendedor.getSelectedItem();
+            int idPersona =  Integer.parseInt(transaccion.getId());
+            PersonaQuerys.cargarSaldo(idPersona, -1*ProductoQuerys.obtenerPrecioVentaProducto(idProducto));
+        }
+        cargarTablaProductosTransaccion();
+    }
+    
+    private void tProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tProductoKeyPressed
+               if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
+        {
+            cargarProducto(tProducto.getText());
+            tProducto.setText("");
+            tProducto.requestFocus();
+        }
+    }//GEN-LAST:event_tProductoKeyPressed
+
+    public class HiloCalculos implements Runnable {
+        private Thread t;
+        DecimalFormat df = new DecimalFormat("0.00");
+        public HiloCalculos() 
+        {
+            t = new Thread(this);
+            t.start();
+        }
+
+        @Override
+        public void run() 
+        {
+            while(true)
+            {
+                try 
+                {
+                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccion(idTransaccion)));
+                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccion(idTransaccion)));
+                    Thread.sleep(100);
+                }
+                catch(InterruptedException exp) 
+                {
+                }
+            }
+        }
+    }
+    
+    public void setIcon(Icon anIcon){
+        setFrameIcon(anIcon);
+    }
+     
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(new Color(100, 0, 4, 85));
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cbTransaccion;
@@ -293,9 +402,13 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lCantidad;
+    private javax.swing.JLabel lSubtotal;
+    private javax.swing.JTextField tProducto;
     private javax.swing.JTable tblProductosTransaccion;
     // End of variables declaration//GEN-END:variables
 }

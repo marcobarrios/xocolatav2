@@ -163,6 +163,7 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         tTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         tTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tTotal.setText("0");
+        tTotal.setFocusable(false);
         tTotal.setPreferredSize(new java.awt.Dimension(12, 30));
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N

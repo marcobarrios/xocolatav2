@@ -133,14 +133,13 @@ public static Personas consultarPersona(String nombrePersona, String tipoPersona
         int existencia = 0;
         try
         {
-            try (Statement comando = (Statement)conexion.createStatement()) {
-                ResultSet dato = comando.executeQuery("select saldoPersona from tblPersonas where idPersona = '" + idPersona + "'");
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("select saldoPersona from tblPersonas where idPersona = '" + idPersona + "'")) {
                 dato.next();
                 Double saldo = dato.getDouble("saldoPersona");
                 DecimalFormat df = new DecimalFormat("0.00");
-                Double total = saldo + cargo;
+                Double total = Double.parseDouble(df.format(saldo + cargo));
                 comando.executeUpdate("UPDATE tblPersonas SET saldoPersona = '" + total + "' where idPersona = '" + idPersona + "'");
-                dato.close();
             }
             conexion.close();
         }
@@ -173,7 +172,7 @@ public static Personas consultarPersona(String nombrePersona, String tipoPersona
     public static void actualizarSaldo(Double abono, int idPersona)
     {
         Connection conexion = ConexionDB.ObtenerConexion();
-        String saldo =null;
+        String saldo;
         try
         {
             DecimalFormat df;
