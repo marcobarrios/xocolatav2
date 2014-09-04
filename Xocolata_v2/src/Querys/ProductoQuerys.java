@@ -231,10 +231,10 @@ public class ProductoQuerys {
                 try (Statement comando = (Statement)conexion.createStatement(); 
                         ResultSet dato = comando.executeQuery("SELECT precioOfertado FROM tblProductos WHERE idProducto = '" + idProducto + "'")) {
                         dato.next();
-                        double precio = dato.getDouble("precioVentaFinal");
-                        precioFinal = precio * (100-porcentaje);
+                        double precio = dato.getDouble("precioOfertado");
+                        precioFinal = precio*(100-porcentaje)/100;
                         descuento = precio - precioFinal;
-                        comando.executeUpdate("UPDATE tblProductos SET porcentajeOfertaVenta = '" + porcentaje + "', descuentoVenta = '" + descuento + "', precioVentaFinal = '" + precioFinal + "' WHERE idProducto = '" + idProducto + "'");
+                comando.executeUpdate("UPDATE tblProductos SET porcentajeOfertaVenta = '" + porcentaje + "', descuentoVenta = '" + descuento + "', precioVentaFinal = '" + precioFinal + "' WHERE idProducto = '" + idProducto + "'");
                 dato.close();
                 comando.close();
                 conexion.close();
@@ -243,7 +243,7 @@ public class ProductoQuerys {
             }
             catch (SQLException ex)
             {
-                JOptionPane.showMessageDialog(null, "error");
+                JOptionPane.showMessageDialog(null, ex.toString());
             }
         } 
         else {
@@ -255,7 +255,7 @@ public class ProductoQuerys {
                 try (Statement comando = (Statement)conexion.createStatement(); 
                         ResultSet dato = comando.executeQuery("SELECT precioOfertadoSugerido FROM tblProductos WHERE idProducto = '" + idProducto + "'")) {
                         dato.next();
-                        double precio = dato.getDouble("precioVentaFinal");
+                        double precio = dato.getDouble("precioOfertadoSugerido");
                         precioFinal = precio * (100-porcentaje);
                         descuento = precio - precioFinal;
                         comando.executeUpdate("UPDATE tblProductos SET porcentajeOfertaVenta = '" + porcentaje + "', descuentoVenta = '" + descuento + "', precioVentaFinal = '" + precioFinal + "' WHERE idProducto = '" + idProducto + "'");

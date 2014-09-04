@@ -113,7 +113,7 @@ public class TransaccionQuerys {
                     dato.next();
                     cantidad = dato.getInt("COUNT(idProducto)");
             dato.close();
-            comando.executeUpdate("UPDATE tblRegistroProductos SET cantidadProductos = '" + cantidad + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
+            comando.executeUpdate("UPDATE tblRegistroTransacciones SET cantidadProductos = '" + cantidad + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
             comando.close();
             conexion.close();
             return cantidad;
@@ -121,6 +121,7 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
             return cantidad;
         }
     }
@@ -138,7 +139,7 @@ public class TransaccionQuerys {
                     dato.next();
                     precio = dato.getInt("SUM(tblProductos.precioVentaFinal)");
             dato.close();
-            comando.executeUpdate("UPDATE tblRegistroProductos SET totalTransaccion = '" + precio + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
+            comando.executeUpdate("UPDATE tblRegistroTransacciones SET totalTransaccion = '" + precio + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
             comando.close();
             conexion.close();
             return precio;
@@ -146,6 +147,7 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
             return precio;
         }
     }
@@ -167,6 +169,7 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
             return cantidad;
         }
     }
@@ -189,6 +192,7 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
             return precio;
         }
     }
@@ -211,6 +215,7 @@ public class TransaccionQuerys {
         }
         catch (SQLException ex)
         {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
             return precio;
         }
     }

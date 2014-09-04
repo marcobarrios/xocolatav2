@@ -576,17 +576,21 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubTotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubTotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
+        
         ArrayList<Integer> lista = getListaId();
         Iterator iterador = lista.iterator();
         if (rPrecioVenta.isSelected()) {
             while (iterador.hasNext()) {
-                ProductoQuerys.actualizarPreciosFinales(lista.iterator().next(), Double.parseDouble(tOferta.getText()), 1);
+                int idProducto = (int) iterador.next();
+                ProductoQuerys.actualizarPreciosFinales(idProducto, Double.parseDouble(tOferta.getText()), 1);
             }
         } else {
             while (iterador.hasNext()) {
-                ProductoQuerys.actualizarPreciosFinales(lista.iterator().next(), Double.parseDouble(tOferta.getText()), 2);
+                int idProducto = (int) iterador.next();
+                ProductoQuerys.actualizarPreciosFinales(idProducto, Double.parseDouble(tOferta.getText()), 2);
             }
         }
+        
         TransaccionQuerys.sumaPrecioVentaRegistroTransaccion(idRegistroTransaccion);
         TransaccionQuerys.contarProductosRegistroTransaccion(idRegistroTransaccion);
         
@@ -624,7 +628,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
     private ArrayList getListaId()
     {
-        int tama = tblProductosTransaccion.getColumnCount();
+        int tama = tblProductosTransaccion.getRowCount();
         ArrayList lista = new ArrayList();
         for(int i = 0; i < tama ; i++)
         {

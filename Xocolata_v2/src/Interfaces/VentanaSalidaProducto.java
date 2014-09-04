@@ -23,6 +23,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -55,10 +56,10 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         
         rNuevaTransaccion.setSelected(true);
         rReusarTransaccion.setSelected(false);
-        cbTransaccion.setVisible(false);
+        cbRegistroTransaccion.setVisible(false);
         DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
         dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-        cbTransaccion.setRenderer(dlcr);
+        cbRegistroTransaccion.setRenderer(dlcr);
         cbVendedor.setRenderer(dlcr);
     }
     
@@ -87,7 +88,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private void cargarDatosTransaccion() {
         Item gasto = (Item)cbVendedor.getSelectedItem();
         int id = Integer.parseInt(gasto.getId());
-        cbTransaccion.removeAllItems();
+        cbRegistroTransaccion.removeAllItems();
         ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
@@ -96,8 +97,8 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                 dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + id + "' ORDER BY idRegistroTransaccion DESC");
                 while(dato.next())
                 {
-                    Item transaccion = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
-                    cbTransaccion.addItem(transaccion);
+                    Item registroTransaccion = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
+                    cbRegistroTransaccion.addItem(registroTransaccion);
                 }
                 dato.close();
             }
@@ -154,7 +155,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     
     private ArrayList getListaId()
     {
-        int tama = tblProductosTrasaccion.getColumnCount();
+        int tama = tblProductosTrasaccion.getRowCount();
         ArrayList lista = new ArrayList();
         for(int i = 0; i < tama ; i++)
         {
@@ -207,7 +208,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         bTransaccion = new javax.swing.JButton();
         rNuevaTransaccion = new javax.swing.JRadioButton();
         rReusarTransaccion = new javax.swing.JRadioButton();
-        cbTransaccion = new javax.swing.JComboBox();
+        cbRegistroTransaccion = new javax.swing.JComboBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -389,9 +390,9 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        cbTransaccion.addItemListener(new java.awt.event.ItemListener() {
+        cbRegistroTransaccion.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbTransaccionItemStateChanged(evt);
+                cbRegistroTransaccionItemStateChanged(evt);
             }
         });
 
@@ -409,7 +410,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rReusarTransaccion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbRegistroTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bTransaccion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -423,7 +424,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                     .addComponent(cbVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rNuevaTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rReusarTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(cbRegistroTransaccion, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(bTransaccion))
                 .addContainerGap())
         );
@@ -519,25 +520,27 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         {
             Item persona = (Item)cbVendedor.getSelectedItem();
             int id =  Integer.parseInt(persona.getId());
-            
-            Transacciones transaccion = new Transacciones();
-            
-            transaccion.setIdTransaccion(0);
-            transaccion.setFechaTransaccion(fechaActual);
-            transaccion.setFechaDevolucion(fechaActual);
-            transaccion.setCantidadPRoductos(0);
-            transaccion.setSubtotalTransaccion(0.0);
-            transaccion.setPorcentajeOferta(0.0);
-            transaccion.setDescuentoTransaccion(0.0);
-            transaccion.setTotalTransccion(0.0);
-            transaccion.setIdRegistroProducto(idRegistroTransaccion);
-            idTransaccion = TransaccionQuerys.insertarTransaccion(transaccion);
+            idRegistroTransaccion = TransaccionQuerys.crearRegistroTransaccion(1, id);
         }
         else if (rReusarTransaccion.isSelected())
         {
-            Item transaccion = (Item)cbTransaccion.getSelectedItem();
-            idTransaccion =  Integer.parseInt(transaccion.getId());            
+            Item registroTransaccion = (Item)cbRegistroTransaccion.getSelectedItem();
+            idRegistroTransaccion =  Integer.parseInt(registroTransaccion.getId());            
         }
+        
+        Transacciones transaccion = new Transacciones();
+            
+        transaccion.setIdTransaccion(0);
+        transaccion.setFechaTransaccion(fechaActual);
+        transaccion.setFechaDevolucion(fechaActual);
+        transaccion.setCantidadPRoductos(0);
+        transaccion.setSubtotalTransaccion(0.0);
+        transaccion.setPorcentajeOferta(0.0);
+        transaccion.setDescuentoTransaccion(0.0);
+        transaccion.setTotalTransccion(0.0);
+        transaccion.setIdRegistroProducto(idRegistroTransaccion);
+        idTransaccion = TransaccionQuerys.insertarTransaccion(transaccion);
+        
         habilitarPanel(false);
         cargarTablaProductosTransaccion();
         hilo = new HiloCalculos();
@@ -561,30 +564,40 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private void rNuevaTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rNuevaTransaccionActionPerformed
         rNuevaTransaccion.setSelected(true);
         rReusarTransaccion.setSelected(false);
-        cbTransaccion.setVisible(false);
+        cbRegistroTransaccion.setVisible(false);
         bTransaccion.setText("Crear Transacción");
     }//GEN-LAST:event_rNuevaTransaccionActionPerformed
 
     private void rReusarTransaccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rReusarTransaccionActionPerformed
         rNuevaTransaccion.setSelected(false);
         rReusarTransaccion.setSelected(true);
-        cbTransaccion.setVisible(true);
+        cbRegistroTransaccion.setVisible(true);
         bTransaccion.setText("Cargar Transacción");
     }//GEN-LAST:event_rReusarTransaccionActionPerformed
 
-    private void cbTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTransaccionItemStateChanged
-        if (cbTransaccion.getItemCount() > 0) {
-        Item persona = (Item)cbTransaccion.getSelectedItem();
-        idTransaccion =  Integer.parseInt(persona.getId());
+    private void cbRegistroTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbRegistroTransaccionItemStateChanged
+        if (cbRegistroTransaccion.getItemCount() > 0) {
+        Item registroTransaccion = (Item)cbRegistroTransaccion.getSelectedItem();
+        idRegistroTransaccion =  Integer.parseInt(registroTransaccion.getId());
         }
-    }//GEN-LAST:event_cbTransaccionItemStateChanged
+    }//GEN-LAST:event_cbRegistroTransaccionItemStateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubtotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubtotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
 
+        ArrayList<Integer> lista = getListaId();
+        Iterator iterador = lista.iterator();
+        while (iterador.hasNext()) {
+            int idProducto = (int) iterador.next();
+            ProductoQuerys.actualizarPreciosFinales(idProducto, Double.parseDouble(tOferta.getText()), 1);
+        }
+        
         Item persona = (Item)cbVendedor.getSelectedItem();
         int id =  Integer.parseInt(persona.getId());
         PersonaQuerys.cargarSaldo(id, total);
+        
+        TransaccionQuerys.sumaPrecioVentaRegistroTransaccion(idRegistroTransaccion);
+        TransaccionQuerys.contarProductosRegistroTransaccion(idRegistroTransaccion);
         
         int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if(resultado == JOptionPane.YES_OPTION)
@@ -692,7 +705,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bTransaccion;
-    private javax.swing.JComboBox cbTransaccion;
+    private javax.swing.JComboBox cbRegistroTransaccion;
     private javax.swing.JComboBox cbVendedor;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

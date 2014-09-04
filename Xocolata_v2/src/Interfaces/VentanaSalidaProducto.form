@@ -400,7 +400,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="rReusarTransaccion" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cbTransaccion" min="-2" pref="104" max="-2" attributes="0"/>
+                          <Component id="cbRegistroTransaccion" min="-2" pref="104" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bTransaccion" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -416,7 +416,7 @@
                               <Component id="cbVendedor" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="rNuevaTransaccion" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="rReusarTransaccion" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                              <Component id="cbTransaccion" alignment="3" pref="32" max="32767" attributes="0"/>
+                              <Component id="cbRegistroTransaccion" alignment="3" pref="32" max="32767" attributes="0"/>
                               <Component id="bTransaccion" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -482,14 +482,14 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rReusarTransaccionActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="cbTransaccion">
+                <Component class="javax.swing.JComboBox" name="cbRegistroTransaccion">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbTransaccionItemStateChanged"/>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbRegistroTransaccionItemStateChanged"/>
                   </Events>
                 </Component>
               </SubComponents>

@@ -30,7 +30,7 @@ import xocolata_v2.ConexionDB;
  */
 public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
 
-    int idTransaccion;
+    int idRegistroTransaccion, idTransaccion;
     HiloCalculos hilo;
     /**
      * Creates new form VentanaDevolucionVendedores
@@ -41,7 +41,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         
         DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
         dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-        cbTransaccion.setRenderer(dlcr);
+        cbRegistroTransaccion.setRenderer(dlcr);
         cbVendedor.setRenderer(dlcr);
     }
 
@@ -70,17 +70,17 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     private void cargarDatosTransaccion() {
         Item gasto = (Item)cbVendedor.getSelectedItem();
         int id = Integer.parseInt(gasto.getId());
-        cbTransaccion.removeAllItems();
+        cbRegistroTransaccion.removeAllItems();
         ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("Select idTransaccion, codigoTransaccion from tblTransacciones WHERE idPersona = '" + id + "' ORDER BY idTransaccion DESC");
+                dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + id + "' ORDER BY idRegistroTransaccion DESC");
                 while(dato.next())
                 {
-                    Item transaccion = new Item(dato.getString("idTransaccion"), dato.getString("codigoTransaccion"));
-                    cbTransaccion.addItem(transaccion);
+                    Item registroTransaccion = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
+                    cbRegistroTransaccion.addItem(registroTransaccion);
                 }
                 dato.close();
             }
@@ -112,7 +112,8 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                         + "INNER JOIN tblGeneros on tblProductos.idGenero = tblGeneros.idGenero "
                         + "INNER JOIN tblDetalleTransacciones on tblDetalleTransacciones.idProducto = tblProductos.idProducto "
                         + "INNER JOIN tblTransacciones on tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
-                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
+                        + "INNER JOIN tblRegistroTransacciones ON tblRegistroTransacciones.idRegistroTransaccion = tblTransacciones.idRegistroTransaccion "
+                        + "WHERE tblRegistroTransacciones.idRegistroTransaccion = '" + idRegistroTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
@@ -151,7 +152,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         cbVendedor = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cbTransaccion = new javax.swing.JComboBox();
+        cbRegistroTransaccion = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductosTransaccion = new javax.swing.JTable();
@@ -217,8 +218,13 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Transacción");
 
-        cbTransaccion.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        cbTransaccion.setPreferredSize(new java.awt.Dimension(32, 30));
+        cbRegistroTransaccion.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        cbRegistroTransaccion.setPreferredSize(new java.awt.Dimension(32, 30));
+        cbRegistroTransaccion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbRegistroTransaccionItemStateChanged(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(204, 0, 102));
         jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -243,7 +249,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbRegistroTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(182, Short.MAX_VALUE))
@@ -256,7 +262,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
                     .addComponent(cbVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbRegistroTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -393,7 +399,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbVendedorItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Item transaccion = (Item)cbTransaccion.getSelectedItem();
+        Item transaccion = (Item)cbRegistroTransaccion.getSelectedItem();
         idTransaccion =  Integer.parseInt(transaccion.getId());
         cargarTablaProductosTransaccion();
         
@@ -412,14 +418,14 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void cargarProducto(String codigo) {
+    private void descargarProducto(String codigo) {
         int idProducto = ProductoQuerys.buscarIdProductoTransaccion(codigo);
         if (idProducto != 0) {
             TransaccionQuerys.devolverProductoTransaccion(idTransaccion, idProducto);
             ProductoQuerys.cambiarEstadoProducto(idProducto, 1);
             
-            Item transaccion = (Item)cbVendedor.getSelectedItem();
-            int idPersona =  Integer.parseInt(transaccion.getId());
+            Item persona = (Item)cbVendedor.getSelectedItem();
+            int idPersona =  Integer.parseInt(persona.getId());
             PersonaQuerys.cargarSaldo(idPersona, -1*ProductoQuerys.obtenerPrecioVentaProducto(idProducto));
         }
         cargarTablaProductosTransaccion();
@@ -428,11 +434,17 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     private void tProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tProductoKeyPressed
         if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
         {
-            cargarProducto(tProducto.getText());
+            descargarProducto(tProducto.getText());
             tProducto.setText("");
             tProducto.requestFocus();
         }
     }//GEN-LAST:event_tProductoKeyPressed
+
+    private void cbRegistroTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbRegistroTransaccionItemStateChanged
+        Item registroTransaccion = (Item)cbRegistroTransaccion.getSelectedItem();
+        idRegistroTransaccion =  Integer.parseInt(registroTransaccion.getId());
+        cargarTablaProductosTransaccion();
+    }//GEN-LAST:event_cbRegistroTransaccionItemStateChanged
 
     public class HiloCalculos implements Runnable {
         private Thread t;
@@ -472,7 +484,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cbTransaccion;
+    private javax.swing.JComboBox cbRegistroTransaccion;
     private javax.swing.JComboBox cbVendedor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
