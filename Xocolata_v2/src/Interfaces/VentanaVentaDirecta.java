@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.DefaultListCellRenderer;
@@ -606,6 +607,18 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private ArrayList getListaId()
+    {
+        int tama = tblProductosTransaccion.getColumnCount();
+        ArrayList lista = new ArrayList();
+        for(int i = 0; i < tama ; i++)
+        {
+            Item aux = (Item)tblProductosTransaccion.getValueAt(i, 0);
+            lista.add(Integer.parseInt(aux.getId()));
+        }
+        return lista;
+    }
+    
     private void cargarAbono() {
         Item persona = (Item)cbCliente.getSelectedItem();
         int id =  Integer.parseInt(persona.getId());

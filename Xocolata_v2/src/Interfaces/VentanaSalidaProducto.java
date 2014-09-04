@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.DefaultListCellRenderer;
@@ -149,6 +150,18 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, exp.toString());
             }
         }
+    }
+    
+    private ArrayList getListaId()
+    {
+        int tama = tblProductosTrasaccion.getColumnCount();
+        ArrayList lista = new ArrayList();
+        for(int i = 0; i < tama ; i++)
+        {
+            Item aux = (Item)tblProductosTrasaccion.getValueAt(i, 0);
+            lista.add(Integer.parseInt(aux.getId()));
+        }
+        return lista;
     }
     
     private void cargarProducto(String codigo) {
