@@ -450,8 +450,8 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
             {
                 try 
                 {
-                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccion(idTransaccion)));
-                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccion(idTransaccion)));
+                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosRegistroTransaccion(idTransaccion)));
+                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaRegistroTransaccion(idTransaccion)));
                     Thread.sleep(100);
                 }
                 catch(InterruptedException exp) 

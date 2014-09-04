@@ -12,8 +12,6 @@ package Clases;
  */
 public class Transacciones {
     private int idTransaccion = 0;
-    private String codigoTransaccion = "";
-    private int idPersona = 0;
     private String fechaTransaccion = "";
     private String fechaDevolucion = "";
     private int cantidadPRoductos = 0;
@@ -21,7 +19,7 @@ public class Transacciones {
     private double porcentajeOferta = 0.0;
     private double descuentoTransaccion = 0.0;
     private double totalTransccion = 0.0;
-    private int tipoTransccion = 0;
+    private int idRegistroProducto = 0;
 
     /**
      * @return the idTransaccion
@@ -35,34 +33,6 @@ public class Transacciones {
      */
     public void setIdTransaccion(int idTransaccion) {
         this.idTransaccion = idTransaccion;
-    }
-
-    /**
-     * @return the codigoTransaccion
-     */
-    public String getCodigoTransaccion() {
-        return codigoTransaccion;
-    }
-
-    /**
-     * @param codigoTransaccion the codigoTransaccion to set
-     */
-    public void setCodigoTransaccion(String codigoTransaccion) {
-        this.codigoTransaccion = codigoTransaccion;
-    }
-
-    /**
-     * @return the idPersona
-     */
-    public int getIdPersona() {
-        return idPersona;
-    }
-
-    /**
-     * @param idPersona the idPersona to set
-     */
-    public void setIdPersona(int idPersona) {
-        this.idPersona = idPersona;
     }
 
     /**
@@ -136,6 +106,20 @@ public class Transacciones {
     }
 
     /**
+     * @return the descuentoTransaccion
+     */
+    public double getDescuentoTransaccion() {
+        return descuentoTransaccion;
+    }
+
+    /**
+     * @param descuentoTransaccion the descuentoTransaccion to set
+     */
+    public void setDescuentoTransaccion(double descuentoTransaccion) {
+        this.descuentoTransaccion = descuentoTransaccion;
+    }
+
+    /**
      * @return the totalTransccion
      */
     public double getTotalTransccion() {
@@ -150,30 +134,18 @@ public class Transacciones {
     }
 
     /**
-     * @return the tipoTransccion
+     * @return the idRegistroProducto
      */
-    public int getTipoTransccion() {
-        return tipoTransccion;
+    public int getIdRegistroProducto() {
+        return idRegistroProducto;
     }
 
     /**
-     * @param tipoTransccion the tipoTransccion to set
+     * @param idRegistroProducto the idRegistroProducto to set
      */
-    public void setTipoTransccion(int tipoTransccion) {
-        this.tipoTransccion = tipoTransccion;
+    public void setIdRegistroProducto(int idRegistroProducto) {
+        this.idRegistroProducto = idRegistroProducto;
     }
 
-    /**
-     * @return the descuentoTransaccion
-     */
-    public double getDescuentoTransaccion() {
-        return descuentoTransaccion;
-    }
-
-    /**
-     * @param descuentoTransaccion the descuentoTransaccion to set
-     */
-    public void setDescuentoTransaccion(double descuentoTransaccion) {
-        this.descuentoTransaccion = descuentoTransaccion;
-    }
+   
 }

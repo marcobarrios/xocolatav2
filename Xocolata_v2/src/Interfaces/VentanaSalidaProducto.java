@@ -36,7 +36,7 @@ import xocolata_v2.ConexionDB;
 public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
     double total;
-    int idTransaccion;
+    int idRegistroTransaccion, idTransaccion;
     String fechaActual = "";
     HiloCalculos hilo;
     /**
@@ -88,15 +88,15 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         Item gasto = (Item)cbVendedor.getSelectedItem();
         int id = Integer.parseInt(gasto.getId());
         cbTransaccion.removeAllItems();
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("Select idTransaccion, codigoTransaccion from tblTransacciones WHERE idPersona = '" + id + "' ORDER BY idTransaccion DESC");
+                dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + id + "' ORDER BY idRegistroTransaccion DESC");
                 while(dato.next())
                 {
-                    Item transaccion = new Item(dato.getString("idTransaccion"), dato.getString("codigoTransaccion"));
+                    Item transaccion = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
                     cbTransaccion.addItem(transaccion);
                 }
                 dato.close();
@@ -129,7 +129,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                         + "INNER JOIN tblGeneros on tblProductos.idGenero = tblGeneros.idGenero "
                         + "INNER JOIN tblDetalleTransacciones on tblDetalleTransacciones.idProducto = tblProductos.idProducto "
                         + "INNER JOIN tblTransacciones on tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
-                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' AND tblDetalleTransacciones.fechaDetalle = '" + fechaActual + "' ORDER BY tblProductos.codigoProducto ASC");
+                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
@@ -167,7 +167,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private void cargarProducto(String codigo) {
         int idProducto = ProductoQuerys.buscarIdProductoDisponible(codigo);
         if (idProducto != 0) {
-            TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto, fechaActual);
+            TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto);
             ProductoQuerys.cambiarEstadoProducto(idProducto, 2);
         }
         cargarTablaProductosTransaccion();
@@ -523,8 +523,6 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             Transacciones transaccion = new Transacciones();
             
             transaccion.setIdTransaccion(0);
-            transaccion.setCodigoTransaccion("0");
-            transaccion.setIdPersona(id);
             transaccion.setFechaTransaccion(fechaActual);
             transaccion.setFechaDevolucion(fechaActual);
             transaccion.setCantidadPRoductos(0);
@@ -532,7 +530,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             transaccion.setPorcentajeOferta(0.0);
             transaccion.setDescuentoTransaccion(0.0);
             transaccion.setTotalTransccion(0.0);
-            transaccion.setTipoTransccion(1);
+            transaccion.setIdRegistroProducto(idRegistroTransaccion);
             idTransaccion = TransaccionQuerys.insertarTransaccion(transaccion);
         }
         else if (rReusarTransaccion.isSelected())
@@ -630,10 +628,10 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         if(resultado == JOptionPane.YES_OPTION)
         {        
             if (rNuevaTransaccion.isSelected()) {
-                TransaccionQuerys.cancelarTransaccion(idTransaccion);
+                TransaccionQuerys.cancelarRegistroTransaccion(idTransaccion, idRegistroTransaccion);
             }
             else if (rReusarTransaccion.isSelected()) {
-                TransaccionQuerys.cancelarUltimaTransaccion(idTransaccion, fechaActual);
+                TransaccionQuerys.cancelarTransaccion(idTransaccion);
             }
             this.dispose();
         }
@@ -671,8 +669,8 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                                 }
                     }
                     ////////////////////////////////////////////////////////////
-                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccionUnica(idTransaccion, fechaActual)));
-                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccionUnica(idTransaccion, fechaActual)));
+                    lCantidad.setText(String.valueOf(TransaccionQuerys.contarProductosTransaccion(idTransaccion)));
+                    lSubtotal.setText(String.valueOf(TransaccionQuerys.sumaPrecioVentaTransaccion(idTransaccion)));
                     Thread.sleep(100);
                 }
                 catch(InterruptedException exp) 

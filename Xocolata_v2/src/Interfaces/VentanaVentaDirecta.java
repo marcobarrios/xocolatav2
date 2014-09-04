@@ -24,6 +24,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
@@ -38,7 +39,7 @@ import xocolata_v2.ConexionDB;
  */
 public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
-    int idTransaccion;
+    int idRegistroTransaccion, idTransaccion;
     double total;
     String fechaActual;
     HiloCalculos hilo;
@@ -103,7 +104,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                         + "INNER JOIN tblGeneros on tblProductos.idGenero = tblGeneros.idGenero "
                         + "INNER JOIN tblDetalleTransacciones on tblDetalleTransacciones.idProducto = tblProductos.idProducto "
                         + "INNER JOIN tblTransacciones on tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
-                        + "WHERE tblTransacciones.idTransaccion = '" + idTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
+                        + "INNER JOIN tblRegistroTransacciones on tblRegistroTransacciones.idRegistroTransaccion = tblTransacciones.idRegistroTransaccion "
+                        + "WHERE tblRegistroTransacciones.idRegistroTransaccion = '" + idRegistroTransaccion + "' ORDER BY tblProductos.codigoProducto ASC");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
@@ -542,11 +544,10 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         Item persona = (Item)cbCliente.getSelectedItem();
         int id =  Integer.parseInt(persona.getId());
 
+        idRegistroTransaccion = TransaccionQuerys.crearRegistroTransaccion(2, id);
+        
         Transacciones transaccion = new Transacciones();
-
         transaccion.setIdTransaccion(0);
-        transaccion.setCodigoTransaccion("0");
-        transaccion.setIdPersona(id);
         transaccion.setFechaTransaccion(fechaActual);
         transaccion.setFechaDevolucion(fechaActual);
         transaccion.setCantidadPRoductos(0);
@@ -554,7 +555,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         transaccion.setPorcentajeOferta(0.0);
         transaccion.setDescuentoTransaccion(0.0);
         transaccion.setTotalTransccion(0.0);
-        transaccion.setTipoTransccion(2);
+        transaccion.setIdRegistroProducto(idRegistroTransaccion);
         idTransaccion = TransaccionQuerys.insertarTransaccion(transaccion);
 
         habilitarPanel(false);
@@ -575,6 +576,20 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubTotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubTotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
+        ArrayList<Integer> lista = getListaId();
+        Iterator iterador = lista.iterator();
+        if (rPrecioVenta.isSelected()) {
+            while (iterador.hasNext()) {
+                ProductoQuerys.actualizarPreciosFinales(lista.iterator().next(), Double.parseDouble(tOferta.getText()), 1);
+            }
+        } else {
+            while (iterador.hasNext()) {
+                ProductoQuerys.actualizarPreciosFinales(lista.iterator().next(), Double.parseDouble(tOferta.getText()), 2);
+            }
+        }
+        TransaccionQuerys.sumaPrecioVentaRegistroTransaccion(idRegistroTransaccion);
+        TransaccionQuerys.contarProductosRegistroTransaccion(idRegistroTransaccion);
+        
         if (rContado.isSelected()) {
             //LLAMAR REPORTE VENTA DIRECTA AL CONTADO 
         }
@@ -671,7 +686,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     private void cargarProducto(String codigo) {
         int idProducto = ProductoQuerys.buscarIdProductoDisponible(codigo);
         if (idProducto != 0) {
-            TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto, fechaActual);
+            TransaccionQuerys.ingresarDetalleTransaccion(idTransaccion, idProducto);
             ProductoQuerys.cambiarEstadoProducto(idProducto, 3);
         }
         cargarTablaProductosTransaccion();

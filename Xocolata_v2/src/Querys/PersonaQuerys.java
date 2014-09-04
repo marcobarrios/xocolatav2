@@ -51,7 +51,7 @@ public static Personas consultarPersona(String nombrePersona, String tipoPersona
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                ResultSet dato = comando.executeQuery("select * from tblPersonas where nombrePersona='"+ nombrePersona +"' AND idTipoPersona='"+ Integer.parseInt(tipoPersona)+"'");
+                ResultSet dato = comando.executeQuery("select * from tblPersonas where nombrePersona = '"+ nombrePersona +"' AND idTipoPersona='"+ Integer.parseInt(tipoPersona)+"'");
                 dato.next();
                 persona = new Personas();
                 persona.setNombre(dato.getString("nombrePersona"));

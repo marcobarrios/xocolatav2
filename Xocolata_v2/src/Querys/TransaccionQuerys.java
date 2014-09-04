@@ -21,24 +21,52 @@ import xocolata_v2.ConexionDB;
  */
 public class TransaccionQuerys {
     
+    public static int crearRegistroTransaccion(int tipo, int idpersona)
+    {
+        int idTransaccion = 0;
+        try {
+            try (Connection conexion = ConexionDB.ObtenerConexion()) {
+                PreparedStatement ps;
+                ps = conexion.prepareStatement("INSERT INTO `tblRegistroTransacciones`(`idRegistroTransaccion`, `codigoTransaccion`, `tipoTransaccion`, `cantidadProductos`, `totalTransaccion`, `idPersona`) VALUES (?,?,?,?,?,?)");
+                ps.setInt(1, 0);
+                ps.setString(2, "");
+                ps.setInt(3, tipo);
+                ps.setInt(4, 0);
+                ps.setDouble(5, 0.0);
+                ps.setInt(6, idpersona);
+                ps.executeUpdate();
+                try ( //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
+                        ResultSet dato = ps.executeQuery("select MAX(idRegistroTransaccion) from tblRegistroTransacciones")) {
+                    dato.next();
+                    idTransaccion = dato.getInt("MAX(idRegistroTransaccion)");
+                }
+                ps.close();
+                conexion.close();
+                return idTransaccion;
+
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+                    return idTransaccion;
+        }
+    }
+    
     public static int insertarTransaccion(Transacciones transaccion)
     {
         int idTransaccion = 0;
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
                 PreparedStatement ps;
-                ps = conexion.prepareStatement("INSERT INTO `tblTransacciones`(`idTransaccion`,`codigoTransaccion`,`idPersona`,`fechaTransaccion`,`fechaDevolucion`,`cantidadProductos`,`subtotalTransaccion`,`porcentajeOferta`,`descuentoTransaccion`,`totalTransaccion`,`tipoTransaccion`) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                ps = conexion.prepareStatement("INSERT INTO `tblTransacciones`(`idTransaccion`,`fechaTransaccion`,`fechaDevolucion`,`cantidadProductos`,`subtotalTransaccion`,`porcentajeOferta`,`descuentoTransaccion`,`totalTransaccion`,`idRegistroTransaccion`) VALUES (?,?,?,?,?,?,?,?,?)");
                 ps.setInt(1, 0);
-                ps.setString(2, "0");
-                ps.setInt(3, transaccion.getIdPersona());
-                ps.setString(4, transaccion.getFechaTransaccion());
-                ps.setString(5, transaccion.getFechaDevolucion());
-                ps.setInt(6, transaccion.getCantidadPRoductos());
-                ps.setDouble(7, transaccion.getSubtotalTransaccion());
-                ps.setDouble(8, transaccion.getPorcentajeOferta());
-                ps.setDouble(9, transaccion.getDescuentoTransaccion());
-                ps.setDouble(10, transaccion.getTotalTransccion());
-                ps.setInt(11, transaccion.getTipoTransccion());
+                ps.setString(2, transaccion.getFechaTransaccion());
+                ps.setString(3, transaccion.getFechaDevolucion());
+                ps.setInt(4, transaccion.getCantidadPRoductos());
+                ps.setDouble(5, transaccion.getSubtotalTransaccion());
+                ps.setDouble(6, transaccion.getPorcentajeOferta());
+                ps.setDouble(7, transaccion.getDescuentoTransaccion());
+                ps.setDouble(8, transaccion.getTotalTransccion());
+                ps.setInt(9, transaccion.getIdRegistroProducto());
                 ps.executeUpdate();
                 try ( //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
                         ResultSet dato = ps.executeQuery("select MAX(idTransaccion) from tblTransacciones")) {
@@ -56,14 +84,13 @@ public class TransaccionQuerys {
         }
     }
     
-    public static void ingresarDetalleTransaccion(int idTransaccion, int idProducto, String fecha) {
+    public static void ingresarDetalleTransaccion(int idTransaccion, int idProducto) {
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
                 PreparedStatement ps;
-                ps = conexion.prepareStatement("INSERT INTO `tblDetalleTransacciones`(`idTransaccion`,`idProducto`,`fechaDetalle`) VALUES (?,?,?)");
+                ps = conexion.prepareStatement("INSERT INTO `tblDetalleTransacciones`(`idTransaccion`,`idProducto`) VALUES (?,?)");
                 ps.setInt(1, idTransaccion);
                 ps.setInt(2, idProducto);
-                ps.setString(3, fecha);
                 ps.executeUpdate();
                 //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
                 ps.close();
@@ -71,6 +98,55 @@ public class TransaccionQuerys {
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
+        }
+    }
+    
+    public static int contarProductosRegistroTransaccion(int idRegistroTransaccion) {
+        int cantidad = 0;
+                Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT COUNT(idProducto) FROM tblDetalleTransacciones "
+                            + "INNER JOIN tblTransacciones ON tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
+                            + "WHERE tblTransacciones.idRegistroTransaccion = '" + idRegistroTransaccion + "'")) {
+                    dato.next();
+                    cantidad = dato.getInt("COUNT(idProducto)");
+            dato.close();
+            comando.executeUpdate("UPDATE tblRegistroProductos SET cantidadProductos = '" + cantidad + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
+            comando.close();
+            conexion.close();
+            return cantidad;
+            }
+        }
+        catch (SQLException ex)
+        {
+            return cantidad;
+        }
+    }
+    
+    public static double sumaPrecioVentaRegistroTransaccion(int idRegistroTransaccion) {
+        double precio = 0;
+                Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT SUM(tblProductos.precioVentaFinal) FROM tblProductos "
+                            + "INNER JOIN tblDetalleTransacciones on tblProductos.idProducto = tblDetalleTransacciones.idProducto "
+                            + "INNER JOIN tblTransacciones ON tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
+                            + "WHERE tblTransacciones.idRegistroTransaccion = '" + idRegistroTransaccion + "'")) {
+                    dato.next();
+                    precio = dato.getInt("SUM(tblProductos.precioVentaFinal)");
+            dato.close();
+            comando.executeUpdate("UPDATE tblRegistroProductos SET totalTransaccion = '" + precio + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
+            comando.close();
+            conexion.close();
+            return precio;
+            }
+        }
+        catch (SQLException ex)
+        {
+            return precio;
         }
     }
     
@@ -101,7 +177,7 @@ public class TransaccionQuerys {
         try
         {
             try (Statement comando = (Statement)conexion.createStatement(); 
-                    ResultSet dato = comando.executeQuery("SELECT SUM(tblProductos.precioVentaFinal) FROM tblProductos "
+                    ResultSet dato = comando.executeQuery("SELECT SUM(tblProductos.precioOfertado) FROM tblProductos "
                             + "INNER JOIN tblDetalleTransacciones on tblProductos.idProducto = tblDetalleTransacciones.idProducto WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "'")) {
                     dato.next();
                     precio = dato.getInt("SUM(tblProductos.precioOfertado)");
@@ -123,73 +199,8 @@ public class TransaccionQuerys {
         try
         {
             try (Statement comando = (Statement)conexion.createStatement(); 
-                                        ResultSet dato = comando.executeQuery("SELECT SUM(tblProductos.precioVentaFinal) FROM tblProductos "
-                            + "INNER JOIN tblDetalleTransacciones on tblProductos.idProducto = tblDetalleTransacciones.idProducto WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "'")) {
-                    dato.next();
-                    precio = dato.getInt("SUM(tblProductos.precioOfertadoSugerido)");
-            dato.close();
-            comando.close();
-            conexion.close();
-            return precio;
-            }
-        }
-        catch (SQLException ex)
-        {
-            return precio;
-        }
-    }
-    
-    public static int contarProductosTransaccionUnica(int idTransaccion, String fecha) {
-        int cantidad = 0;
-                Connection conexion = ConexionDB.ObtenerConexion();
-        try
-        {
-            try (Statement comando = (Statement)conexion.createStatement(); 
-                    ResultSet dato = comando.executeQuery("SELECT COUNT(idProducto) FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "' AND fechaDetalle = '" + fecha + "'")) {
-                    dato.next();
-                    cantidad = dato.getInt("COUNT(idProducto)");
-            dato.close();
-            comando.close();
-            conexion.close();
-            return cantidad;
-            }
-        }
-        catch (SQLException ex)
-        {
-            return cantidad;
-        }
-    }
-    
-    public static double sumaPrecioVentaTransaccionUnica(int idTransaccion, String fecha) {
-        double precio = 0;
-                Connection conexion = ConexionDB.ObtenerConexion();
-        try
-        {
-            try (Statement comando = (Statement)conexion.createStatement(); 
-                    ResultSet dato = comando.executeQuery("SELECT SUM(tblProductos.precioOfertado) FROM tblProductos "
-                            + "INNER JOIN tblDetalleTransacciones on tblProductos.idProducto = tblDetalleTransacciones.idProducto WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "' AND tblDetalleTransacciones.fechaDetalle = '" + fecha + "'")) {
-                    dato.next();
-                    precio = dato.getInt("SUM(tblProductos.precioOfertado)");
-            dato.close();
-            comando.close();
-            conexion.close();
-            return precio;
-            }
-        }
-        catch (SQLException ex)
-        {
-            return precio;
-        }
-    }
-    
-    public static double sumaPrecioSugeridoTransaccionUnica(int idTransaccion, String fecha) {
-        double precio = 0;
-                Connection conexion = ConexionDB.ObtenerConexion();
-        try
-        {
-            try (Statement comando = (Statement)conexion.createStatement(); 
                                         ResultSet dato = comando.executeQuery("SELECT SUM(tblProductos.precioOfertadoSugerido) FROM tblProductos "
-                            + "INNER JOIN tblDetalleTransacciones on tblProductos.idProducto = tblDetalleTransacciones.idProducto WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "' AND tblDetalleTransacciones.fechaDetalle = '" + fecha + "'")) {
+                            + "INNER JOIN tblDetalleTransacciones on tblProductos.idProducto = tblDetalleTransacciones.idProducto WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "'")) {
                     dato.next();
                     precio = dato.getInt("SUM(tblProductos.precioOfertadoSugerido)");
             dato.close();
@@ -234,12 +245,13 @@ public class TransaccionQuerys {
         }
     }
     
-    public static void cancelarUltimaTransaccion(int idTransaccion, String fecha) {
+    public static void cancelarTransaccion(int idTransaccion) {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "' AND fechaDetalle = '" + fecha + "'");
+                comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
+                comando.executeUpdate("DELETE FROM tblTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
             }
             conexion.close();
         }
@@ -249,13 +261,14 @@ public class TransaccionQuerys {
         }
     }
     
-    public static void cancelarTransaccion(int idTransaccion) {
+    public static void cancelarRegistroTransaccion(int idTransaccion, int idRegistroTransaccion) {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
                 comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
                 comando.executeUpdate("DELETE FROM tblTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
+                comando.executeUpdate("DELETE FROM tblRegistroTransacciones WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
             }
             conexion.close();
         }

@@ -220,4 +220,55 @@ public class ProductoQuerys {
             return precio;
         }
     }
+    
+    public static void actualizarPreciosFinales(int idProducto, double porcentaje, int tipoPrecio) {
+        if (tipoPrecio == 1) {
+            double precioFinal;
+            double descuento;
+            Connection conexion = ConexionDB.ObtenerConexion();
+            try
+            {
+                try (Statement comando = (Statement)conexion.createStatement(); 
+                        ResultSet dato = comando.executeQuery("SELECT precioOfertado FROM tblProductos WHERE idProducto = '" + idProducto + "'")) {
+                        dato.next();
+                        double precio = dato.getDouble("precioVentaFinal");
+                        precioFinal = precio * (100-porcentaje);
+                        descuento = precio - precioFinal;
+                        comando.executeUpdate("UPDATE tblProductos SET porcentajeOfertaVenta = '" + porcentaje + "', descuentoVenta = '" + descuento + "', precioVentaFinal = '" + precioFinal + "' WHERE idProducto = '" + idProducto + "'");
+                dato.close();
+                comando.close();
+                conexion.close();
+                }
+
+            }
+            catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, "error");
+            }
+        } 
+        else {
+            double precioFinal;
+            double descuento;
+            Connection conexion = ConexionDB.ObtenerConexion();
+            try
+            {
+                try (Statement comando = (Statement)conexion.createStatement(); 
+                        ResultSet dato = comando.executeQuery("SELECT precioOfertadoSugerido FROM tblProductos WHERE idProducto = '" + idProducto + "'")) {
+                        dato.next();
+                        double precio = dato.getDouble("precioVentaFinal");
+                        precioFinal = precio * (100-porcentaje);
+                        descuento = precio - precioFinal;
+                        comando.executeUpdate("UPDATE tblProductos SET porcentajeOfertaVenta = '" + porcentaje + "', descuentoVenta = '" + descuento + "', precioVentaFinal = '" + precioFinal + "' WHERE idProducto = '" + idProducto + "'");
+                dato.close();
+                comando.close();
+                conexion.close();
+                }
+
+            }
+            catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, "error");
+            }
+        }
+    }
 }
