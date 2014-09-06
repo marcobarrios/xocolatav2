@@ -271,4 +271,49 @@ public class ProductoQuerys {
             }
         }
     }
+    
+    public static Productos obtenerProducto(String codigoProducto)
+    {
+        Productos producto = null;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT * FROM tblProductos WHERE codigoProducto = '" + codigoProducto + "'")) {
+                    dato.next();
+                    producto = new Productos();
+                    producto.setMarca(dato.getInt("idMarca"));
+                    producto.setTipoCambio(dato.getInt("idTipoProducto"));
+                    producto.setTalla(dato.getInt("idTalla"));
+                    producto.setGenero(dato.getInt("idGenero"));
+                    producto.setColor(dato.getString("colorProducto"));
+                    producto.setDescripcion(dato.getString("descripcionProducto"));
+                    producto.setPrecioDolar(dato.getDouble("costoDolares"));
+                    producto.setImpuestoProducto(dato.getDouble("impuestoProducto"));
+                    producto.setEnvioProducto(dato.getDouble("envioProducto"));
+                    producto.setPrecioCostoDolar(dato.getDouble("totalDolares"));
+                    producto.setTipoCambio(dato.getDouble("tipoCambio"));
+                    producto.setEnvioGt(dato.getDouble("envioGuate"));
+                    producto.setPrecioCostoQuetzal(dato.getDouble("totalQuetzales"));
+                    producto.setPorcentajeGanancia(dato.getDouble("porcentajeGanancia"));
+                    producto.setGananciaEstimada(dato.getDouble("gananciaEstimada"));
+                    producto.setPrecioVenta(dato.getDouble("precioVenta"));
+                    producto.setPorcentajeGananciaSugerida(dato.getDouble("porcentajeGananciaSugerida"));
+                    producto.setGananciaSugerida(dato.getDouble("gananciaSugerida"));
+                    producto.setPrecioSugeridoVendedor(dato.getDouble("precioSugerido"));
+                    
+            dato.close();
+            comando.close();
+            conexion.close();
+            return producto;
+            }
+
+        }
+        catch (SQLException ex)
+        {
+            //JOptionPane.showMessageDialog(null, "Producto no Disponible");
+            return producto;
+        }
+        
+    }
 }
