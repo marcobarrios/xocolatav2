@@ -56,8 +56,8 @@ public class VentanaConsultaTransacciones extends javax.swing.JInternalFrame {
     }
     
     private void cargarTabla() {
-        String[] titulos={"Código", "Fecha", "Cantidad de Productos", "SubTotal", "Oferta(%)", "Total"};
-        Object[] registros = new Object[6];
+        String[] titulos={"Código", "Fecha", "Cantidad de Productos", "SubTotal", "Oferta(%)", "Descuento", "Total"};
+        Object[] registros = new Object[7];
         DefaultTableModel model= new DefaultTableModel(null,titulos){public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
         Connection conexion = ConexionDB.ObtenerConexion();            
         if(conexion!=null)
@@ -65,17 +65,19 @@ public class VentanaConsultaTransacciones extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT idTransaccion, codigoTransaccion, fechaTransaccion, cantidadProductos, subtotalTransaccion, porcentajeOferta, totalTransaccion "
-                                                        + "from tblTransacciones where idPersona = '" + id + "' ORDER BY codigoTransaccion DESC");
+                ResultSet Datos = Query.executeQuery("SELECT tblRegistroTransacciones.idRegistroTransaccion, codigoTransaccion, fechaTransaccion, tblTransacciones.cantidadProductos, subtotalTransaccion, porcentajeOferta, descuentoTransaccion, tblTransacciones.totalTransaccion  from tblTransacciones "
+                        + "INNER JOIN tblRegistroTransacciones ON tblRegistroTransacciones.idRegistroTransaccion = tblTransacciones.idRegistroTransaccion "
+                        + "where idPersona = '" + id + "' ORDER BY codigoTransaccion DESC");
                 Datos = Query.getResultSet();                    
                 while (Datos.next()) 
                 {
-                    registros[0]= new Item(Datos.getString("idTransaccion"),Datos.getString("codigoTransaccion"));
+                    registros[0]= new Item(Datos.getString("tblRegistroTransacciones.idRegistroTransaccion"),Datos.getString("codigoTransaccion"));
                     registros[1]=Datos.getString("fechaTransaccion");
-                    registros[2]=Datos.getString("cantidadProductos");
+                    registros[2]=Datos.getString("tblTransacciones.cantidadProductos");
                     registros[3]=Datos.getString("subtotalTransaccion");
                     registros[4]=Datos.getString("porcentajeOferta");
-                    registros[5]=Datos.getString("totalTransaccion");
+                    registros[5]=Datos.getString("descuentoTransaccion");
+                    registros[6]=Datos.getString("tblTransacciones.totalTransaccion");
                     model.addRow(registros);
                 }
                 jTable1.setModel(model);

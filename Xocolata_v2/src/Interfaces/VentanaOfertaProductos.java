@@ -6,7 +6,10 @@
 
 package Interfaces;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import javax.swing.Icon;
 
 /**
  *
@@ -200,7 +203,16 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tProductoKeyPressed
 
-
+    public void setIcon(Icon anIcon){
+        setFrameIcon(anIcon);
+    }
+     
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(new Color(100, 0, 4, 85));
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
