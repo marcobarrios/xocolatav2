@@ -336,11 +336,7 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
  
         if (type.equals(DocumentEvent.EventType.CHANGE))
         {
-            tCorreo.setText("");
-            tDPI.setText("");
-            tDireccion.setText("");
-            tTelefono.setText("");
- 
+            cambio();
         }
         else if (type.equals(DocumentEvent.EventType.INSERT))
         {

@@ -123,7 +123,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioOfertado, tblProductos.precioOfertadoSugerido FROM tblProductos "
                         + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
                         + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
                         + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
@@ -140,8 +140,8 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
                     registros[3]=Datos.getString("tblTallas.Talla");
                     registros[4]=Datos.getString("tblGeneros.Genero");
                     registros[5]=Datos.getString("tblProductos.colorProducto");
-                    registros[6]=Datos.getString("tblProductos.precioVenta");
-                    registros[7]=Datos.getString("tblProductos.precioSugerido");
+                    registros[6]=Datos.getString("tblProductos.precioOfertado");
+                    registros[7]=Datos.getString("tblProductos.precioOfertadoSugerido");
                     model.addRow(registros);
                 }
                 tblProductosTrasaccion.setModel(model);

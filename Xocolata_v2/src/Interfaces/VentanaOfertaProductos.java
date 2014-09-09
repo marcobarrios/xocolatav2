@@ -6,10 +6,17 @@
 
 package Interfaces;
 
+import Clases.Productos;
+import ContenedorComboBox.Item;
+import Querys.ProductoQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,11 +24,15 @@ import javax.swing.Icon;
  */
 public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
 
+    ArrayList<Productos> productos;
+    DecimalFormat df;
     /**
      * Creates new form VentanaOfertaProductos
      */
     public VentanaOfertaProductos() {
         initComponents();
+        this.productos = new ArrayList();
+        df = new DecimalFormat("0.00");
     }
 
     /**
@@ -38,13 +49,13 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         pContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tOferta = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        tProducto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductosOfertar = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        tOferta = new javax.swing.JTextField();
+        tProducto = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -83,25 +94,10 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
         pContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Porcentaje de Oferta");
 
-        tOferta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tOferta.setPreferredSize(new java.awt.Dimension(4, 30));
-        tOferta.setRequestFocusEnabled(false);
-
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Código del Producto");
-
-        tProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tProducto.setPreferredSize(new java.awt.Dimension(4, 30));
-        tProducto.setRequestFocusEnabled(false);
-        tProducto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tProductoKeyPressed(evt);
-            }
-        });
 
         tblProductosOfertar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,12 +107,22 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
 
             }
         ));
+        tblProductosOfertar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductosOfertarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProductosOfertar);
 
         jButton1.setBackground(new java.awt.Color(0, 153, 0));
         jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Ofertar Productos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -128,51 +134,61 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        tOferta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tOferta.setPreferredSize(new java.awt.Dimension(6, 30));
+
+        tProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tProducto.setPreferredSize(new java.awt.Dimension(6, 30));
+        tProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tProductoKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pContenedorLayout = new javax.swing.GroupLayout(pContenedor);
         pContenedor.setLayout(pContenedorLayout);
         pContenedorLayout.setHorizontalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pContenedorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(31, 31, 31))
-            .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pContenedorLayout.createSequentialGroup()
-                    .addGap(138, 138, 138)
-                    .addComponent(jLabel1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(tOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(174, Short.MAX_VALUE)))
+                .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pContenedorLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)
+                                .addGap(31, 31, 31))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         pContenedorLayout.setVerticalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pContenedorLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .addGap(7, 7, 7)
+                .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
                 .addGap(7, 7, 7))
-            .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pContenedorLayout.createSequentialGroup()
-                    .addGap(6, 6, 6)
-                    .addGroup(pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(tOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)
-                        .addComponent(tProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(401, Short.MAX_VALUE)))
         );
 
         pPrincipal.add(pContenedor);
@@ -195,13 +211,71 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cargarTablaOferta() {
+        String[] titulos={"Código", "Marca", "Tipo de Productos", "Precio Venta", "% Oferta","Descuento", "Precio Ofertado", "Precio Sugerido", "Precio Sugerido Ofertado"};
+        Object[] registros = new Object[9];
+        DefaultTableModel model= new DefaultTableModel(null,titulos){public boolean isCellEditable(int rowIndex,int columnIndex){return false;} };
+                for (Object i : productos) 
+                {
+                    Productos p = (Productos)i;
+                    registros[0] = new Item(String.valueOf(ProductoQuerys.buscarIdProducto(p.getCodigo())), p.getCodigo());
+                    registros[1] = ProductoQuerys.buscarMarca(p.getMarca());
+                    registros[2] = ProductoQuerys.buscarTipoProducto(p.getTipoProducto());
+                    registros[3] = p.getPrecioVenta();
+                    registros[4] = p.getPorcentajeOferta();
+                    registros[5] = p.getDescuentoOferta();
+                    registros[6] = p.getPrecioOfertado();
+                    registros[7] = p.getPrecioSugeridoVendedor();
+                    registros[8] = p.getPrecioOfertadoSugerido();
+                    model.addRow(registros);
+                }
+                tblProductosOfertar.setModel(model);
+    }
+    
+    int temporal = -1;
+    private void tblProductosOfertarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosOfertarMouseClicked
+        if(!evt.isMetaDown())
+        {
+            if(tblProductosOfertar.getSelectedRow() == temporal)
+            {
+                Item idProducto = (Item)tblProductosOfertar.getValueAt(temporal, 0);
+                for (Object i : productos) {
+                    Productos p = (Productos)i;
+                    if (p.getCodigo().equals(idProducto.getDato())) {
+                        productos.remove(p);
+                    }
+                }
+                cargarTablaOferta();
+            }
+            else
+            {
+                temporal = tblProductosOfertar.getSelectedRow();
+            }
+        }
+    }//GEN-LAST:event_tblProductosOfertarMouseClicked
+
     private void tProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tProductoKeyPressed
         if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
         {
+            Productos p = ProductoQuerys.obtenerProducto(tProducto.getText());
+            p.setPorcentajeOferta(Double.parseDouble(df.format(Double.parseDouble(tOferta.getText()))));
+            p.setDescuentoOferta(Double.parseDouble(df.format(p.getPrecioVenta() * Double.parseDouble(tOferta.getText()) / 100)));
+            p.setPrecioOfertado(Double.parseDouble(df.format(p.getPrecioVenta() - p.getDescuentoOferta())));
+            p.setPrecioOfertadoSugerido(Double.parseDouble(df.format(p.getPrecioSugeridoVendedor() - p.getDescuentoOferta())));
+            productos.add(p);
+            cargarTablaOferta();
             tProducto.setText("");
             tProducto.requestFocus();
         }
     }//GEN-LAST:event_tProductoKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        for (Object i : productos) {
+            Productos p = (Productos)i;
+            ProductoQuerys.ofertarProducto(p);
+        }
+        JOptionPane.showMessageDialog(this, "Productos Ofertado Exitosamente");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void setIcon(Icon anIcon){
         setFrameIcon(anIcon);

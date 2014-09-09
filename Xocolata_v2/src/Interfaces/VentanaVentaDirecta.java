@@ -43,12 +43,15 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     double total;
     String fechaActual;
     HiloCalculos hilo;
+    DecimalFormat df;
     /**
      * Creates new form VentanaVentaDirecta
      */
     public VentanaVentaDirecta() {
         initComponents();
         cargarDatosCliente();
+        
+        df = new DecimalFormat("0.00");
         
         Calendar fecha = new GregorianCalendar();
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
@@ -97,7 +100,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
             try
             {
                 Statement Query = conexion.createStatement();            
-                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioVenta, tblProductos.precioSugerido FROM tblProductos "
+                ResultSet Datos = Query.executeQuery("SELECT tblProductos.idProducto, tblProductos.codigoProducto, tblMarcas.Marca, tblTipoProductos.TipoProducto, tblTallas.Talla, tblGeneros.Genero, tblProductos.colorProducto, tblProductos.precioOfertado, tblProductos.precioOfertadoSugerido FROM tblProductos "
                         + "INNER JOIN tblMarcas on tblProductos.idMarca = tblMarcas.idMarca "
                         + "INNER JOIN tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto "
                         + "INNER JOIN tblTallas on tblProductos.idTalla = tblTallas.idTalla "
@@ -115,8 +118,8 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                     registros[3]=Datos.getString("tblTallas.Talla");
                     registros[4]=Datos.getString("tblGeneros.Genero");
                     registros[5]=Datos.getString("tblProductos.colorProducto");
-                    registros[6]=Datos.getString("tblProductos.precioVenta");
-                    registros[7]=Datos.getString("tblProductos.precioSugerido");
+                    registros[6]=Datos.getString("tblProductos.precioOfertado");
+                    registros[7]=Datos.getString("tblProductos.precioOfertadoSugerido");
                     model.addRow(registros);
                 }
                 tblProductosTransaccion.setModel(model);
@@ -582,12 +585,12 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         if (rPrecioVenta.isSelected()) {
             while (iterador.hasNext()) {
                 int idProducto = (int) iterador.next();
-                ProductoQuerys.actualizarPreciosFinales(idProducto, Double.parseDouble(tOferta.getText()), 1);
+                ProductoQuerys.actualizarPreciosFinales(idProducto, Double.parseDouble(df.format(Double.parseDouble(tOferta.getText()))), 1);
             }
         } else {
             while (iterador.hasNext()) {
                 int idProducto = (int) iterador.next();
-                ProductoQuerys.actualizarPreciosFinales(idProducto, Double.parseDouble(tOferta.getText()), 2);
+                ProductoQuerys.actualizarPreciosFinales(idProducto, Double.parseDouble(df.format(Double.parseDouble(tOferta.getText()))), 2);
             }
         }
         

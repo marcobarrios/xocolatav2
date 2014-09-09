@@ -24,8 +24,8 @@ import xocolata_v2.ConexionDB;
  */
 public class ProductoQuerys {
     
-    public static void insertarProducto(Productos producto)
-    {DecimalFormat df = new DecimalFormat("0.00");
+    public static void insertarProducto(Productos producto) {
+        DecimalFormat df = new DecimalFormat("0.00");
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
                 PreparedStatement ps;
@@ -137,6 +137,67 @@ public class ProductoQuerys {
         }
     }
     
+    public static String buscarMarca(int idmarca) {
+        String marca = "";
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT marca FROM tblMarcas WHERE idMarca = '" + idmarca + "'")) {
+                    dato.next();
+                    marca = dato.getString("marca");
+            dato.close();
+            comando.close();
+            conexion.close();
+            return marca;
+            }
+        }
+        catch (SQLException exp) {
+            return marca;
+        }
+    }
+    
+    public static String buscarTipoProducto(int idtipo) {
+        String tipo = "";
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT tipoproducto FROM tblTipoProductos WHERE idTipoProducto = '" + idtipo + "'")) {
+                    dato.next();
+                    tipo = dato.getString("tipoproducto");
+            dato.close();
+            comando.close();
+            conexion.close();
+            return tipo;
+            }
+        }
+        catch (SQLException exp) {
+            return tipo;
+        }
+    }
+    
+    public static int buscarIdProducto(String codigoProducto) {
+        int idProducto = -1;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement(); 
+                    ResultSet dato = comando.executeQuery("SELECT idProducto FROM tblProductos WHERE codigoProducto = '" + codigoProducto + "'")) {
+                    dato.next();
+                    idProducto = dato.getInt("idProducto");
+            dato.close();
+            comando.close();
+            conexion.close();
+            return idProducto;
+            }
+        }
+        catch (SQLException ex)
+        {
+            return idProducto;
+        }
+    }
+    
     public static int buscarIdProductoDisponible(String codigoProducto) {
         int idProducto = 0;
         Connection conexion = ConexionDB.ObtenerConexion();
@@ -178,7 +239,6 @@ public class ProductoQuerys {
         }
         catch (SQLException ex)
         {
-            JOptionPane.showMessageDialog(null, "Producto no Disponible");
             return idProducto;
         }
     }
@@ -216,12 +276,12 @@ public class ProductoQuerys {
         }
         catch (SQLException ex)
         {
-            JOptionPane.showMessageDialog(null, "Producto no Disponible");
             return precio;
         }
     }
     
     public static void actualizarPreciosFinales(int idProducto, double porcentaje, int tipoPrecio) {
+        DecimalFormat df = new DecimalFormat("0.00");
         if (tipoPrecio == 1) {
             double precioFinal;
             double descuento;
@@ -232,8 +292,8 @@ public class ProductoQuerys {
                         ResultSet dato = comando.executeQuery("SELECT precioOfertado FROM tblProductos WHERE idProducto = '" + idProducto + "'")) {
                         dato.next();
                         double precio = dato.getDouble("precioOfertado");
-                        precioFinal = precio*(100-porcentaje)/100;
-                        descuento = precio - precioFinal;
+                        precioFinal = Double.parseDouble(df.format(precio * (100-porcentaje)/100));
+                        descuento = Double.parseDouble(df.format(precio - precioFinal));
                 comando.executeUpdate("UPDATE tblProductos SET porcentajeOfertaVenta = '" + porcentaje + "', descuentoVenta = '" + descuento + "', precioVentaFinal = '" + precioFinal + "' WHERE idProducto = '" + idProducto + "'");
                 dato.close();
                 comando.close();
@@ -256,8 +316,8 @@ public class ProductoQuerys {
                         ResultSet dato = comando.executeQuery("SELECT precioOfertadoSugerido FROM tblProductos WHERE idProducto = '" + idProducto + "'")) {
                         dato.next();
                         double precio = dato.getDouble("precioOfertadoSugerido");
-                        precioFinal = precio * (100-porcentaje);
-                        descuento = precio - precioFinal;
+                        precioFinal = Double.parseDouble(df.format(precio * (100-porcentaje)/100));
+                        descuento = Double.parseDouble(df.format(precio - precioFinal));
                         comando.executeUpdate("UPDATE tblProductos SET porcentajeOfertaVenta = '" + porcentaje + "', descuentoVenta = '" + descuento + "', precioVentaFinal = '" + precioFinal + "' WHERE idProducto = '" + idProducto + "'");
                 dato.close();
                 comando.close();
@@ -282,8 +342,9 @@ public class ProductoQuerys {
                     ResultSet dato = comando.executeQuery("SELECT * FROM tblProductos WHERE codigoProducto = '" + codigoProducto + "'")) {
                     dato.next();
                     producto = new Productos();
+                    producto.setCodigo(dato.getString("codigoProducto"));
                     producto.setMarca(dato.getInt("idMarca"));
-                    producto.setTipoCambio(dato.getInt("idTipoProducto"));
+                    producto.setTipoProducto(dato.getInt("idTipoProducto"));
                     producto.setTalla(dato.getInt("idTalla"));
                     producto.setGenero(dato.getInt("idGenero"));
                     producto.setColor(dato.getString("colorProducto"));
@@ -314,6 +375,20 @@ public class ProductoQuerys {
             //JOptionPane.showMessageDialog(null, "Producto no Disponible");
             return producto;
         }
-        
+    }
+    
+    public static void ofertarProducto(Productos p) {
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("UPDATE tblProductos SET porcentajeOferta = '" + p.getPorcentajeOferta() + "', descuentoOferta = '" + p.getDescuentoOferta() + "', precioOfertado = '" + p.getPrecioOfertado() + "', precioOfertadoSugerido = '" + p.getPrecioOfertadoSugerido() + "' WHERE codigoProducto = '" + p.getCodigo() + "'");
+            }
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
 }

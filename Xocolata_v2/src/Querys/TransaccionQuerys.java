@@ -255,6 +255,7 @@ public class TransaccionQuerys {
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("UPDATE tblProductos inner join tblDetalleTransacciones ON tblProductos.idProducto = tblDetalleTransacciones.idProducto SET idEstadoProducto = '1' WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "'");
                 comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
                 comando.executeUpdate("DELETE FROM tblTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
             }
@@ -271,6 +272,7 @@ public class TransaccionQuerys {
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("UPDATE tblProductos inner join tblDetalleTransacciones ON tblProductos.idProducto = tblDetalleTransacciones.idProducto SET idEstadoProducto = '1' WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "'");
                 comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
                 comando.executeUpdate("DELETE FROM tblTransacciones WHERE idTransaccion = '" + idTransaccion + "'");
                 comando.executeUpdate("DELETE FROM tblRegistroTransacciones WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
