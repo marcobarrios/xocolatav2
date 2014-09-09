@@ -9,6 +9,7 @@ package Interfaces;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,6 +22,7 @@ public class VentanaDevolucionClientes extends javax.swing.JInternalFrame {
      */
     public VentanaDevolucionClientes() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
     }
 
     /**
@@ -98,11 +100,21 @@ public class VentanaDevolucionClientes extends javax.swing.JInternalFrame {
 
         tCodigoProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tCodigoProducto.setPreferredSize(new java.awt.Dimension(4, 30));
+        tCodigoProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tCodigoProductoKeyPressed(evt);
+            }
+        });
 
         bAceptar.setBackground(new java.awt.Color(255, 51, 102));
         bAceptar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         bAceptar.setForeground(new java.awt.Color(255, 255, 255));
         bAceptar.setText("Aceptar Devolución");
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAceptarActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
@@ -353,6 +365,14 @@ public class VentanaDevolucionClientes extends javax.swing.JInternalFrame {
     private void tPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tPrecioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tPrecioActionPerformed
+
+    private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bAceptarActionPerformed
+
+    private void tCodigoProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCodigoProductoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tCodigoProductoKeyPressed
 
     public void setIcon(Icon anIcon){
         setFrameIcon(anIcon);

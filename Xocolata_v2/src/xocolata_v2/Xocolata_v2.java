@@ -19,10 +19,9 @@ public class Xocolata_v2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Xocolata Version 2");
         Xocolata ventana = new Xocolata();
-        ventana.setTitle("Xocolata 2.0");
-        ventana.setName("Xocolata 2.0");
+        ventana.setTitle("Xocolata 2.0 - Distribuidora de Ropa");
+        ventana.setName("Xocolata 2.0 - Distribuidora de Ropa");
         ventana.setLocationRelativeTo(null);
         ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventana.setVisible(true);

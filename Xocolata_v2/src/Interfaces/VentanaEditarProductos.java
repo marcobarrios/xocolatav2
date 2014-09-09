@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -35,7 +36,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
      */
     public VentanaEditarProductos() {
         initComponents();
-        
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
         setJTexFieldChanged(tCodigoProducto);
    }
     
@@ -195,7 +196,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
             cargarTipos();
             cargarGeneros();
             cargarTallas();
-            //cargarCbProductos(p);
+            cargarCbProductos(p);
             //Setear datos a los campos
             tColor.setText(p.getColor());
             tDescripción.setText(p.getDescripcion());
@@ -214,44 +215,52 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
             tPrecioSugerido.setText(String.valueOf(p.getPrecioSugeridoVendedor()));
         } 
         catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            //JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
     
     private void cargarCbProductos(Productos p)
     {
         ///Mostrar Marca Producto
-            Item[] lm = (Item[]) cbMarca.getItemListeners();
-            for (Item l1 : lm) {
-                if (l1.getId().equals(p.getMarca())) {
-                    cbMarca.setSelectedItem(l1);
+            
+        if(p!=null)
+        {
+            for(int i=1; i < cbMarca.getItemCount(); i++)
+            {
+                Item it = (Item)cbMarca.getItemAt(i);
+                if (it.getId().equals(String.valueOf(p.getMarca()))) {
+                    cbMarca.setSelectedItem(it);
                     break;
                 }
             }
-        ///Mostrar Tipo de Producto Producto
-            Item[] ltp = (Item[]) cbTipoProducto.getItemListeners();
-            for (Item l1 : ltp) {
-                if (l1.getId().equals(p.getMarca())) {
-                    cbMarca.setSelectedItem(l1);
+            
+            for(int i=1; i < cbTipoProducto.getItemCount(); i++)
+            {
+                Item it = (Item)cbTipoProducto.getItemAt(i);
+                if (it.getId().equals(String.valueOf(p.getTipoProducto()))) {
+                    cbTipoProducto.setSelectedItem(it);
                     break;
                 }
             }
-        ///Mostrar Talla Producto
-            Item[] lt = (Item[]) cbTalla.getItemListeners();
-            for (Item l1 : lt) {
-                if (l1.getId().equals(p.getMarca())) {
-                    cbMarca.setSelectedItem(l1);
+            
+            for(int i=1; i < cbTalla.getItemCount(); i++)
+            {
+                Item it = (Item)cbTalla.getItemAt(i);
+                if (it.getId().equals(String.valueOf(p.getTalla()))) {
+                    cbTalla.setSelectedItem(it);
                     break;
                 }
             }
-        ///Mostrar Genero Producto
-            Item[] lg = (Item[]) cbGenero.getItemListeners();
-            for (Item l1 : lg) {
-                if (l1.getId().equals(p.getMarca())) {
-                    cbMarca.setSelectedItem(l1);
+            
+            for(int i=1; i < cbGenero.getItemCount(); i++)
+            {
+                Item it = (Item)cbGenero.getItemAt(i);
+                if (it.getId().equals(String.valueOf(p.getGenero()))) {
+                    cbGenero.setSelectedItem(it);
                     break;
                 }
-            }
+            }           
+        }
     }
     
     private void limpiarCampos()
@@ -320,14 +329,12 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         tEnvioProducto = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        tCostosQ = new javax.swing.JTextField();
         tTotalQ = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         tEnvioGuate = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         tTipoCambio = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         tPorcentajeGanancia = new javax.swing.JTextField();
@@ -495,7 +502,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(tDescripción, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -529,10 +536,6 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel12.setText("Total Dolares");
 
-        tCostosQ.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tCostosQ.setMinimumSize(new java.awt.Dimension(4, 30));
-        tCostosQ.setPreferredSize(new java.awt.Dimension(73, 30));
-
         tTotalQ.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tTotalQ.setMinimumSize(new java.awt.Dimension(4, 30));
         tTotalQ.setPreferredSize(new java.awt.Dimension(73, 30));
@@ -554,15 +557,12 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         tTipoCambio.setMinimumSize(new java.awt.Dimension(4, 30));
         tTipoCambio.setPreferredSize(new java.awt.Dimension(73, 30));
 
-        jLabel16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel16.setText("Costos Q. :");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel15)
@@ -572,10 +572,6 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tEnvioGuate, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tCostosQ, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -596,12 +592,12 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tCostoDolares, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(tCostoDolares, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -621,10 +617,6 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(tTipoCambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(tCostosQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
@@ -835,7 +827,6 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -859,7 +850,6 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tCodigoProducto;
     private javax.swing.JTextField tColor;
     private javax.swing.JTextField tCostoDolares;
-    private javax.swing.JTextField tCostosQ;
     private javax.swing.JTextField tDescripción;
     private javax.swing.JTextField tEnvioGuate;
     private javax.swing.JTextField tEnvioProducto;

@@ -20,6 +20,7 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
@@ -37,6 +38,8 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
      */
     public VentanaDevolucionVendedores() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+        
         cargarDatosVendedor();
         
         DefaultListCellRenderer dlcr = new DefaultListCellRenderer();

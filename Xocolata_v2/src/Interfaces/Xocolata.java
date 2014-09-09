@@ -9,6 +9,8 @@ package Interfaces;
 import ReportesClases.VentanaDatosClientes;
 import ReportesClases.VentanaDatosVendedores;
 import java.awt.Dimension;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -22,6 +24,8 @@ public class Xocolata extends javax.swing.JFrame {
     public Xocolata() {
         iniciarInterno();
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/Imagenes/xocolata.jpg")).getImage();
+        setIconImage(icon);
     }
 
     private void iniciarInterno()

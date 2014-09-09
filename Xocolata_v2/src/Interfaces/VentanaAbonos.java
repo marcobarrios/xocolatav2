@@ -18,6 +18,7 @@ import java.sql.Statement;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import xocolata_v2.ConexionDB;
 
@@ -34,6 +35,9 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
      */
     public VentanaAbonos(String persona) {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+
+        
         this.tipoPersona = persona;
         cargarDatosPersona();
         Calendar fecha = new GregorianCalendar();

@@ -27,6 +27,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -49,6 +50,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
      */
     public VentanaVentaDirecta() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
         cargarDatosCliente();
         
         df = new DecimalFormat("0.00");
@@ -60,6 +62,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         fechaActual = Integer.toString(año) + "-" + Integer.toString(mes) + "-" + Integer.toString(dia);
         
         rPrecioVenta.setSelected(true);
+        rContado.setSelected(true);
         DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
         dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
         cbCliente.setRenderer(dlcr);
@@ -653,7 +656,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if(resultado == JOptionPane.YES_OPTION)
         {
-            TransaccionQuerys.cancelarTransaccion(idTransaccion);
+            TransaccionQuerys.cancelarRegistroTransaccion(idTransaccion, idRegistroTransaccion);
             this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

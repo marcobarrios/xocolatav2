@@ -11,6 +11,7 @@ import Querys.PersonaQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -28,6 +29,8 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
     Boolean estado;
     public VentanaPersonas(String cadena) {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+        
         this.persona = cadena;
         tTitulo.setText("Ingreso de  " + cadena);
         lNombre.setText("Nombre del " +  cadena);

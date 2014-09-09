@@ -23,7 +23,7 @@ public class BackgroundImage implements Border {
  
     public BackgroundImage(){
         try {
-            URL imagePath = new URL(BackgroundImage.class.getResource("fondo5.jpg").toString());
+            URL imagePath = new URL(BackgroundImage.class.getResource("/Imagenes/fondo5.jpg").toString());
             back = ImageIO.read(imagePath);
             
         } catch (Exception ex) {

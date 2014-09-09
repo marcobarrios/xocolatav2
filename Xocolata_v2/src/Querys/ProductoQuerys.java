@@ -372,8 +372,7 @@ public class ProductoQuerys {
         }
         catch (SQLException ex)
         {
-            //JOptionPane.showMessageDialog(null, "Producto no Disponible");
-            return producto;
+            return null;
         }
     }
     

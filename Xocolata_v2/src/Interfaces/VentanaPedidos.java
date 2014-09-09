@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -28,6 +29,8 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
      */
     public VentanaPedidos() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+        
         Calendar fecha = new GregorianCalendar();
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
         int mes = fecha.get(Calendar.MONTH)+1;

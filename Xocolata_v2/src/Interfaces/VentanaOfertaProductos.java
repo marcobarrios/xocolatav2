@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +32,8 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
      */
     public VentanaOfertaProductos() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+        
         this.productos = new ArrayList();
         df = new DecimalFormat("0.00");
     }
@@ -243,6 +246,7 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
                     Productos p = (Productos)i;
                     if (p.getCodigo().equals(idProducto.getDato())) {
                         productos.remove(p);
+                        break;
                     }
                 }
                 cargarTablaOferta();
@@ -275,6 +279,7 @@ public class VentanaOfertaProductos extends javax.swing.JInternalFrame {
             ProductoQuerys.ofertarProducto(p);
         }
         JOptionPane.showMessageDialog(this, "Productos Ofertado Exitosamente");
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void setIcon(Icon anIcon){

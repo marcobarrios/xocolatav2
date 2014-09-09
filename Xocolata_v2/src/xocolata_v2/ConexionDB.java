@@ -23,7 +23,7 @@ public class ConexionDB {
             conexion = DriverManager.getConnection ("jdbc:mysql://localhost/Xocolatav2","root", "dsoftxela");
         } catch (Exception e)
             {
-                JOptionPane.showMessageDialog(null, e.toString(), "Error de Conexion", 2);
+                JOptionPane.showMessageDialog(null, "Error de Conexion");
             }
        return conexion;
     }

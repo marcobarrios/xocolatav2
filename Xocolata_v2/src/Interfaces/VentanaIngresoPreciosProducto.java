@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
@@ -39,6 +40,8 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
      */
     public VentanaIngresoPreciosProducto(int idPedido, Productos producto) {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+        
         this.idPedido = idPedido;
         this.producto = producto;
         hilo = new HiloCalculos();

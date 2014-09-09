@@ -32,7 +32,7 @@ public class VentanaAgregarContactos extends javax.swing.JInternalFrame {
      */
     public VentanaAgregarContactos(String id) {
         initComponents();
-        //this.setFrameIcon(new ImageIcon(this.getClass().getResource("/16x16/logo.png")));
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
         this.id=id;
         cargarDatos();
     }

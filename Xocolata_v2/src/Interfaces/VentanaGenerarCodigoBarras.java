@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.CodBarra;
@@ -30,6 +31,7 @@ public class VentanaGenerarCodigoBarras extends javax.swing.JInternalFrame {
      */
     public VentanaGenerarCodigoBarras() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
         cargarTabla();
     }
 
@@ -44,10 +46,6 @@ public class VentanaGenerarCodigoBarras extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
 
         jTable1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(

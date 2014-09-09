@@ -30,8 +30,9 @@ public class VentanaConsultaPedidos extends javax.swing.JInternalFrame {
      */
     public VentanaConsultaPedidos() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+
         cargarTabla();
-        //this.setFrameIcon(new ImageIcon(this.getClass().getResource("/16x16/logo.png")));
     }
     
     private void cargarTabla() {

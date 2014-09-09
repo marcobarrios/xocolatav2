@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import xocolata_v2.ConexionDB;
 
@@ -32,6 +33,8 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
      */
     public VentanaGastos() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+        
         cargarTipoGastos();
     }
 

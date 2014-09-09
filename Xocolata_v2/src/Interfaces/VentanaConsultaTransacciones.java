@@ -28,10 +28,11 @@ public class VentanaConsultaTransacciones extends javax.swing.JInternalFrame {
     String id ;
     public VentanaConsultaTransacciones() {
         initComponents();
+        this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
+        
         jTable1.setColumnSelectionAllowed(false);
         jTable1.setRowSelectionAllowed(true);
         cargarDatos();
-        //this.setFrameIcon(new ImageIcon(this.getClass().getResource("/16x16/logo.png")));
     }
 
     public void cargarDatos() {
