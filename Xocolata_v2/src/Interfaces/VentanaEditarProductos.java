@@ -11,11 +11,13 @@ import ContenedorComboBox.Item;
 import Querys.ProductoQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -27,6 +29,7 @@ import xocolata_v2.ConexionDB;
  */
 public class VentanaEditarProductos extends javax.swing.JInternalFrame {
 
+    Productos p;
     /**
      * Creates new form VentanaEditarProducto
      */
@@ -38,7 +41,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
     
     
     private void cargarMarcas() {
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
         try
             {
@@ -58,12 +61,12 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
              }
              catch (SQLException ex)
              {
-                 //JOptionPane.showMessageDialog(null, ex.getMessage());
+                 JOptionPane.showMessageDialog(null, ex.getMessage());
              }
     }
     
     private void cargarTipos() {
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
         try
             {
@@ -83,12 +86,12 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
              }
              catch (SQLException ex)
              {
-                 //JOptionPane.showMessageDialog(null, ex.getMessage());
+                 JOptionPane.showMessageDialog(null, ex.getMessage());
              }
     }
     
     private void cargarTallas() {
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
         try
             {
@@ -108,12 +111,12 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
              }
              catch (SQLException ex)
              {
-                 //JOptionPane.showMessageDialog(null, ex.getMessage());
+                 JOptionPane.showMessageDialog(null, ex.getMessage());
              }
     }
     
     private void cargarGeneros() {
-        ResultSet dato = null;
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
         try
             {
@@ -133,7 +136,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
              }
              catch (SQLException ex)
              {
-                 //JOptionPane.showMessageDialog(null, ex.getMessage());
+                 JOptionPane.showMessageDialog(null, ex.getMessage());
              }
     }
     
@@ -169,7 +172,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
             //tDPI.setText("");
             //tDireccion.setText("");
             //tTelefono.setText("");
-            limpiarCampos();
+            //limpiarCampos();
  
         }
         else if (type.equals(DocumentEvent.EventType.INSERT))
@@ -186,13 +189,13 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
     {
         try 
         {
-            Productos p = ProductoQuerys.obtenerProducto(tCodigoProducto.getText());
+            p = ProductoQuerys.obtenerProducto(tCodigoProducto.getText());
             //Setea datos a los comboBox
             cargarMarcas();
             cargarTipos();
             cargarGeneros();
             cargarTallas();
-            cargarCbProductos(p);
+            //cargarCbProductos(p);
             //Setear datos a los campos
             tColor.setText(p.getColor());
             tDescripción.setText(p.getDescripcion());
@@ -211,7 +214,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
             tPrecioSugerido.setText(String.valueOf(p.getPrecioSugeridoVendedor()));
         } 
         catch (Exception e) {
-            
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
     
@@ -385,32 +388,33 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         tCodigoProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tCodigoProducto.setMinimumSize(new java.awt.Dimension(4, 30));
         tCodigoProducto.setPreferredSize(new java.awt.Dimension(73, 30));
+        tCodigoProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tCodigoProductoKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Marca");
 
-        cbMarca.setBackground(new java.awt.Color(255, 255, 255));
         cbMarca.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbMarca.setPreferredSize(new java.awt.Dimension(70, 30));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Tipo de Producto");
 
-        cbTipoProducto.setBackground(new java.awt.Color(255, 255, 255));
         cbTipoProducto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbTipoProducto.setPreferredSize(new java.awt.Dimension(70, 30));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Talla");
 
-        cbTalla.setBackground(new java.awt.Color(255, 255, 255));
         cbTalla.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbTalla.setPreferredSize(new java.awt.Dimension(70, 30));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Genero");
 
-        cbGenero.setBackground(new java.awt.Color(255, 255, 255));
         cbGenero.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbGenero.setPreferredSize(new java.awt.Dimension(70, 30));
 
@@ -799,6 +803,13 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tCodigoProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCodigoProductoKeyPressed
+        if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
+        {
+         editarProducto();
+        }
+    }//GEN-LAST:event_tCodigoProductoKeyPressed
 
     public void setIcon(Icon anIcon){
         setFrameIcon(anIcon);

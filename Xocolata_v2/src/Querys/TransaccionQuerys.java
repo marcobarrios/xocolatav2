@@ -35,7 +35,7 @@ public class TransaccionQuerys {
                 ps.setDouble(5, 0.0);
                 ps.setInt(6, idpersona);
                 ps.executeUpdate();
-                try ( //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
+                try ( 
                         ResultSet dato = ps.executeQuery("select MAX(idRegistroTransaccion) from tblRegistroTransacciones")) {
                     dato.next();
                     idTransaccion = dato.getInt("MAX(idRegistroTransaccion)");
@@ -68,7 +68,7 @@ public class TransaccionQuerys {
                 ps.setDouble(8, transaccion.getTotalTransccion());
                 ps.setInt(9, transaccion.getIdRegistroProducto());
                 ps.executeUpdate();
-                try ( //JOptionPane.showMessageDialog(null, "Producto ingresado correctamente", "Ingreso Exitoso", 1);
+                try ( 
                         ResultSet dato = ps.executeQuery("select MAX(idTransaccion) from tblTransacciones")) {
                     dato.next();
                     idTransaccion = dato.getInt("MAX(idTransaccion)");

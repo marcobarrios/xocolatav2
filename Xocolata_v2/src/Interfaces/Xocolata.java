@@ -86,6 +86,7 @@ public class Xocolata extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
+        jMenuItem21 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -294,6 +295,14 @@ public class Xocolata extends javax.swing.JFrame {
         jMenuBar1.add(jMenu12);
 
         jMenu9.setText("Reportes");
+
+        jMenuItem21.setText("Generar Códigos de Barras");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem21);
 
         jMenu10.setText("Personas");
 
@@ -527,6 +536,16 @@ public class Xocolata extends javax.swing.JFrame {
         ventana.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        VentanaGenerarCodigoBarras ventana = new VentanaGenerarCodigoBarras();
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -592,6 +611,7 @@ public class Xocolata extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
