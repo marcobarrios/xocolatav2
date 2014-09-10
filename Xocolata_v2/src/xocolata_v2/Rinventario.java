@@ -46,8 +46,8 @@ public class Rinventario extends javax.swing.JInternalFrame {
             
             Map parametro = new HashMap();
             parametro.put("dato", parametroBusqueda);
-            parametro.put("xocolata", encabezado);
-            parametro.put("encabezado", xocolata);
+            parametro.put("xocolata", xocolata);
+            parametro.put("encabezado", encabezado);
                           
              JasperReport jasperReport= (JasperReport) JRLoader.loadObject(archivo);
              JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametro, conect);  // conect 

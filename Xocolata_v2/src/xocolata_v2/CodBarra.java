@@ -58,10 +58,10 @@ public class CodBarra {
                    Dispatch.call((Dispatch) oSelection, "MoveDown");
                    Dispatch.get((Dispatch)oSelection, "InLineShapes").toDispatch();
                    Dispatch.call((Dispatch)oImage, "AddPicture", archivo);
-                   Dispatch.put((Dispatch)oSelection, "Text", "   ");
-                   //if(contador == 6)
+                   Dispatch.put((Dispatch)oSelection, "Text", "                         ");
+                   if(contador == 4)
                    {
-                       //Dispatch.put((Dispatch)oSelection, "Text", "\r\n");
+                       Dispatch.put((Dispatch)oSelection, "Text", "\r\n");
                        contador = 0;
                    }
                }

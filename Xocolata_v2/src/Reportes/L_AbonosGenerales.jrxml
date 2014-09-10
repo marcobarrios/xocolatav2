@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ca6f382-9177-4618-9ce7-1e3b4b7115bd">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="28"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="23"/>
 	<style name="table">
 		<box>
@@ -171,41 +171,39 @@ order by  nombrePersona, fechaabono;]]>
 	</title>
 	<pageHeader>
 		<band height="128" splitType="Stretch">
-			<image scaleImage="FillFrame">
-				<reportElement x="168" y="25" width="197" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<rectangle>
-				<reportElement x="1" y="0" width="554" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="554" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="47" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="96" y="89" width="158" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
+				<reportElement x="207" y="47" width="163" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
 				<textElement verticalAlignment="Bottom">
-					<font size="15" isBold="true"/>
+					<font size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Abonos Generales]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="365" y="0" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
+				<reportElement x="365" y="0" width="188" height="24" forecolor="#000000" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Abonos Generales]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+				<reportElement x="4" y="5" width="361" height="20" forecolor="#000000" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="124" width="555" height="1" forecolor="#009999" uuid="098fd94e-6a2f-4b17-a53d-a255d78b0086"/>
 			</line>
 			<staticText>
-				<reportElement x="444" y="27" width="110" height="39" uuid="53bee5af-c6d9-49e4-9bab-feccd275c8b1"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="416" y="27" width="138" height="56" uuid="53bee5af-c6d9-49e4-9bab-feccd275c8b1"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
 				<text><![CDATA[Distribuidora de Ropa xocolataxela@gmail.com 4045-5444]]></text>
 			</staticText>
 		</band>
@@ -300,7 +298,7 @@ order by  nombrePersona, fechaabono;]]>
 				<text><![CDATA[Cantidad de Abonos:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="163" y="7" width="100" height="29" uuid="f3531d39-8457-441e-8ebc-209df7b5a693"/>
+				<reportElement x="163" y="7" width="53" height="29" uuid="f3531d39-8457-441e-8ebc-209df7b5a693"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
@@ -317,18 +315,18 @@ order by  nombrePersona, fechaabono;]]>
 				<textFieldExpression><![CDATA[$V{montoAbono_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="311" y="12" width="84" height="18" uuid="8c3aaf85-2250-4050-b8be-54c52a78df1a"/>
+				<reportElement x="240" y="12" width="155" height="18" uuid="8c3aaf85-2250-4050-b8be-54c52a78df1a"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total de Ventas:]]></text>
+				<text><![CDATA[Total de Productos Vendidos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="311" y="30" width="84" height="18" uuid="bf72e616-0f33-4a8b-9e6e-5baab5644a26"/>
+				<reportElement x="240" y="30" width="155" height="18" uuid="bf72e616-0f33-4a8b-9e6e-5baab5644a26"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Pendiente:]]></text>
+				<text><![CDATA[Total de Productos Pendientes:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="311" y="70" width="84" height="18" uuid="142b8596-90f0-4f95-a0dc-f6e929cba1e7"/>

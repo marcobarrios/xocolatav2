@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="2027" pageHeight="842" columnWidth="1987" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ca6f382-9177-4618-9ce7-1e3b4b7115bd">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="751"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -216,38 +216,34 @@ order by tblProductos.codigoProducto]]>
 	<pageHeader>
 		<band height="120" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="1986" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="1986" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
-			<image scaleImage="FillFrame">
-				<reportElement x="11" y="38" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
-				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="96" y="80" width="188" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
-				<textElement verticalAlignment="Middle">
-					<font size="16" isBold="true"/>
+				<reportElement x="889" y="69" width="229" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INVENTARIO GENERAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1797" y="3" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
+				<reportElement x="1797" y="3" width="188" height="24" forecolor="#000000" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INVENTARIO GENERAL]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="4" y="5" width="361" height="20" forecolor="#000000" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame">
-				<reportElement x="898" y="38" width="292" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
+				<reportElement x="4" y="30" width="104" height="90" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
+				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="1852" y="30" width="133" height="42" uuid="54480cd9-c6f7-4f0b-816f-d7668ac5819e"/>
+				<reportElement x="1824" y="30" width="161" height="63" uuid="54480cd9-c6f7-4f0b-816f-d7668ac5819e"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Distribuidora de Ropa  xocolataxela@gmail.com 4045-5444]]></text>
 			</staticText>

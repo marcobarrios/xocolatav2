@@ -473,7 +473,7 @@ order by tblProductos.codigoProducto]]>
 			<textField>
 				<reportElement x="681" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{precioVentaFinal}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
