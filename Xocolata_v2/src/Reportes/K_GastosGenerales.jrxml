@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ca6f382-9177-4618-9ce7-1e3b4b7115bd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="xocolata" class="File">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="encabezado" class="File">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from tblGastos
+inner join tblTipoGastos on tblTipoGastos.idTipoGasto = tblGastos.idTipoGasto
+order by tblTipoGastos.idTipoGasto asc,tblGastos.fechaGasto;]]>
+	</queryString>
+	<field name="idGasto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montoGasto" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fechaGasto" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idTipoGasto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TipoGasto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="montoGasto_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{montoGasto}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="127" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="168" y="26" width="221" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
+				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="1" y="0" width="554" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement x="11" y="42" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
+				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="96" y="84" width="140" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gastos Generales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="0" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gastos Generales]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="124" width="555" height="1" forecolor="#009999" uuid="098fd94e-6a2f-4b17-a53d-a255d78b0086"/>
+			</line>
+			<staticText>
+				<reportElement x="433" y="29" width="122" height="38" uuid="3538f77f-7275-47e3-8b34-17605f912dcb"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Distribuidora de Ropa xocolataxela@gmail.com 4045-5444]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="29" width="554" height="1" uuid="01d604d9-93b5-4722-a57c-0eeeefbc3b38"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Double" lineColor="#990000"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="71" y="2" width="100" height="27" uuid="d4a97989-309c-4642-aa6a-4be414ff0033"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TipoGasto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="2" width="100" height="27" uuid="2a80b30c-4aa8-40d3-92b4-61fc95cc0011"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gasto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="2" width="100" height="27" uuid="b2a4bc55-231e-424f-b500-cf099723ec28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Gasto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="26" width="554" height="1" forecolor="#CCCCCC" uuid="09610825-79a2-4b7f-9e32-79de4c76b75c"/>
+			</line>
+			<textField pattern="###0.00">
+				<reportElement x="71" y="4" width="100" height="20" uuid="40dad378-a23e-4dc0-8495-3fe5ab585df0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TipoGasto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="198" y="4" width="100" height="20" uuid="250f414c-7fce-4126-aea4-3d647321dddc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{montoGasto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="332" y="4" width="100" height="20" uuid="36ac7c74-9764-4711-a472-cf2410e74c4f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechaGasto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="433" y="1" width="80" height="20" uuid="b740b1da-b7d2-40de-b977-78ab1fa6b594"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="1" width="40" height="20" uuid="44230a17-ffd5-46c6-9b7d-7ccbba2a51f6"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="57" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="4" width="554" height="1" forecolor="#999999" uuid="3f76ba1f-6afb-44a2-a2da-3de255f83cfb"/>
+			</line>
+			<staticText>
+				<reportElement x="319" y="5" width="70" height="29" uuid="46e3dd7e-f882-45df-832b-144c71c06619"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de Gastos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="403" y="5" width="100" height="29" uuid="f3531d39-8457-441e-8ebc-209df7b5a693"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="319" y="36" width="84" height="18" uuid="6be80c15-826b-459f-b560-ad7d7d2cfaaa"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Gastos:]]></text>
+			</staticText>
+			<textField pattern="###0.00">
+				<reportElement x="403" y="36" width="100" height="18" uuid="e037dade-95d7-4045-8128-bd81e96e48de"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{montoGasto_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
