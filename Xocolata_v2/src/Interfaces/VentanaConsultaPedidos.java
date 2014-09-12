@@ -9,6 +9,7 @@ package Interfaces;
 import ContenedorComboBox.Item;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
+import xocolata_v2.Rinventario;
 
 /**
  *
@@ -181,15 +183,14 @@ public class VentanaConsultaPedidos extends javax.swing.JInternalFrame {
             {
                 Item idPedido = (Item)jTable1.getValueAt(temporal, 0);
                 //////IMPLEMENTAR CÓDIGO cargar reporte Pedidos
-                //Rinventario Rinv=new Rinventario(idPedido.getId(),"src\\Reportes\\Productos\\ProductosdePedidos.jasper");
-                //Rinv.setVisible(true);
-                //this.getParent().add(Rinv);        
-                //Rinv.show();
-                //try {
-                //Rinv.setSelected(true);
-                //} catch (PropertyVetoException ex) {
-                //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-                //}
+                Rinventario Rinv=new Rinventario(idPedido.getId(),"src\\Reportes\\F_ProductosPedido.jasper");
+                Rinv.setVisible(true);
+                this.getParent().add(Rinv);        
+                Rinv.show();
+                try {
+                Rinv.setSelected(true);
+                } catch (PropertyVetoException ex) {
+                }
             }
             else
             {

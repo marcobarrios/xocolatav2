@@ -156,7 +156,6 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        cbPersona.setBackground(new java.awt.Color(255, 255, 255));
         cbPersona.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         cbPersona.setPreferredSize(new java.awt.Dimension(32, 30));
 
@@ -184,7 +183,13 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
         jLabel4.setText("Monto del Abono:");
 
         tMontoAbono.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tMontoAbono.setText("0");
         tMontoAbono.setPreferredSize(new java.awt.Dimension(4, 30));
+        tMontoAbono.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tMontoAbonoFocusGained(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(255, 0, 51));
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -298,6 +303,10 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
         lSaldoActual.setText("0.0");
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tMontoAbonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tMontoAbonoFocusGained
+        tMontoAbono.selectAll();
+    }//GEN-LAST:event_tMontoAbonoFocusGained
 
     public void setIcon(Icon anIcon){
         setFrameIcon(anIcon);

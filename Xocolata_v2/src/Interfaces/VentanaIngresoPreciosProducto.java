@@ -205,7 +205,13 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
         tPrecioDolar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPrecioDolar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPrecioDolar.setText("0");
         tPrecioDolar.setPreferredSize(new java.awt.Dimension(4, 30));
+        tPrecioDolar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tPrecioDolarFocusGained(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Precio Costo $");
@@ -262,12 +268,14 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         tGananciaAproxV.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tGananciaAproxV.setForeground(new java.awt.Color(255, 153, 0));
         tGananciaAproxV.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tGananciaAproxV.setText("0");
         tGananciaAproxV.setEnabled(false);
         tGananciaAproxV.setPreferredSize(new java.awt.Dimension(4, 30));
 
         tPrecioAproxV.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPrecioAproxV.setForeground(new java.awt.Color(0, 153, 51));
         tPrecioAproxV.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPrecioAproxV.setText("0");
         tPrecioAproxV.setEnabled(false);
         tPrecioAproxV.setPreferredSize(new java.awt.Dimension(4, 30));
 
@@ -276,7 +284,13 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
         tPrecioSugerido.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPrecioSugerido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPrecioSugerido.setText("0");
         tPrecioSugerido.setPreferredSize(new java.awt.Dimension(4, 30));
+        tPrecioSugerido.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tPrecioSugeridoFocusGained(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel12.setText("Ganancia Aprox.");
@@ -286,7 +300,13 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
 
         tPorcentajeGananciaV.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPorcentajeGananciaV.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPorcentajeGananciaV.setText("0");
         tPorcentajeGananciaV.setPreferredSize(new java.awt.Dimension(4, 30));
+        tPorcentajeGananciaV.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tPorcentajeGananciaVFocusGained(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -347,23 +367,37 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         tGananciaAprox.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tGananciaAprox.setForeground(new java.awt.Color(255, 153, 0));
         tGananciaAprox.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tGananciaAprox.setText("0");
         tGananciaAprox.setEnabled(false);
         tGananciaAprox.setMinimumSize(new java.awt.Dimension(4, 30));
         tGananciaAprox.setPreferredSize(new java.awt.Dimension(4, 30));
 
         tPorcentajeGanancia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPorcentajeGanancia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPorcentajeGanancia.setText("0");
         tPorcentajeGanancia.setMinimumSize(new java.awt.Dimension(4, 30));
         tPorcentajeGanancia.setPreferredSize(new java.awt.Dimension(4, 30));
+        tPorcentajeGanancia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tPorcentajeGananciaFocusGained(evt);
+            }
+        });
 
         tPrecioVenta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPrecioVenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPrecioVenta.setText("0");
         tPrecioVenta.setMinimumSize(new java.awt.Dimension(4, 30));
         tPrecioVenta.setPreferredSize(new java.awt.Dimension(4, 30));
+        tPrecioVenta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tPrecioVentaFocusGained(evt);
+            }
+        });
 
         tPrecioAprox.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tPrecioAprox.setForeground(new java.awt.Color(0, 153, 51));
         tPrecioAprox.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tPrecioAprox.setText("0");
         tPrecioAprox.setEnabled(false);
         tPrecioAprox.setMinimumSize(new java.awt.Dimension(4, 30));
         tPrecioAprox.setPreferredSize(new java.awt.Dimension(4, 30));
@@ -504,6 +538,26 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void tPrecioDolarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPrecioDolarFocusGained
+        tPrecioDolar.selectAll();
+    }//GEN-LAST:event_tPrecioDolarFocusGained
+
+    private void tPorcentajeGananciaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPorcentajeGananciaFocusGained
+        tPorcentajeGanancia.selectAll();
+    }//GEN-LAST:event_tPorcentajeGananciaFocusGained
+
+    private void tPrecioVentaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPrecioVentaFocusGained
+        tPrecioVenta.selectAll();
+    }//GEN-LAST:event_tPrecioVentaFocusGained
+
+    private void tPorcentajeGananciaVFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPorcentajeGananciaVFocusGained
+        tPorcentajeGananciaV.selectAll();
+    }//GEN-LAST:event_tPorcentajeGananciaVFocusGained
+
+    private void tPrecioSugeridoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tPrecioSugeridoFocusGained
+        tPrecioSugerido.selectAll();
+    }//GEN-LAST:event_tPrecioSugeridoFocusGained
+
     public class HiloCalculos implements Runnable {
         private Thread t;
         DecimalFormat df = new DecimalFormat("0.00");
@@ -533,6 +587,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                             tPrecioDolar.setCaretPosition(hasta);
                         }
                     }
+                   
                     if (tPrecioCostoDolar.getText().length() != 0)
                     {
                         try
@@ -543,6 +598,8 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                         {
     
                         }
+                    } else {
+                        tPrecioCostoDolar.setText("0");
                     }
                     if (tPrecioCostoDolar.getText().length() != 0)
                     {
@@ -554,6 +611,8 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                         {
 
                         }
+                    } else {
+                        tPrecioCostoDolar.setText("0");
                     }
                     if (tPrecioCostoQuetzal.getText().length() != 0 && tPorcentajeGanancia.getText().length() != 0)
                     {
@@ -568,6 +627,9 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                             tPorcentajeGanancia.setText(resultado);
                             tPorcentajeGanancia.setCaretPosition(hasta);
                         }
+                    } else {
+                        tPrecioCostoQuetzal.setText("0");
+                        tPorcentajeGanancia.setText("0");
                     }
                     if (tGananciaAprox.getText().length() != 0)
                     {
@@ -582,7 +644,7 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                             tGananciaAprox.setText(resultado);
                             tGananciaAprox.setCaretPosition(hasta);
                         }
-                    }
+                    } 
                     if (tPrecioVenta.getText().length() != 0)
                     {
                         try
@@ -610,6 +672,9 @@ public class VentanaIngresoPreciosProducto extends javax.swing.JInternalFrame {
                             tPorcentajeGananciaV.setText(resultado);
                             tPorcentajeGananciaV.setCaretPosition(hasta);
                         }
+                    } else {
+                        tPrecioVenta.setText("0");
+                        tPorcentajeGananciaV.setText("0");
                     }
                     if (tPrecioVenta.getText().length() != 0 && tPorcentajeGananciaV.getText().length() != 0)
                     {

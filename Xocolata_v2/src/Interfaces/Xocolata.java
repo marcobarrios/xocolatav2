@@ -11,8 +11,6 @@ import ReportesClases.VentanaDatosVendedores;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import xocolata_v2.Rinventario;
 
@@ -109,7 +107,6 @@ public class Xocolata extends javax.swing.JFrame {
         jMenuItem41 = new javax.swing.JMenuItem();
         jMenuItem42 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
-        jMenuItem26 = new javax.swing.JMenuItem();
         jMenuItem31 = new javax.swing.JMenuItem();
         jMenuItem32 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
@@ -439,14 +436,6 @@ public class Xocolata extends javax.swing.JFrame {
         });
         jMenu15.add(jMenuItem25);
 
-        jMenuItem26.setText("Productos de un Pedido");
-        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem26ActionPerformed(evt);
-            }
-        });
-        jMenu15.add(jMenuItem26);
-
         jMenuItem31.setText("Productos por Marca");
         jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -486,9 +475,19 @@ public class Xocolata extends javax.swing.JFrame {
         jMenu17.setText("Personas");
 
         jMenuItem29.setText("Vendedores");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
         jMenu17.add(jMenuItem29);
 
         jMenuItem30.setText("Clientes");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
         jMenu17.add(jMenuItem30);
 
         jMenu9.add(jMenu17);
@@ -829,31 +828,53 @@ public class Xocolata extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem40ActionPerformed
 
     private void jMenuItem41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem41ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("VentaClienteEspecifico");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("VentaClienteEspecifico");
+        
+        ventana.show();
     }//GEN-LAST:event_jMenuItem41ActionPerformed
 
     private void jMenuItem42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem42ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("VentaVendedorEspecifico");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("VentaVendedorEspecifico");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem42ActionPerformed
 
-    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("ProductosPedido");
-    }//GEN-LAST:event_jMenuItem26ActionPerformed
-
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("ProductosMarca");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("ProductosMarca");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("ProductosTipo");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("ProductosTipo");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("ProductosTalla");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("ProductosTalla");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("ProductosCodigo");
+        
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
@@ -867,7 +888,13 @@ public class Xocolata extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem35ActionPerformed
 
     private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("GastoEspecifico");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("GastoEspecifico");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem36ActionPerformed
 
     private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem37ActionPerformed
@@ -881,12 +908,44 @@ public class Xocolata extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem37ActionPerformed
 
     private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem38ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("AbonoVendedorEspecifico");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("AbonoVendedorEspecifico");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem38ActionPerformed
 
     private void jMenuItem43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem43ActionPerformed
-        SeleccionDeDatos ventana = new SeleccionDeDatos("AbonoClienteEspecifico");
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("AbonoClienteEspecifico");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
     }//GEN-LAST:event_jMenuItem43ActionPerformed
+
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("PersonaVendedor");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("PersonaCliente");
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -965,7 +1024,6 @@ public class Xocolata extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
-    private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;

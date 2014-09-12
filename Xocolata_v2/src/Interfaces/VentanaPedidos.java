@@ -108,6 +108,11 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         tSubtotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tSubtotal.setText("0");
         tSubtotal.setPreferredSize(new java.awt.Dimension(12, 30));
+        tSubtotal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tSubtotalFocusGained(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Codigo del Pedido");
@@ -116,6 +121,11 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         tImpuesto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tImpuesto.setText("0");
         tImpuesto.setPreferredSize(new java.awt.Dimension(12, 30));
+        tImpuesto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tImpuestoFocusGained(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Subtotal del Pedido ($)");
@@ -125,6 +135,11 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         tEnvio.setText("0");
         tEnvio.setMinimumSize(new java.awt.Dimension(4, 30));
         tEnvio.setPreferredSize(new java.awt.Dimension(12, 30));
+        tEnvio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tEnvioFocusGained(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Impuesto del Pedido ($)");
@@ -275,6 +290,18 @@ public class VentanaPedidos extends javax.swing.JInternalFrame {
         PedidoQuerys.insertarPedido(crearPedido());
         limpiarCampos();
     }//GEN-LAST:event_Btn_Ingresar_PedidoActionPerformed
+
+    private void tSubtotalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tSubtotalFocusGained
+        tSubtotal.selectAll();
+    }//GEN-LAST:event_tSubtotalFocusGained
+
+    private void tImpuestoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tImpuestoFocusGained
+        tImpuesto.selectAll();
+    }//GEN-LAST:event_tImpuestoFocusGained
+
+    private void tEnvioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tEnvioFocusGained
+        tEnvio.selectAll();
+    }//GEN-LAST:event_tEnvioFocusGained
 
     public void limpiarCampos() {
         tCambio.setText("");

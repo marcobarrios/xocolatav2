@@ -404,6 +404,11 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         tOferta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tOferta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tOferta.setText("0");
+        tOferta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tOfertaFocusGained(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 1, 13)); // NOI18N
         jLabel6.setText("TOTAL: Q.");
@@ -720,6 +725,10 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         rPrecioVenta.setSelected(false);
         rPrecioSugerido.setSelected(true);
     }//GEN-LAST:event_rPrecioSugeridoActionPerformed
+
+    private void tOfertaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tOfertaFocusGained
+        tOferta.selectAll();
+    }//GEN-LAST:event_tOfertaFocusGained
 
     public class HiloCalculos implements Runnable {
         private Thread t;

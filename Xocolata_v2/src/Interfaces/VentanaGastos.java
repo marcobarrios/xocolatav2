@@ -114,13 +114,18 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         jLabel2.setText("Monto del Gasto");
 
         tMontoGasto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tMontoGasto.setText("0");
         tMontoGasto.setMinimumSize(new java.awt.Dimension(273, 21));
         tMontoGasto.setPreferredSize(new java.awt.Dimension(4, 30));
+        tMontoGasto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tMontoGastoFocusGained(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Tipo de Gasto");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Seleccione Tipo de Gasto", "---------------------------------------" }));
 
@@ -152,7 +157,7 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton2))
-                        .addComponent(calendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(calendario, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                         .addComponent(tMontoGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap(56, Short.MAX_VALUE)))
         );
@@ -228,6 +233,10 @@ public class VentanaGastos extends javax.swing.JInternalFrame {
         }
         cargarTipoGastos();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tMontoGastoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tMontoGastoFocusGained
+        tMontoGasto.selectAll();
+    }//GEN-LAST:event_tMontoGastoFocusGained
 
     public String obtenerFecha() {
         Calendar fecha = calendario.getCalendar();
