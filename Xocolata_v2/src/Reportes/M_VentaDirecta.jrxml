@@ -247,16 +247,16 @@ order by tblProductos.codigoProducto]]>
 	<pageHeader>
 		<band height="206" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="801" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="801" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="38" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="96" y="80" width="161" height="24" uuid="b2e22dc6-2301-4d04-a694-16ca3a1dd628"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font size="16" isBold="true"/>
+				<reportElement x="321" y="67" width="161" height="24" uuid="b2e22dc6-2301-4d04-a694-16ca3a1dd628"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Venta al Contado]]></text>
 			</staticText>
@@ -267,14 +267,10 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[Venta al Contado]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame">
-				<reportElement x="288" y="33" width="242" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="60" y="140" width="60" height="16" uuid="783a8ac3-cb0f-4c29-ad6e-93029237bcd7"/>
 				<textElement verticalAlignment="Bottom">
@@ -390,49 +386,49 @@ order by tblProductos.codigoProducto]]>
 	<columnHeader>
 		<band height="44" splitType="Stretch">
 			<staticText>
-				<reportElement x="61" y="1" width="86" height="37" uuid="31cc4332-ed95-4adb-a929-e08358faf9c7"/>
+				<reportElement x="100" y="1" width="86" height="37" uuid="31cc4332-ed95-4adb-a929-e08358faf9c7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código Producto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="150" y="1" width="86" height="37" uuid="5c9a8419-9da2-4021-939e-7fbb6046244c"/>
+				<reportElement x="189" y="1" width="86" height="37" uuid="5c9a8419-9da2-4021-939e-7fbb6046244c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Marca]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="239" y="1" width="83" height="37" uuid="7018129c-481e-4578-9adb-f66a44c34958"/>
+				<reportElement x="278" y="1" width="83" height="37" uuid="7018129c-481e-4578-9adb-f66a44c34958"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[TipoProducto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="325" y="1" width="34" height="37" uuid="d97d4e91-1de5-4cd5-a085-d26ff6950942"/>
+				<reportElement x="364" y="1" width="34" height="37" uuid="d97d4e91-1de5-4cd5-a085-d26ff6950942"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Talla]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="1" width="49" height="37" uuid="06e5fe51-4a67-4fca-b60a-708599d6bde5"/>
+				<reportElement x="401" y="1" width="49" height="37" uuid="06e5fe51-4a67-4fca-b60a-708599d6bde5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Genero]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="415" y="1" width="72" height="37" uuid="ad20921b-a3c2-471c-8ce8-750f30ec6db1"/>
+				<reportElement x="454" y="1" width="72" height="37" uuid="ad20921b-a3c2-471c-8ce8-750f30ec6db1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Color]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="491" y="1" width="100" height="37" uuid="a16af147-dd5b-4aa9-a85f-4809abadd63d"/>
+				<reportElement x="530" y="1" width="100" height="37" uuid="a16af147-dd5b-4aa9-a85f-4809abadd63d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -445,55 +441,48 @@ order by tblProductos.codigoProducto]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="595" y="2" width="57" height="36" uuid="70f47081-843d-456f-909a-704a798be2f0"/>
+				<reportElement x="634" y="2" width="57" height="36" uuid="70f47081-843d-456f-909a-704a798be2f0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Precio de Venta]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="659" y="2" width="76" height="36" uuid="8524d5e8-37e2-4432-89d4-81898dc76496"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Precio Sugerido]]></text>
+				<text><![CDATA[Precio]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
 			<textField>
-				<reportElement x="61" y="4" width="86" height="20" uuid="f41c2a18-9e8d-431e-aed3-b8cd7b627667"/>
+				<reportElement x="100" y="4" width="86" height="20" uuid="f41c2a18-9e8d-431e-aed3-b8cd7b627667"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigoProducto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="4" width="86" height="20" uuid="e48bdd48-564e-40ed-9b0c-60b6ff591ae9"/>
+				<reportElement x="189" y="4" width="86" height="20" uuid="e48bdd48-564e-40ed-9b0c-60b6ff591ae9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Marca}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="239" y="4" width="83" height="20" uuid="da393633-b8a1-4383-805c-4a50764f91ee"/>
+				<reportElement x="278" y="4" width="83" height="20" uuid="da393633-b8a1-4383-805c-4a50764f91ee"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{TipoProducto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="325" y="4" width="34" height="20" uuid="ccca04e8-77d5-4d1e-9ce5-558d279b2143"/>
+				<reportElement x="364" y="4" width="34" height="20" uuid="ccca04e8-77d5-4d1e-9ce5-558d279b2143"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Talla}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="362" y="4" width="49" height="20" uuid="eeac5468-5672-41b3-a139-4d0f4aca0f64"/>
+				<reportElement x="401" y="4" width="49" height="20" uuid="eeac5468-5672-41b3-a139-4d0f4aca0f64"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Genero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="415" y="4" width="72" height="20" uuid="612ec7b2-ea54-408e-becb-70d507bee5ca"/>
+				<reportElement x="454" y="4" width="72" height="20" uuid="612ec7b2-ea54-408e-becb-70d507bee5ca"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{colorProducto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="491" y="4" width="100" height="20" uuid="b800761f-793b-43d4-b307-45b78a92062d"/>
+				<reportElement x="530" y="4" width="100" height="20" uuid="b800761f-793b-43d4-b307-45b78a92062d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{descripcionProducto}]]></textFieldExpression>
 			</textField>
@@ -501,14 +490,9 @@ order by tblProductos.codigoProducto]]>
 				<reportElement x="1" y="26" width="801" height="1" forecolor="#CCCCCC" uuid="09610825-79a2-4b7f-9e32-79de4c76b75c"/>
 			</line>
 			<textField>
-				<reportElement x="596" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
+				<reportElement x="635" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="659" y="4" width="76" height="20" uuid="df1dae5a-a9f3-43c6-b2ea-25668cab25e3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precioSugerido}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

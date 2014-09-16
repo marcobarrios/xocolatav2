@@ -77,9 +77,6 @@ where tblRegistroTransacciones.idRegistroTransaccion =
 	<parameter name="xocolata" class="File">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="encabezado" class="File">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[select * from tblPersonas
 inner join tblRegistroTransacciones on tblPersonas.idPersona = tblRegistroTransacciones.idPersona
@@ -282,16 +279,16 @@ order by tblProductos.codigoProducto]]>
 	<pageHeader>
 		<band height="206" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="801" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="801" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="38" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="96" y="80" width="161" height="24" uuid="b2e22dc6-2301-4d04-a694-16ca3a1dd628"/>
+				<reportElement x="322" y="69" width="161" height="24" uuid="b2e22dc6-2301-4d04-a694-16ca3a1dd628"/>
 				<textElement verticalAlignment="Middle" markup="none">
-					<font size="16" isBold="true"/>
+					<font size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Venta al Credito]]></text>
 			</staticText>
@@ -302,14 +299,10 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[Venta al Credito]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame">
-				<reportElement x="288" y="33" width="242" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="60" y="140" width="60" height="16" uuid="783a8ac3-cb0f-4c29-ad6e-93029237bcd7"/>
 				<textElement verticalAlignment="Bottom">

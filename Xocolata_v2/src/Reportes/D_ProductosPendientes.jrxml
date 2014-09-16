@@ -6,9 +6,6 @@
 	<parameter name="xocolata" class="File">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="encabezado" class="File">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[select * from tblPersonas
 inner join tblRegistroTransacciones on tblPersonas.idPersona = tblRegistroTransacciones.idPersona
@@ -211,16 +208,16 @@ order by tblProductos.codigoProducto]]>
 	<pageHeader>
 		<band height="120" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="966" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="966" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="38" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="96" y="80" width="188" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
-				<textElement verticalAlignment="Middle">
-					<font size="16" isBold="true"/>
+				<reportElement x="365" y="59" width="243" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Productos Pendientes]]></text>
 			</staticText>
@@ -235,10 +232,6 @@ order by tblProductos.codigoProducto]]>
 				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame">
-				<reportElement x="342" y="27" width="297" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="845" y="29" width="122" height="40" uuid="62ecd323-75a0-4463-bedb-8817b095fa7f"/>
 				<textElement textAlignment="Right"/>
@@ -338,6 +331,12 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[Fecha de Devolución]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="-3" width="967" height="1" uuid="d20bb62f-e230-4a35-b1c2-7c4bc5429d4d"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#009999"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>

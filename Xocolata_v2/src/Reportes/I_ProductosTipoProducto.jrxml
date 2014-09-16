@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1940" pageHeight="842" columnWidth="1900" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ca6f382-9177-4618-9ce7-1e3b4b7115bd">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="1049"/>
+	<property name="ireport.x" value="68"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dato" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="xocolata" class="File">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="encabezado" class="File">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -167,16 +164,16 @@ order by tblProductos.codigoProducto]]>
 	<pageHeader>
 		<band height="164" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="1899" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="1899" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="38" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="96" y="80" width="144" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
-				<textElement verticalAlignment="Middle">
-					<font size="16" isBold="true"/>
+				<reportElement x="864" y="72" width="170" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo de Producto]]></text>
 			</staticText>
@@ -187,14 +184,10 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[Tipo de Productos]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame">
-				<reportElement x="806" y="44" width="299" height="73" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="96" y="136" width="83" height="17" uuid="7018129c-481e-4578-9adb-f66a44c34958"/>
 				<textElement verticalAlignment="Bottom">

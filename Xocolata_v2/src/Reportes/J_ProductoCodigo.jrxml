@@ -179,18 +179,18 @@ order by tblProductos.codigoProducto]]>
 	<pageHeader>
 		<band height="116" splitType="Stretch">
 			<rectangle>
-				<reportElement x="1" y="0" width="554" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="554" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="41" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="96" y="85" width="188" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="173" y="55" width="188" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Por Código de Producto]]></text>
+				<text><![CDATA[Producto]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="348" y="0" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
@@ -199,14 +199,10 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[Por Código de Producto]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame">
-				<reportElement x="157" y="28" width="231" height="58" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="431" y="28" width="124" height="42" uuid="5e694412-0f76-4843-989e-782d7eaadf3e"/>
 				<textElement textAlignment="Right"/>

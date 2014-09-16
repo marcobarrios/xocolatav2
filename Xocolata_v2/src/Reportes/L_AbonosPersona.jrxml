@@ -107,9 +107,6 @@ where tblPersonas.idPersona = $P{dato};]]>
 	<parameter name="xocolata" class="File">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="encabezado" class="File">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[select * from tblAbonoPersonas
 inner join tblPersonas on tblAbonoPersonas.idPersona = tblPersonas.idPersona
@@ -164,21 +161,17 @@ order by  nombrePersona, fechaabono;]]>
 	</title>
 	<pageHeader>
 		<band height="196" splitType="Stretch">
-			<image scaleImage="FillFrame">
-				<reportElement x="166" y="25" width="229" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<rectangle>
-				<reportElement x="1" y="0" width="554" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="554" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="47" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="96" y="89" width="189" height="24" uuid="02e3c678-3986-4e27-a17e-ba9df881c955"/>
-				<textElement verticalAlignment="Bottom" markup="none">
-					<font size="15" isBold="true"/>
+				<reportElement x="171" y="84" width="201" height="24" uuid="02e3c678-3986-4e27-a17e-ba9df881c955"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+					<font size="17" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $F{idTipoPersona}.equals("2") ? "Abonos Clientes" : "Abonos Vendedores" )]]></textFieldExpression>
 			</textField>
@@ -189,7 +182,7 @@ order by  nombrePersona, fechaabono;]]>
 				</textElement>
 				<text><![CDATA[Abonos]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>

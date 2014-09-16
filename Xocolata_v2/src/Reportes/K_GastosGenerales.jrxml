@@ -6,9 +6,6 @@
 	<parameter name="xocolata" class="File">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="encabezado" class="File">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[select * from tblGastos
 inner join tblTipoGastos on tblTipoGastos.idTipoGasto = tblGastos.idTipoGasto
@@ -40,21 +37,17 @@ order by tblTipoGastos.idTipoGasto asc,tblGastos.fechaGasto;]]>
 	</title>
 	<pageHeader>
 		<band height="127" splitType="Stretch">
-			<image scaleImage="FillFrame">
-				<reportElement x="168" y="26" width="221" height="66" uuid="c21ea6f3-97eb-46c5-a625-4ff10daa675f"/>
-				<imageExpression><![CDATA[$P{encabezado}.getAbsolutePath()]]></imageExpression>
-			</image>
 			<rectangle>
-				<reportElement x="1" y="0" width="554" height="27" backcolor="#CC0066" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
+				<reportElement x="1" y="0" width="554" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement x="11" y="42" width="81" height="66" uuid="5b4f3a5f-9c83-458a-9eaa-a7e0ad71f3ea"/>
 				<imageExpression><![CDATA[$P{xocolata}.getAbsolutePath()]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="96" y="84" width="140" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
-				<textElement verticalAlignment="Bottom">
-					<font size="16" isBold="true"/>
+				<reportElement x="198" y="53" width="160" height="24" uuid="eb1277c4-1132-4e09-9297-fc24415a7794"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Gastos Generales]]></text>
 			</staticText>
@@ -65,8 +58,8 @@ order by tblTipoGastos.idTipoGasto asc,tblGastos.fechaGasto;]]>
 				</textElement>
 				<text><![CDATA[Gastos Generales]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="4" y="5" width="328" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
