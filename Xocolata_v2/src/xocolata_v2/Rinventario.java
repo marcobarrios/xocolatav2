@@ -41,13 +41,11 @@ public class Rinventario extends javax.swing.JInternalFrame {
         String archivo = rutaReporte;
          try
          {
-            File encabezado = new File("src\\Imagenes\\encabezado.jpg");
             File xocolata =   new File("src\\Imagenes\\xocolata.png");
             
             Map parametro = new HashMap();
             parametro.put("dato", parametroBusqueda);
             parametro.put("xocolata", xocolata);
-            parametro.put("encabezado", encabezado);
                           
              JasperReport jasperReport= (JasperReport) JRLoader.loadObject(archivo);
              JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametro, conect);  // conect 
