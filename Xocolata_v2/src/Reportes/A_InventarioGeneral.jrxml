@@ -59,9 +59,6 @@ where idUsuario = 1]]>
 	<parameter name="xocolata" class="File">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="encabezado" class="File">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[select * from tblMarcas
 inner join tblProductos on tblProductos.idMarca = tblMarcas.idMarca
@@ -214,7 +211,7 @@ order by tblProductos.codigoProducto]]>
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="120" splitType="Stretch">
+		<band height="132" splitType="Stretch">
 			<rectangle>
 				<reportElement x="1" y="0" width="1986" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
@@ -247,6 +244,12 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[Distribuidora de Ropa  xocolataxela@gmail.com 4045-5444]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="130" width="1986" height="1" uuid="1f484ee3-8a5e-4a05-8dd8-ff9d7ec28e24"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#009999"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>

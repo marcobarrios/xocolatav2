@@ -171,7 +171,7 @@ order by tblProductos.codigoProducto]]>
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="222" splitType="Stretch">
+		<band height="196" splitType="Stretch">
 			<rectangle>
 				<reportElement x="1" y="0" width="967" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
@@ -187,124 +187,124 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Productos de un Pedido]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="780" y="1" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
+				<reportElement x="780" y="1" width="188" height="24" forecolor="#000000" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Productos de un Pedido]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+				<reportElement x="4" y="5" width="361" height="20" forecolor="#000000" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="1" y="219" width="967" height="1" forecolor="#009999" uuid="cd720e6f-f505-4fc8-ad42-6120c9ecb73e"/>
+				<reportElement x="1" y="193" width="967" height="1" forecolor="#009999" uuid="cd720e6f-f505-4fc8-ad42-6120c9ecb73e"/>
 			</line>
 			<textField pattern="###0.00">
-				<reportElement x="128" y="134" width="100" height="20" uuid="e09e46de-525d-4258-ba7d-d93b3ede7bda"/>
+				<reportElement x="128" y="118" width="100" height="20" uuid="e09e46de-525d-4258-ba7d-d93b3ede7bda"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigoPedido}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="126" y="162" width="100" height="20" uuid="37c35a7f-1398-4149-bd2b-2c1de4f19cd2"/>
+				<reportElement x="126" y="146" width="100" height="20" uuid="37c35a7f-1398-4149-bd2b-2c1de4f19cd2"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{subTotalPedido}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="126" y="182" width="100" height="20" uuid="378f0a7e-f92a-41e9-912d-307035d362f8"/>
+				<reportElement x="126" y="166" width="100" height="20" uuid="378f0a7e-f92a-41e9-912d-307035d362f8"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{impuestoPedido}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="372" y="136" width="100" height="20" uuid="ede174d6-7967-405d-af74-98a432e8e905"/>
+				<reportElement x="372" y="120" width="100" height="20" uuid="ede174d6-7967-405d-af74-98a432e8e905"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{envioPedido}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0">
-				<reportElement x="372" y="171" width="141" height="20" uuid="91ad54a0-5868-46a3-963a-5362f1672182"/>
+				<reportElement x="372" y="155" width="141" height="20" uuid="91ad54a0-5868-46a3-963a-5362f1672182"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cantidadProductos}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="650" y="154" width="130" height="20" uuid="a5af89d4-c2b3-41d0-ad9b-d20fbfa938c1"/>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="650" y="138" width="130" height="20" uuid="a5af89d4-c2b3-41d0-ad9b-d20fbfa938c1"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fechaIngreso}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="650" y="175" width="100" height="20" uuid="1783c0c6-774e-44fc-b0ad-283a527938f8"/>
+				<reportElement x="650" y="159" width="100" height="20" uuid="1783c0c6-774e-44fc-b0ad-283a527938f8"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{tipoCambio}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
-				<reportElement x="650" y="135" width="100" height="20" uuid="3a503db3-021b-4590-962d-cc1d046729b4"/>
+				<reportElement x="650" y="119" width="100" height="20" uuid="3a503db3-021b-4590-962d-cc1d046729b4"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{envioGuate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="71" y="125" width="55" height="37" uuid="8078d183-afde-497a-8a8e-ec6d05b0ed18"/>
+				<reportElement x="71" y="109" width="55" height="37" uuid="8078d183-afde-497a-8a8e-ec6d05b0ed18"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Codigo del Pedido:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="162" width="55" height="20" uuid="2a22f762-a43b-4225-a99e-908871210bb9"/>
+				<reportElement x="71" y="146" width="55" height="20" uuid="2a22f762-a43b-4225-a99e-908871210bb9"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sub-Total:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="182" width="55" height="20" uuid="ee981df2-1b2f-4f7e-ae64-ab8c00052781"/>
+				<reportElement x="71" y="166" width="55" height="20" uuid="ee981df2-1b2f-4f7e-ae64-ab8c00052781"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Impuesto:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="125" width="88" height="39" uuid="2c444c56-a47f-4ee2-bc9f-041dff555c87"/>
+				<reportElement x="286" y="109" width="88" height="39" uuid="2c444c56-a47f-4ee2-bc9f-041dff555c87"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Envio del Producto en EU:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="165" width="88" height="31" uuid="d313a948-3c75-463f-95b8-131c115f69ab"/>
+				<reportElement x="286" y="149" width="88" height="31" uuid="d313a948-3c75-463f-95b8-131c115f69ab"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cantidad de Productos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="792" y="156" width="44" height="20" uuid="3ff04b24-1ebf-4d30-99e3-17845180459a"/>
+				<reportElement x="792" y="140" width="44" height="20" uuid="3ff04b24-1ebf-4d30-99e3-17845180459a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="550" y="135" width="100" height="20" uuid="06296b09-7c16-4a28-9a23-c8c9eaa11752"/>
+				<reportElement x="550" y="119" width="100" height="20" uuid="06296b09-7c16-4a28-9a23-c8c9eaa11752"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[Envio a Guate:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="550" y="155" width="100" height="20" uuid="9c7084bf-48a1-4c93-ba12-d7ddfa119a1c"/>
+				<reportElement x="550" y="139" width="100" height="20" uuid="9c7084bf-48a1-4c93-ba12-d7ddfa119a1c"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[Fecha de Ingreso:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="550" y="175" width="100" height="20" uuid="1ef34f24-dc87-4918-a6a4-d3364813d733"/>
+				<reportElement x="550" y="159" width="100" height="20" uuid="1ef34f24-dc87-4918-a6a4-d3364813d733"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[Tipo de Cambio:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="838" y="156" width="100" height="20" uuid="d64cebe5-b75c-445b-a90f-9f6a075b7fac"/>
+				<reportElement x="838" y="140" width="100" height="20" uuid="d64cebe5-b75c-445b-a90f-9f6a075b7fac"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{subTotalPedido} + $F{impuestoPedido} + $F{envioPedido}]]></textFieldExpression>
 			</textField>
@@ -481,7 +481,7 @@ order by tblProductos.codigoProducto]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="24" splitType="Stretch">

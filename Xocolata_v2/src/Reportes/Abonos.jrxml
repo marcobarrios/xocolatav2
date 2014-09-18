@@ -47,9 +47,10 @@
 		<parameter name="dato" class="java.lang.String">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
-		<queryString language="SQL">
+		<queryString>
 			<![CDATA[select max(contactoPersona) from tblContactoPersonas 
-inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona]]>
+inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona
+where tblPersonas.idPersona = $P{dato}]]>
 		</queryString>
 		<field name="max(contactoPersona)" class="java.lang.String"/>
 		<group name="max(contactoPersona)">
@@ -143,14 +144,17 @@ where tblAbonoPersonas.idAbonoPersona = (select max(idAbonoPersona) from tblAbon
 				<text><![CDATA[Abonos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="1" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
+				<reportElement x="362" y="1" width="188" height="24" forecolor="#000000" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Abonos]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="4" y="5" width="222" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+				<reportElement x="4" y="5" width="222" height="20" forecolor="#000000" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>

@@ -236,7 +236,7 @@ order by tblProductos.codigoProducto]]>
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="189" splitType="Stretch">
+		<band height="172" splitType="Stretch">
 			<rectangle>
 				<reportElement x="1" y="0" width="801" height="27" backcolor="#66CCFF" uuid="a5659f05-ca9f-4321-9288-316cc96e6a22"/>
 			</rectangle>
@@ -252,75 +252,75 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Ventas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="614" y="1" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
+				<reportElement x="614" y="1" width="188" height="24" forecolor="#000000" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ventas]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+				<reportElement x="4" y="5" width="361" height="20" forecolor="#000000" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="60" y="123" width="60" height="16" uuid="783a8ac3-cb0f-4c29-ad6e-93029237bcd7"/>
+				<reportElement x="60" y="111" width="60" height="16" uuid="783a8ac3-cb0f-4c29-ad6e-93029237bcd7"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="120" y="123" width="221" height="16" uuid="d5da3286-ca65-4358-9808-de6721b861cd"/>
+				<reportElement x="120" y="111" width="221" height="16" uuid="d5da3286-ca65-4358-9808-de6721b861cd"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="139" width="221" height="16" uuid="89232404-bc51-4293-8e60-6be817bcb757"/>
+				<reportElement x="120" y="127" width="221" height="16" uuid="89232404-bc51-4293-8e60-6be817bcb757"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{dpiPersona}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="60" y="139" width="60" height="16" uuid="f5061a12-4c05-4f8f-91a7-803cb79d2bc6"/>
+				<reportElement x="60" y="127" width="60" height="16" uuid="f5061a12-4c05-4f8f-91a7-803cb79d2bc6"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[DPI:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="120" y="155" width="221" height="16" uuid="554aded3-accd-4109-8df6-149c8f0033f5"/>
+				<reportElement x="120" y="143" width="221" height="16" uuid="554aded3-accd-4109-8df6-149c8f0033f5"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{direccionPersona}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="60" y="155" width="60" height="16" uuid="2b276add-0b84-41f2-9583-3e6f1cc8f3c0"/>
+				<reportElement x="60" y="143" width="60" height="16" uuid="2b276add-0b84-41f2-9583-3e6f1cc8f3c0"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="352" y="123" width="60" height="16" uuid="c83bc1fb-ede1-4f33-bbf5-7c9b9bcc95cc"/>
+				<reportElement x="352" y="111" width="60" height="16" uuid="c83bc1fb-ede1-4f33-bbf5-7c9b9bcc95cc"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Correo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="412" y="123" width="122" height="16" uuid="337c7cff-0ec7-424f-95c5-9877fc7d6483"/>
+				<reportElement x="412" y="111" width="122" height="16" uuid="337c7cff-0ec7-424f-95c5-9877fc7d6483"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{correoPersona}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="352" y="143" width="60" height="20" uuid="b11f4237-42a5-4bf5-a347-2dac81913d79"/>
+				<reportElement x="352" y="131" width="60" height="20" uuid="b11f4237-42a5-4bf5-a347-2dac81913d79"/>
 				<textElement verticalAlignment="Top">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Télefono:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table" style="table" x="412" y="143" width="118" height="20" uuid="9902859f-06f9-4d16-a48f-af247085287b"/>
+				<reportElement key="table" style="table" x="412" y="131" width="118" height="20" uuid="9902859f-06f9-4d16-a48f-af247085287b"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Telefono" uuid="90d69249-442f-4d25-b372-74b82420eb9c">
 						<datasetParameter name="dato">
@@ -344,7 +344,7 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Distribuidora de Ropa xocolataxela@gmail.com 4045-5444]]></text>
 			</staticText>
 			<line>
-				<reportElement x="4" y="185" width="801" height="1" uuid="961e1c18-a343-45b1-bd1b-b5f54030aa7b"/>
+				<reportElement x="0" y="169" width="801" height="1" uuid="961e1c18-a343-45b1-bd1b-b5f54030aa7b"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#009999"/>
 				</graphicElement>

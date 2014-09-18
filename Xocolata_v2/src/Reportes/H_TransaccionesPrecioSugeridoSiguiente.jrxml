@@ -27,9 +27,11 @@
 		<parameter name="dato" class="java.lang.String">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
-		<queryString language="SQL">
+		<queryString>
 			<![CDATA[select max(contactoPersona) from tblContactoPersonas 
-inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona]]>
+inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona
+inner join tblRegistroTransacciones on tblPersonas.idPersona = tblRegistroTransacciones.idPersona
+where tblRegistroTransacciones.idRegistroTransaccion = $P{dato}]]>
 		</queryString>
 		<field name="max(contactoPersona)" class="java.lang.String"/>
 		<group name="max(contactoPersona)">
@@ -258,14 +260,14 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Transacción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="614" y="1" width="188" height="24" forecolor="#FFFFFF" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
+				<reportElement x="614" y="1" width="188" height="24" forecolor="#000000" uuid="8dcddea4-f966-4cba-93e6-43d169c8e637"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Transacción]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="4" y="5" width="361" height="20" forecolor="#FFFFFF" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
+				<reportElement x="4" y="5" width="361" height="20" forecolor="#000000" uuid="67c33c48-872e-4e60-9c19-9793f630691b"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -314,7 +316,7 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Correo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="412" y="140" width="122" height="16" uuid="337c7cff-0ec7-424f-95c5-9877fc7d6483"/>
+				<reportElement x="412" y="140" width="142" height="16" uuid="337c7cff-0ec7-424f-95c5-9877fc7d6483"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{correoPersona}]]></textFieldExpression>
 			</textField>
@@ -358,12 +360,12 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigoTransaccion}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="654" y="163" width="100" height="20" uuid="f99f6be4-da83-43cc-b01d-f7f398dbefd9"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{fechaTransaccion}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="654" y="180" width="100" height="20" uuid="cb0cc12b-afb7-431d-bc84-0c66dd8f466c"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fechaDevolucion}]]></textFieldExpression>

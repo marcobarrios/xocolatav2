@@ -27,9 +27,11 @@
 		<parameter name="dato" class="java.lang.String">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
-		<queryString language="SQL">
+		<queryString>
 			<![CDATA[select max(contactoPersona) from tblContactoPersonas 
-inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona]]>
+inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona
+inner join tblRegistroTransacciones on tblPersonas.idPersona = tblRegistroTransacciones.idPersona
+where tblRegistroTransacciones.idRegistroTransaccion = $P{dato}]]>
 		</queryString>
 		<field name="max(contactoPersona)" class="java.lang.String"/>
 		<group name="max(contactoPersona)">
@@ -40,9 +42,6 @@ inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona]
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="xocolata" class="File">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="encabezado" class="File">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -361,7 +360,7 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigoTransaccion}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="654" y="163" width="100" height="20" uuid="f99f6be4-da83-43cc-b01d-f7f398dbefd9"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{fechaTransaccion}]]></textFieldExpression>
