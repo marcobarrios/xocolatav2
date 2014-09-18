@@ -11,6 +11,7 @@ import ContenedorComboBox.Item;
 import Querys.AbonoQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +22,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import xocolata_v2.ConexionDB;
+import xocolata_v2.Rinventario;
 
 /**
  *
@@ -301,7 +303,16 @@ public class VentanaAbonos extends javax.swing.JInternalFrame {
         lNuevoSaldo.setText(String.valueOf(Double.parseDouble(lSaldoActual.getText())-Double.parseDouble(tMontoAbono.getText())));
         tMontoAbono.setText("");
         lSaldoActual.setText("0.0");
+        
+        Rinventario Rinv=new Rinventario(String.valueOf(id),"src\\Reportes\\Abonos.jasper");
+        this.getParent().add(Rinv);        
+        Rinv.show();
+        try {
+            Rinv.setSelected(true);
+        } catch (PropertyVetoException ex) {
+        }
 
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tMontoAbonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tMontoAbonoFocusGained

@@ -54,7 +54,7 @@ public class Calendario extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
-        jLabel1.setText("Ingrese fecha límita de pago");
+        jLabel1.setText("Ingrese fecha límite:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

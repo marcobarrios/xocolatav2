@@ -16,6 +16,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
+import xocolata_v2.Rinventario;
 
 /**
  *
@@ -607,6 +609,13 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         
         if (rContado.isSelected()) {
             //LLAMAR REPORTE VENTA DIRECTA AL CONTADO 
+            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\M_VentaDirecta.jasper");
+            this.getParent().add(Rinv);        
+            Rinv.show();
+            try {
+                Rinv.setSelected(true);
+            } catch (PropertyVetoException ex) {
+            }
         }
         else if (rCredito.isSelected()) {
             final Calendario ventana = new Calendario();
@@ -629,6 +638,7 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
                             TransaccionQuerys.ingresarFechaLimite(idTransaccion, fecha);
                             cargarAbono();
                             //LLAMAR REPORTE VENTA DIRECTA AL CREDITO
+                            llamarReporteVentaDirectaCredito();
                         }
 			@Override public void internalFrameActivated(InternalFrameEvent arg0)   {}
 		});
@@ -637,6 +647,16 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void llamarReporteVentaDirectaCredito() {
+        Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\M_VentaCredito.jasper");
+        this.getParent().add(Rinv);        
+        Rinv.show();
+        try {
+            Rinv.setSelected(true);
+        } catch (PropertyVetoException ex) {
+        }
+    }
+    
     private ArrayList getListaId()
     {
         int tama = tblProductosTransaccion.getRowCount();

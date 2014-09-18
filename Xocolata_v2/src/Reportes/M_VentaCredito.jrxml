@@ -409,7 +409,7 @@ order by tblProductos.codigoProducto]]>
 				<reportElement x="0" y="203" width="802" height="1" forecolor="#009999" uuid="d4be755c-73a3-4e0a-ba8e-5a54b6105b84"/>
 			</line>
 			<staticText>
-				<reportElement x="554" y="186" width="107" height="16" uuid="71e0a214-2912-4104-9dd5-cb26c6b46bb6"/>
+				<reportElement x="534" y="186" width="127" height="16" uuid="71e0a214-2912-4104-9dd5-cb26c6b46bb6"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>

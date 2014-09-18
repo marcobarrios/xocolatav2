@@ -24,6 +24,8 @@ public class Rinventario extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Rinventario
+     * @param parametroBusqueda
+     * @param rutaReporte
      */
     public Rinventario(String parametroBusqueda, String rutaReporte) {
         initComponents();

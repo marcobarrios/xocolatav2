@@ -300,12 +300,13 @@ public class TransaccionQuerys {
         }
     }
     
-    public static void agregarProductosVendidos(int idTransaccion) {
+    public static void agregarProductosVendidos(int idRegistroTransaccion) {
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                comando.executeUpdate("UPDATE tblProductos INNER JOIN tblDetalleTransacciones ON tblProductos.idProducto = tblDetalleTransacciones.idProducto SET idEstadoProducto = '3' WHERE tblDetalleTransacciones.idTransaccion = '" + idTransaccion + "'");
+                comando.executeUpdate("UPDATE tblProductos INNER JOIN tblDetalleTransacciones ON tblProductos.idProducto = tblDetalleTransacciones.idProducto "
+                        + "INNER JOIN tblTransacciones ON tblDetalleTransacciones.idTransaccion = tblTransacciones.idTransaccion SET idEstadoProducto = '3' WHERE tblTransacciones.idRegistroTransaccion = '" + idRegistroTransaccion + "'");
             }
             conexion.close();
         }

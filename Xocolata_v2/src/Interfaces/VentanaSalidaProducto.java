@@ -13,8 +13,10 @@ import Querys.ProductoQuerys;
 import Querys.TransaccionQuerys;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,8 +30,11 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 import xocolata_v2.ConexionDB;
+import xocolata_v2.Rinventario;
 
 /**
  *
@@ -592,7 +597,34 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TransaccionQuerys.agregarPreciosTransaccion(idTransaccion, Integer.parseInt(lCantidad.getText()), Double.parseDouble(lSubtotal.getText()), Double.parseDouble(tOferta.getText()), Double.parseDouble(lSubtotal.getText())-Double.parseDouble(lTotal.getText()), Double.parseDouble(lTotal.getText()));
 
-        ArrayList<Integer> lista = getListaId();
+        final Calendario ventana = new Calendario();
+            Dimension desktopSize = this.getParent().getSize();
+            Dimension jInternalFrameSize = ventana.getSize();
+            ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                                (desktopSize.height- jInternalFrameSize.height)/2);
+            this.getParent().add(ventana);
+            ventana.show();
+            ventana.addInternalFrameListener(new InternalFrameListener() {
+			@Override
+			public void internalFrameClosing(InternalFrameEvent arg0) {}
+			@Override public void internalFrameOpened(InternalFrameEvent arg0)      {}
+			@Override public void internalFrameIconified(InternalFrameEvent arg0)   {}
+			@Override public void internalFrameDeiconified(InternalFrameEvent arg0) {}
+			@Override public void internalFrameDeactivated(InternalFrameEvent arg0) {}
+			@Override public void internalFrameClosed(InternalFrameEvent arg0)      
+                        {
+                            String fecha = ventana.getFechaFinal();
+                            TransaccionQuerys.ingresarFechaLimite(idTransaccion, fecha);
+                            terminarTransaccion();
+                        }
+			@Override public void internalFrameActivated(InternalFrameEvent arg0)   {}
+		});
+        
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void terminarTransaccion() {
+                ArrayList<Integer> lista = getListaId();
         Iterator iterador = lista.iterator();
         while (iterador.hasNext()) {
             int idProducto = (int) iterador.next();
@@ -610,16 +642,28 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         if(resultado == JOptionPane.YES_OPTION)
         {
             //REPORTE CON PRECIO SUGERIDO 
-            //MANDAR TBLTRANSACCIONES.IDTRANSACCION Y TBLDETALLETRANSACCIONES.FECHADETALLE
+            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\.jasper");
+            this.getParent().add(Rinv);        
+            Rinv.show();
+            try {
+                Rinv.setSelected(true);
+            } catch (PropertyVetoException ex) {
+            }
         }
         else
         {
             //REPORTE SIN PRECIO SUGERIDO
-            //MANDAR TBLTRANSACCIONES.IDTRANSACCION Y TBLDETALLETRANSACCIONES.FECHADETALLE
+            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\.jasper");
+            this.getParent().add(Rinv);        
+            Rinv.show();
+            try {
+                Rinv.setSelected(true);
+            } catch (PropertyVetoException ex) {
+            }
         }
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
+    }
+    
     int temporal=-1;
     private void tblProductosTrasaccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosTrasaccionMouseClicked
         // TODO add your handling code here:

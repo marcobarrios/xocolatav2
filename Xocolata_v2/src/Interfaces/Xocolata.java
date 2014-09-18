@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.beans.PropertyVetoException;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import xocolata_v2.Rinventario;
 
 /**
@@ -72,12 +73,6 @@ public class Xocolata extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu13 = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -88,6 +83,12 @@ public class Xocolata extends javax.swing.JFrame {
         jMenu14 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu13 = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jMenu12 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
@@ -200,46 +201,6 @@ public class Xocolata extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu6.setText("Personas");
-
-        jMenuItem6.setText("Vendedores");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(jMenuItem6);
-
-        jMenuItem7.setText("Clientes");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(jMenuItem7);
-
-        jMenu13.setText("Agregar Teléfonos");
-
-        jMenuItem16.setText("Vendedor");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
-            }
-        });
-        jMenu13.add(jMenuItem16);
-
-        jMenuItem17.setText("Cliente");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
-            }
-        });
-        jMenu13.add(jMenuItem17);
-
-        jMenu6.add(jMenu13);
-
-        jMenuBar1.add(jMenu6);
-
         jMenu7.setText("Transacciones");
 
         jMenuItem8.setText("Salida de Producto");
@@ -307,6 +268,46 @@ public class Xocolata extends javax.swing.JFrame {
         jMenu14.add(jMenuItem19);
 
         jMenuBar1.add(jMenu14);
+
+        jMenu6.setText("Personas");
+
+        jMenuItem6.setText("Vendedores");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem6);
+
+        jMenuItem7.setText("Clientes");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem7);
+
+        jMenu13.setText("Agregar Teléfonos");
+
+        jMenuItem16.setText("Vendedor");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem16);
+
+        jMenuItem17.setText("Cliente");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem17);
+
+        jMenu6.add(jMenu13);
+
+        jMenuBar1.add(jMenu6);
 
         jMenu12.setText("Consultas");
 
@@ -829,7 +830,11 @@ public class Xocolata extends javax.swing.JFrame {
 
     private void jMenuItem41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem41ActionPerformed
         VentanaSeleccionDatos ventana = new VentanaSeleccionDatos("VentaClienteEspecifico");
-        
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
         ventana.show();
     }//GEN-LAST:event_jMenuItem41ActionPerformed
 
@@ -874,7 +879,14 @@ public class Xocolata extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
-        
+        String codigo = JOptionPane.showInputDialog(null, "Ingrese Código del Producto");
+        Rinventario Rinv=new Rinventario("","src\\Reportes\\K_GastosGenerales.jasper");
+        jDesktopPane1.add(Rinv);        
+        Rinv.show();
+        try {
+            Rinv.setSelected(true);
+        } catch (PropertyVetoException ex) {
+        }
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed

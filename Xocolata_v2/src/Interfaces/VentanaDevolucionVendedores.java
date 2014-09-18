@@ -415,7 +415,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        TransaccionQuerys.agregarProductosVendidos(idTransaccion);
+        TransaccionQuerys.agregarProductosVendidos(idRegistroTransaccion);
         JOptionPane.showMessageDialog(null, "Productos marcados como 'Vendidos'");
     }//GEN-LAST:event_jButton3ActionPerformed
 
