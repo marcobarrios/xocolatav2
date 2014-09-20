@@ -548,7 +548,7 @@ order by tblProductos.codigoProducto]]>
 			<textField pattern="###0.00">
 				<reportElement x="659" y="4" width="76" height="20" uuid="df1dae5a-a9f3-43c6-b2ea-25668cab25e3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precioSugerido}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{precioVentaFinal}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
