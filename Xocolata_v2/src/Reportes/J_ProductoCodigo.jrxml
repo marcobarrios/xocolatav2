@@ -17,7 +17,7 @@ inner join tblTallas on tblProductos.idTalla = tblTallas.idTalla
 inner join tblGeneros on tblProductos.idGenero = tblGeneros.idGenero
 inner join tblEstadoProductos on tblProductos.idEstadoProducto = tblEstadoProductos.idEstadoProducto
 inner join tblPedidos on tblProductos.idPedido = tblPedidos.idPedido
-where tblProductos.idProducto = $P{dato}
+where tblProductos.codigoProducto = $P{dato}
 order by tblProductos.codigoProducto]]>
 	</queryString>
 	<field name="idMarca" class="java.lang.Integer">
