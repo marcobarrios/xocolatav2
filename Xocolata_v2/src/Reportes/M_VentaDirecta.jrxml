@@ -488,7 +488,7 @@ order by tblProductos.codigoProducto]]>
 			<line>
 				<reportElement x="1" y="26" width="801" height="1" forecolor="#CCCCCC" uuid="09610825-79a2-4b7f-9e32-79de4c76b75c"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="635" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
@@ -556,22 +556,22 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[SubTotal]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="680" y="9" width="100" height="20" uuid="b4a9c606-f56b-4a06-9465-7c58dbde8d94"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{subtotalTransaccion}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="680" y="29" width="100" height="20" uuid="058796a2-b20e-4a84-8ea9-6a262c2f3952"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{porcentajeOferta}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="680" y="49" width="100" height="20" uuid="40b0e8cc-1fe5-4ddc-a8aa-b4a0f70e0ba2"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{descuentoTransaccion}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="680" y="69" width="100" height="20" uuid="c813f5e0-379c-4b90-8f0c-e5c65845946b"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalTransaccion}]]></textFieldExpression>

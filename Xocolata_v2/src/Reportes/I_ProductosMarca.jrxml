@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1936" pageHeight="842" columnWidth="1896" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ca6f382-9177-4618-9ce7-1e3b4b7115bd">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="943"/>
+	<property name="ireport.x" value="639"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dato" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -451,12 +451,12 @@ order by tblProductos.codigoProducto]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalDolares}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="780" y="4" width="64" height="20" uuid="7c1cc9ba-447b-4e17-bb07-f06d1dfcd5c7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{envioGuate}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="848" y="4" width="53" height="20" uuid="61e4b5a6-240a-45a8-87f4-33287d08a2ae"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{tipoCambio}]]></textFieldExpression>

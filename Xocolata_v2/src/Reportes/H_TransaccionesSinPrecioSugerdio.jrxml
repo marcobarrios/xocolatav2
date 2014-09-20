@@ -31,7 +31,8 @@
 			<![CDATA[select max(contactoPersona) from tblContactoPersonas 
 inner join tblPersonas on tblContactoPersonas.idPersona = tblPersonas.idPersona
 inner join tblRegistroTransacciones on tblPersonas.idPersona = tblRegistroTransacciones.idPersona
-where tblRegistroTransacciones.idRegistroTransaccion = $P{dato}]]>
+inner join tblTransacciones on tblTransacciones.idRegistroTransaccion= tblRegistroTransacciones.idRegistroTransaccion
+where tblTransacciones.idTransaccion = $P{dato}]]>
 		</queryString>
 		<field name="max(contactoPersona)" class="java.lang.String"/>
 		<group name="max(contactoPersona)">
@@ -54,7 +55,7 @@ inner join tblMarcas on tblProductos.idMarca = tblMarcas.idMarca
 inner join tblTipoProductos on tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto
 inner join tblTallas on tblProductos.idTalla = tblTallas.idTalla
 inner join tblGeneros on tblProductos.idGenero = tblGeneros.idGenero
-where tblRegistroTransacciones.idRegistroTransaccion = $P{dato}
+where tblTransacciones.idTransaccion = $P{dato}
 order by tblProductos.codigoProducto]]>
 	</queryString>
 	<field name="idPersona" class="java.lang.Integer">
@@ -93,7 +94,7 @@ order by tblProductos.codigoProducto]]>
 	<field name="cantidadProductos" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="totalTransaccion" class="java.lang.Double">
+	<field name="totalRegistroTransaccion" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="idTransaccion" class="java.lang.Integer">
@@ -112,6 +113,9 @@ order by tblProductos.codigoProducto]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="descuentoTransaccion" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalTransaccion" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="idDetalleTransaccion" class="java.lang.Integer">
@@ -497,10 +501,10 @@ order by tblProductos.codigoProducto]]>
 			<line>
 				<reportElement x="1" y="26" width="801" height="1" forecolor="#CCCCCC" uuid="09610825-79a2-4b7f-9e32-79de4c76b75c"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="632" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{precioOfertado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -556,7 +560,7 @@ order by tblProductos.codigoProducto]]>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{subtotalTransaccion}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00 %">
+			<textField pattern="###0.00">
 				<reportElement x="677" y="29" width="100" height="20" uuid="87356faa-cb2e-4800-9cf3-878ebd42b580"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{porcentajeOfertaVenta}]]></textFieldExpression>
@@ -583,7 +587,7 @@ order by tblProductos.codigoProducto]]>
 			<textField pattern="###0.00">
 				<reportElement x="677" y="69" width="100" height="20" uuid="465700fe-02df-41ec-88c6-f684696e9789"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{precioVentaFinal_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalTransaccion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

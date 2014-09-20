@@ -64,10 +64,7 @@ where tblRegistroTransacciones.idRegistroTransaccion = $P{dato}]]>
 		</parameter>
 		<queryString>
 			<![CDATA[select tblAbonoPersonas.montoAbono from tblAbonoPersonas
-inner join tblPersonas on tblAbonoPersonas.idPersona = tblPersonas.idPersona
-inner join tblRegistroTransacciones on tblPersonas.idPersona = tblRegistroTransacciones.idPersona
-where tblRegistroTransacciones.idRegistroTransaccion =
- $P{dato} and tblAbonoPersonas.idAbonoPersona = (select max(tblAbonoPersonas.idAbonoPersona) from tblAbonoPersonas)]]>
+where tblAbonoPersonas.idAbonoPersona = (select max(idAbonoPersona) from tblAbonoPersonas)]]>
 		</queryString>
 		<field name="montoAbono" class="java.lang.Double">
 			<fieldDescription><![CDATA[]]></fieldDescription>
@@ -344,26 +341,26 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="352" y="140" width="60" height="16" uuid="c83bc1fb-ede1-4f33-bbf5-7c9b9bcc95cc"/>
+				<reportElement x="346" y="140" width="60" height="16" uuid="c83bc1fb-ede1-4f33-bbf5-7c9b9bcc95cc"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Correo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="412" y="140" width="122" height="16" uuid="337c7cff-0ec7-424f-95c5-9877fc7d6483"/>
+				<reportElement x="406" y="140" width="142" height="16" uuid="337c7cff-0ec7-424f-95c5-9877fc7d6483"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{correoPersona}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="352" y="160" width="60" height="20" uuid="b11f4237-42a5-4bf5-a347-2dac81913d79"/>
+				<reportElement x="346" y="160" width="60" height="20" uuid="b11f4237-42a5-4bf5-a347-2dac81913d79"/>
 				<textElement verticalAlignment="Top">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Télefono:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table" style="table" x="412" y="160" width="118" height="20" uuid="9902859f-06f9-4d16-a48f-af247085287b"/>
+				<reportElement key="table" style="table" x="406" y="160" width="118" height="20" uuid="9902859f-06f9-4d16-a48f-af247085287b"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Telefono" uuid="90d69249-442f-4d25-b372-74b82420eb9c">
 						<datasetParameter name="dato">
@@ -375,6 +372,7 @@ order by tblProductos.codigoProducto]]>
 						<jr:detailCell style="table_TD" height="20">
 							<textField>
 								<reportElement x="0" y="0" width="90" height="20" uuid="c701d33b-a36a-4233-a4a4-95339b910cee"/>
+								<textElement verticalAlignment="Top"/>
 								<textFieldExpression><![CDATA[$F{max(contactoPersona)}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -542,12 +540,12 @@ order by tblProductos.codigoProducto]]>
 			<line>
 				<reportElement x="1" y="26" width="801" height="1" forecolor="#CCCCCC" uuid="09610825-79a2-4b7f-9e32-79de4c76b75c"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="596" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="659" y="4" width="76" height="20" uuid="df1dae5a-a9f3-43c6-b2ea-25668cab25e3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioSugerido}]]></textFieldExpression>
@@ -602,7 +600,7 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Abonado:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table 1" style="table 1" x="679" y="71" width="76" height="20" uuid="6cba286d-23c4-48e8-a993-decdf0988124"/>
+				<reportElement key="table 1" style="table 1" x="679" y="72" width="76" height="20" uuid="6cba286d-23c4-48e8-a993-decdf0988124"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Abonado" uuid="5f4007aa-5494-42e9-981e-38d721eb63a6">
 						<datasetParameter name="dato">
@@ -612,8 +610,9 @@ order by tblProductos.codigoProducto]]>
 					</datasetRun>
 					<jr:column width="90" uuid="c5d0975b-3848-4cbc-b2a3-33326022c7a0">
 						<jr:detailCell style="table 1_TD" height="20">
-							<textField>
+							<textField pattern="###0.00">
 								<reportElement x="0" y="0" width="90" height="20" uuid="20918814-a022-479f-8f86-d1f47215b7a1"/>
+								<textElement verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{montoAbono}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -641,7 +640,7 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="679" y="11" width="100" height="20" uuid="fc346794-6869-4d2a-83bd-f44e7b7adf7c"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{subtotalTransaccion}]]></textFieldExpression>
@@ -651,12 +650,12 @@ order by tblProductos.codigoProducto]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{porcentajeOferta}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="680" y="51" width="100" height="19" uuid="985ebf69-9595-4f41-b93e-79647f4f549f"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{descuentoTransaccion}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="680" y="91" width="99" height="20" uuid="31a4e5b5-654d-4cbf-bf81-33afd9d0fb11"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalTransaccion}]]></textFieldExpression>

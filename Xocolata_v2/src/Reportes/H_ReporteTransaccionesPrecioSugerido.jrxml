@@ -507,15 +507,15 @@ order by tblProductos.codigoProducto]]>
 			<line>
 				<reportElement x="1" y="26" width="801" height="1" forecolor="#CCCCCC" uuid="09610825-79a2-4b7f-9e32-79de4c76b75c"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="596" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{precioOfertado}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="659" y="4" width="76" height="20" uuid="df1dae5a-a9f3-43c6-b2ea-25668cab25e3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precioSugerido}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{precioOfertadoSugerido}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -559,7 +559,7 @@ order by tblProductos.codigoProducto]]>
 			<line>
 				<reportElement x="0" y="5" width="802" height="1" forecolor="#999999" uuid="9c8a3812-d7bd-4e4d-b7b3-24c24c718d72"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="679" y="11" width="100" height="20" uuid="ddcb76d9-e00f-44d0-b839-76830d6e90ec"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalRegistroTransaccion}]]></textFieldExpression>

@@ -93,7 +93,7 @@ order by tblProductos.codigoProducto]]>
 	<field name="cantidadProductos" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="totalTransaccion" class="java.lang.Double">
+	<field name="totalRegistroTransaccion" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="idTransaccion" class="java.lang.Integer">
@@ -112,6 +112,9 @@ order by tblProductos.codigoProducto]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="descuentoTransaccion" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalTransaccion" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="idDetalleTransaccion" class="java.lang.Integer">
@@ -500,7 +503,7 @@ order by tblProductos.codigoProducto]]>
 			<textField>
 				<reportElement x="633" y="4" width="56" height="20" uuid="53e0f716-7fe6-43ac-8aa5-07e882053d43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{precioOfertado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -547,7 +550,7 @@ order by tblProductos.codigoProducto]]>
 			<textField pattern="###0.00">
 				<reportElement x="677" y="11" width="100" height="20" uuid="465700fe-02df-41ec-88c6-f684696e9789"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{precioVentaFinal_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{totalRegistroTransaccion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

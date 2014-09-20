@@ -371,7 +371,7 @@ order by tblProductos.codigoProducto;]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="623" y="4" width="57" height="20" uuid="00aa11f6-66e7-405d-a1c6-c24bd6b68d3b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioVentaFinal}]]></textFieldExpression>
@@ -430,7 +430,7 @@ order by tblProductos.codigoProducto;]]>
 			<line>
 				<reportElement x="0" y="5" width="802" height="1" forecolor="#999999" uuid="9c8a3812-d7bd-4e4d-b7b3-24c24c718d72"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="681" y="49" width="76" height="20" uuid="7ecaf08d-8a1d-4de1-9d20-c85cee392526"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{precioVenta_1}]]></textFieldExpression>

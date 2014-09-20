@@ -328,7 +328,7 @@ order by tblProductos.codigoProducto]]>
 			<line>
 				<reportElement x="1" y="26" width="801" height="1" forecolor="#CCCCCC" uuid="09610825-79a2-4b7f-9e32-79de4c76b75c"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="677" y="4" width="80" height="20" uuid="d1b762c8-89f3-440e-b133-58772289d6a4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioVentaFinal}]]></textFieldExpression>

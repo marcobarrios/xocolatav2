@@ -371,7 +371,7 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="623" y="4" width="57" height="20" uuid="44f4f74f-fd4d-4912-af34-6a69bc71c8fe"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioVentaFinal}]]></textFieldExpression>

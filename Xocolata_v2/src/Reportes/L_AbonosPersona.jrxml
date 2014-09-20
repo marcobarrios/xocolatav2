@@ -254,7 +254,7 @@ order by  nombrePersona, fechaabono;]]>
 					</datasetRun>
 					<jr:column width="90" uuid="eacb31a7-1894-4812-9bf4-35d29ee49807">
 						<jr:detailCell style="table_TD" height="20">
-							<textField>
+							<textField pattern="###0.00">
 								<reportElement x="0" y="0" width="90" height="20" uuid="ff44c806-2bca-4870-84b1-c1279c6f679b"/>
 								<textFieldExpression><![CDATA[$F{ContactoPersona}]]></textFieldExpression>
 							</textField>
@@ -327,7 +327,7 @@ order by  nombrePersona, fechaabono;]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="106" splitType="Stretch">
+		<band height="99" splitType="Stretch">
 			<line>
 				<reportElement x="1" y="4" width="554" height="1" forecolor="#999999" uuid="3f76ba1f-6afb-44a2-a2da-3de255f83cfb"/>
 			</line>
@@ -344,33 +344,33 @@ order by  nombrePersona, fechaabono;]]>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="297" y="62" width="100" height="23" uuid="6be80c15-826b-459f-b560-ad7d7d2cfaaa"/>
+				<reportElement x="297" y="54" width="100" height="23" uuid="6be80c15-826b-459f-b560-ad7d7d2cfaaa"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Abonado:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="402" y="62" width="100" height="23" uuid="df20edd3-ad14-4ac0-99ef-7bc1c1e1ae70"/>
+			<textField pattern="###0.00">
+				<reportElement x="402" y="53" width="100" height="23" uuid="df20edd3-ad14-4ac0-99ef-7bc1c1e1ae70"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{montoAbono_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="297" y="13" width="100" height="20" uuid="80483ead-7c79-4194-8b3c-c23ff1350fc7"/>
+				<reportElement x="297" y="10" width="100" height="20" uuid="80483ead-7c79-4194-8b3c-c23ff1350fc7"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total de las Ventas:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="297" y="86" width="100" height="19" uuid="8379fba7-ce2b-4f42-b732-df4bbcfab1e1"/>
+				<reportElement x="297" y="77" width="100" height="19" uuid="8379fba7-ce2b-4f42-b732-df4bbcfab1e1"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Saldo:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement key="table 1" style="table 1" x="402" y="13" width="100" height="20" uuid="96032b8a-17fe-457d-b0e9-13e3b3a2e187"/>
+				<reportElement key="table 1" style="table 1" x="402" y="10" width="100" height="20" uuid="96032b8a-17fe-457d-b0e9-13e3b3a2e187"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="totalVentas" uuid="144b2ce4-4073-4e53-8892-645e9a34d199">
 						<datasetParameter name="dato">
@@ -380,7 +380,7 @@ order by  nombrePersona, fechaabono;]]>
 					</datasetRun>
 					<jr:column width="90" uuid="8ee01b9a-2300-4d86-a07f-7807c5ec3351">
 						<jr:detailCell style="table 1_TD" height="20">
-							<textField>
+							<textField pattern="###0.00">
 								<reportElement x="0" y="0" width="90" height="20" uuid="9ffc9b06-acd7-4d5f-af9f-8c62ed3b1e28"/>
 								<textFieldExpression><![CDATA[$F{Total Transaccion}]]></textFieldExpression>
 							</textField>
@@ -388,13 +388,13 @@ order by  nombrePersona, fechaabono;]]>
 					</jr:column>
 				</jr:table>
 			</componentElement>
-			<textField>
-				<reportElement x="402" y="85" width="100" height="20" uuid="9ed0ca88-8139-467d-a03e-d8fec832ddfe"/>
+			<textField pattern="###0.00">
+				<reportElement x="402" y="76" width="100" height="20" uuid="9ed0ca88-8139-467d-a03e-d8fec832ddfe"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{saldoPersona}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement key="table 2" style="table 2" x="402" y="38" width="100" height="20" uuid="d1a3904a-df1b-4aa9-b2b4-43e64c3a092e"/>
+				<reportElement key="table 2" style="table 2" x="402" y="32" width="100" height="20" uuid="d1a3904a-df1b-4aa9-b2b4-43e64c3a092e"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="TotalPendiente" uuid="b481bb87-d93f-44f3-8085-c9459d9d67fa">
 						<datasetParameter name="dato">
@@ -404,7 +404,7 @@ order by  nombrePersona, fechaabono;]]>
 					</datasetRun>
 					<jr:column width="90" uuid="1ac1910b-a9ad-4edb-9f7a-343f5f182e50">
 						<jr:detailCell style="table 2_TD" height="20">
-							<textField>
+							<textField pattern="###0.00">
 								<reportElement x="0" y="0" width="90" height="20" uuid="21a1b253-4c7e-4580-b2b3-d86d0040ea5e"/>
 								<textFieldExpression><![CDATA[$F{Total Pendiente:}]]></textFieldExpression>
 							</textField>
@@ -413,7 +413,7 @@ order by  nombrePersona, fechaabono;]]>
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement x="297" y="37" width="100" height="23" uuid="5153219f-f46b-4a8f-ad88-f1f830666a23"/>
+				<reportElement x="297" y="31" width="100" height="23" uuid="5153219f-f46b-4a8f-ad88-f1f830666a23"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>

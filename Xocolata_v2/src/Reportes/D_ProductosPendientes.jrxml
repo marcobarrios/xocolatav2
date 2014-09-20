@@ -381,7 +381,7 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="419" y="4" width="57" height="20" uuid="8427006a-4a36-44d5-bdc8-e4fe46157649"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioVenta}]]></textFieldExpression>
@@ -405,7 +405,7 @@ order by tblProductos.codigoProducto]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fechaDevolucion}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="479" y="4" width="76" height="20" uuid="6a58abd7-b9f8-40ba-8622-91962054d4da"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{precioOfertado}]]></textFieldExpression>
@@ -459,12 +459,12 @@ order by tblProductos.codigoProducto]]>
 			<line>
 				<reportElement x="0" y="5" width="968" height="1" forecolor="#999999" uuid="9c8a3812-d7bd-4e4d-b7b3-24c24c718d72"/>
 			</line>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="900" y="29" width="67" height="20" uuid="3099201b-bba2-45d4-a572-e379dee996ff"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{precioVenta_1}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00">
 				<reportElement x="900" y="49" width="65" height="20" uuid="6f8e1177-e216-47d7-9eaf-7d4fed3e4897"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{precioVentaFinal_2}]]></textFieldExpression>
