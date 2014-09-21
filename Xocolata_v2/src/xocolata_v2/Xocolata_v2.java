@@ -6,7 +6,7 @@
 
 package xocolata_v2;
 
-import Interfaces.Xocolata;
+import Interfaces.Inicio;
 import javax.swing.JFrame;
 
 /**
@@ -19,11 +19,10 @@ public class Xocolata_v2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Xocolata ventana = new Xocolata();
+        Inicio ventana = new Inicio();
         ventana.setTitle("Xocolata 2.0 - Distribuidora de Ropa");
         ventana.setName("Xocolata 2.0 - Distribuidora de Ropa");
         ventana.setLocationRelativeTo(null);
-        ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventana.setVisible(true);
     }
     

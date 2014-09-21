@@ -228,7 +228,7 @@ public class Inicio extends javax.swing.JFrame {
         {
             
             Xocolata ventana = new Xocolata();
-            ventana.setTitle("Xocolata ");
+            ventana.setTitle("Xocolata 2.0 - Distribuidora de Ropa");
             ventana.setLocationRelativeTo(null);
             ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
             ventana.setVisible(true);
@@ -251,7 +251,7 @@ public class Inicio extends javax.swing.JFrame {
             if(tContrasenia.getText().equals(pass))
             {
                 Xocolata ventana = new Xocolata();
-                ventana.setTitle("Xocolata");
+                ventana.setTitle("Xocolata 2.0 - Distribuidora de Ropa");
                 ventana.setLocationRelativeTo(null);
                 ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 ventana.setVisible(true);
