@@ -519,10 +519,14 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel10.setText("Impuesto:");
 
         tImpuestoProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tImpuestoProducto.setEnabled(false);
+        tImpuestoProducto.setFocusable(false);
         tImpuestoProducto.setMinimumSize(new java.awt.Dimension(4, 30));
         tImpuestoProducto.setPreferredSize(new java.awt.Dimension(73, 30));
 
         tTotalDolares.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTotalDolares.setEnabled(false);
+        tTotalDolares.setFocusable(false);
         tTotalDolares.setMinimumSize(new java.awt.Dimension(4, 30));
         tTotalDolares.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -530,6 +534,8 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel11.setText("Envio");
 
         tEnvioProducto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tEnvioProducto.setEnabled(false);
+        tEnvioProducto.setFocusable(false);
         tEnvioProducto.setMinimumSize(new java.awt.Dimension(4, 30));
         tEnvioProducto.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -537,6 +543,8 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel12.setText("Total Dolares");
 
         tTotalQ.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTotalQ.setEnabled(false);
+        tTotalQ.setFocusable(false);
         tTotalQ.setMinimumSize(new java.awt.Dimension(4, 30));
         tTotalQ.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -544,6 +552,8 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel13.setText("Envio Guate:");
 
         tEnvioGuate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tEnvioGuate.setEnabled(false);
+        tEnvioGuate.setFocusable(false);
         tEnvioGuate.setMinimumSize(new java.awt.Dimension(4, 30));
         tEnvioGuate.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -554,6 +564,8 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel15.setText("Total Q. :");
 
         tTipoCambio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tTipoCambio.setEnabled(false);
+        tTipoCambio.setFocusable(false);
         tTipoCambio.setMinimumSize(new java.awt.Dimension(4, 30));
         tTipoCambio.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -635,6 +647,8 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel17.setText("% Ganancia");
 
         tPorcentajeGanancia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tPorcentajeGanancia.setEnabled(false);
+        tPorcentajeGanancia.setFocusable(false);
         tPorcentajeGanancia.setMinimumSize(new java.awt.Dimension(4, 30));
         tPorcentajeGanancia.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -642,10 +656,14 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel18.setText("Ganancia Estimada");
 
         tGananciaEstimada.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tGananciaEstimada.setEnabled(false);
+        tGananciaEstimada.setFocusable(false);
         tGananciaEstimada.setMinimumSize(new java.awt.Dimension(4, 30));
         tGananciaEstimada.setPreferredSize(new java.awt.Dimension(73, 30));
 
         tPorcentajeGananciaSugerida.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tPorcentajeGananciaSugerida.setEnabled(false);
+        tPorcentajeGananciaSugerida.setFocusable(false);
         tPorcentajeGananciaSugerida.setMinimumSize(new java.awt.Dimension(4, 30));
         tPorcentajeGananciaSugerida.setPreferredSize(new java.awt.Dimension(73, 30));
 
@@ -667,6 +685,8 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jLabel22.setText("Ganancia Sugerida");
 
         tGanaciaSugerida.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tGanaciaSugerida.setEnabled(false);
+        tGanaciaSugerida.setFocusable(false);
         tGanaciaSugerida.setMinimumSize(new java.awt.Dimension(4, 30));
         tGanaciaSugerida.setPreferredSize(new java.awt.Dimension(73, 30));
 

@@ -472,9 +472,19 @@ public class Xocolata extends javax.swing.JFrame {
         jMenu16.setText("Historial de Transacciones");
 
         jMenuItem27.setText("Transacción General");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
         jMenu16.add(jMenuItem27);
 
         jMenuItem28.setText("Transaccion Específica");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
         jMenu16.add(jMenuItem28);
 
         jMenu9.add(jMenu16);
@@ -964,6 +974,26 @@ public class Xocolata extends javax.swing.JFrame {
         jDesktopPane1.add(ventana);
         ventana.show();
     }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        VentanaSeleccionTransacciones ventana = new VentanaSeleccionTransacciones(1);
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        VentanaSeleccionTransacciones ventana = new VentanaSeleccionTransacciones(2);
+        Dimension desktopSize = jDesktopPane1.getSize();
+        Dimension jInternalFrameSize = ventana.getSize();
+        ventana.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+                            (desktopSize.height- jInternalFrameSize.height)/2);
+        jDesktopPane1.add(ventana);
+        ventana.show();
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     /**
      * @param args the command line arguments

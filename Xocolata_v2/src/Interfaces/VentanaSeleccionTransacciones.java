@@ -5,6 +5,16 @@
  */
 package Interfaces;
 
+import ContenedorComboBox.Item;
+import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import xocolata_v2.ConexionDB;
+import xocolata_v2.Rinventario;
+
 /**
  *
  * @author Marco Barrios
@@ -12,6 +22,9 @@ package Interfaces;
 public class VentanaSeleccionTransacciones extends javax.swing.JInternalFrame {
 
     int tipoReporte;
+    int idPersona;
+    int idRegistroTransaccion;
+    int idTransaccion;
     /**
      * Creates new form VentanaSeleccionTransacciones
      * @param tipo
@@ -19,8 +32,86 @@ public class VentanaSeleccionTransacciones extends javax.swing.JInternalFrame {
     public VentanaSeleccionTransacciones(int tipo) {
         initComponents();
         this.tipoReporte = tipo;
+        mostrarGeneral();
+        cargarPersonas();
     }
 
+    public void mostrarGeneral() {
+        if (tipoReporte == 1) {
+            jLabel3.setVisible(false);
+            cbTransaccion.setVisible(false);
+        } else  {
+            jLabel3.setVisible(true);
+            cbTransaccion.setVisible(true);
+        }
+    }
+    
+    public void cargarPersonas() {
+        ResultSet dato = null;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            dato = comando.executeQuery("Select idPersona, nombrePersona from tblPersonas ORDER BY nombrePersona");
+            while(dato.next())
+            {
+                Item persona = new Item(dato.getString("idPersona"), dato.getString("nombrePersona"));
+                cbPersona.addItem(persona);
+            }
+            dato.close();
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    public void cargarRegistroTransacciones() {
+        ResultSet dato = null;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + idPersona + "' ORDER BY idRegistroTransaccion DESC");
+            while(dato.next())
+            {
+                Item persona = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
+                cbRegistroTransaccion.addItem(persona);
+            }
+            dato.close();
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    public void cargarTransacciones() {
+        ResultSet dato = null;
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            Statement comando = (Statement)conexion.createStatement();
+            dato = comando.executeQuery("Select idTransaccion, fechaTransaccion from tblTransacciones WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "' ORDER BY idTransaccion DESC");
+            while(dato.next())
+            {
+                Item persona = new Item(dato.getString("idTransaccion"), dato.getString("fechaTransaccion"));
+                cbTransaccion.addItem(persona);
+            }
+            dato.close();
+            comando.close();
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,68 +122,185 @@ public class VentanaSeleccionTransacciones extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbPersona = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        cbRegistroTransaccion = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
+        cbTransaccion = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+
+        setClosable(true);
 
         jLabel1.setText("Seleccione una Persona:");
 
+        cbPersona.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbPersonaItemStateChanged(evt);
+            }
+        });
+
         jLabel2.setText("Seleccione una Transaccion:");
 
-        jLabel3.setText("Seleccione una Transaccion:");
+        cbRegistroTransaccion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbRegistroTransaccionItemStateChanged(evt);
+            }
+        });
+
+        jLabel3.setText("Seleccione una Fecha:");
+
+        cbTransaccion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTransaccionItemStateChanged(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("Reporte de Transacciones");
+
+        jButton1.setText("Generar Reporte");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(221, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbTransaccion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbRegistroTransaccion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbRegistroTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(cbTransaccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cbPersonaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPersonaItemStateChanged
+        Item persona = (Item)cbPersona.getSelectedItem();
+        idPersona = Integer.parseInt(persona.getId());
+        cargarRegistroTransacciones();
+    }//GEN-LAST:event_cbPersonaItemStateChanged
+
+    private void cbRegistroTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbRegistroTransaccionItemStateChanged
+        Item registroTransaccion = (Item)cbRegistroTransaccion.getSelectedItem();
+        idRegistroTransaccion = Integer.parseInt(registroTransaccion.getId());
+        cargarTransacciones();
+    }//GEN-LAST:event_cbRegistroTransaccionItemStateChanged
+
+    private void cbTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTransaccionItemStateChanged
+        Item transaccion = (Item)cbTransaccion.getSelectedItem();
+        idTransaccion = Integer.parseInt(transaccion.getId());
+    }//GEN-LAST:event_cbTransaccionItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (this.tipoReporte == 1) {
+            int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(resultado == JOptionPane.YES_OPTION)
+        {
+            //REPORTE CON PRECIO SUGERIDO 
+            Rinventario Rinv=new Rinventario(String.valueOf(idRegistroTransaccion),"src\\Reportes\\H_ReporteTransaccionesPrecioSugerido.jasper");
+            this.getParent().add(Rinv);        
+            Rinv.show();
+            try {
+                Rinv.setSelected(true);
+            } catch (PropertyVetoException ex) {
+            }
+        }
+        else
+        {
+            //REPORTE SIN PRECIO SUGERIDO
+            Rinventario Rinv=new Rinventario(String.valueOf(idRegistroTransaccion),"src\\Reportes\\H_ReporteTransaccionesSinPrecioSugerdio.jasper");
+            this.getParent().add(Rinv);        
+            Rinv.show();
+            try {
+                Rinv.setSelected(true);
+            } catch (PropertyVetoException ex) {
+            }
+        }
+        this.dispose();
+        } 
+        else {
+        int resultado = JOptionPane.showConfirmDialog(null, "¿Desea Generar Reporte con Precio Sugerido?", "Tipo de Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(resultado == JOptionPane.YES_OPTION)
+        {
+            //REPORTE CON PRECIO SUGERIDO 
+            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\H_TransaccionesPrecioSugerido.jasper");
+            this.getParent().add(Rinv);        
+            Rinv.show();
+            try {
+                Rinv.setSelected(true);
+            } catch (PropertyVetoException ex) {
+            }
+        }
+        else
+        {
+            //REPORTE SIN PRECIO SUGERIDO
+            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\H_TransaccionesSinPrecioSugerdio.jasper");
+            this.getParent().add(Rinv);        
+            Rinv.show();
+            try {
+                Rinv.setSelected(true);
+            } catch (PropertyVetoException ex) {
+            }
+        }
+        this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JComboBox cbPersona;
+    private javax.swing.JComboBox cbRegistroTransaccion;
+    private javax.swing.JComboBox cbTransaccion;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
