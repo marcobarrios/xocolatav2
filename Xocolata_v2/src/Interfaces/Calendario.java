@@ -100,7 +100,7 @@ public class Calendario extends javax.swing.JInternalFrame {
             this.dispose();
         }
         catch(Exception exp) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar una fecha");
+            //JOptionPane.showMessageDialog(null, "Debe ingresar una fecha");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

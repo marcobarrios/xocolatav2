@@ -42,7 +42,7 @@ import xocolata_v2.Rinventario;
  */
 public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 
-    int idRegistroTransaccion, idTransaccion;
+    int idRegistroTransaccion = 0, idTransaccion = 0;
     double total;
     String fechaActual;
     HiloCalculos hilo;
@@ -176,7 +176,6 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         rPrecioVenta = new javax.swing.JRadioButton();
         rPrecioSugerido = new javax.swing.JRadioButton();
 
-        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
@@ -609,13 +608,14 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
         
         if (rContado.isSelected()) {
             //LLAMAR REPORTE VENTA DIRECTA AL CONTADO 
-            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\M_VentaDirecta.jasper");
+            Rinventario Rinv=new Rinventario(String.valueOf(idRegistroTransaccion),"src\\Reportes\\M_VentaDirecta.jasper");
             this.getParent().add(Rinv);        
             Rinv.show();
             try {
                 Rinv.setSelected(true);
             } catch (PropertyVetoException ex) {
             }
+            this.dispose();
         }
         else if (rCredito.isSelected()) {
             final Calendario ventana = new Calendario();
@@ -644,17 +644,17 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
 		});
 
         }
-        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void llamarReporteVentaDirectaCredito() {
-        Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\M_VentaCredito.jasper");
+        Rinventario Rinv=new Rinventario(String.valueOf(idRegistroTransaccion),"src\\Reportes\\M_VentaCredito.jasper");
         this.getParent().add(Rinv);        
         Rinv.show();
         try {
             Rinv.setSelected(true);
         } catch (PropertyVetoException ex) {
         }
+        this.dispose();
     }
     
     private ArrayList getListaId()
@@ -678,11 +678,16 @@ public class VentanaVentaDirecta extends javax.swing.JInternalFrame {
     }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if(resultado == JOptionPane.YES_OPTION)
-        {
-            TransaccionQuerys.cancelarRegistroTransaccion(idTransaccion, idRegistroTransaccion);
+        if (idRegistroTransaccion == 0 || idTransaccion == 0) {
             this.dispose();
+        }
+        else {
+            int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(resultado == JOptionPane.YES_OPTION)
+            {
+                TransaccionQuerys.cancelarRegistroTransaccion(idTransaccion, idRegistroTransaccion);
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

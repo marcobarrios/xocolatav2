@@ -27,7 +27,7 @@ public class TransaccionQuerys {
         try {
             try (Connection conexion = ConexionDB.ObtenerConexion()) {
                 PreparedStatement ps;
-                ps = conexion.prepareStatement("INSERT INTO `tblRegistroTransacciones`(`idRegistroTransaccion`, `codigoTransaccion`, `tipoTransaccion`, `cantidadProductos`, `totalTransaccion`, `idPersona`) VALUES (?,?,?,?,?,?)");
+                ps = conexion.prepareStatement("INSERT INTO `tblRegistroTransacciones`(`idRegistroTransaccion`, `codigoTransaccion`, `tipoTransaccion`, `cantidadProductos`, `totalRegistroTransaccion`, `idPersona`) VALUES (?,?,?,?,?,?)");
                 ps.setInt(1, 0);
                 ps.setString(2, "");
                 ps.setInt(3, tipo);
@@ -139,7 +139,7 @@ public class TransaccionQuerys {
                     dato.next();
                     precio = dato.getInt("SUM(tblProductos.precioVentaFinal)");
             dato.close();
-            comando.executeUpdate("UPDATE tblRegistroTransacciones SET totalTransaccion = '" + precio + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
+            comando.executeUpdate("UPDATE tblRegistroTransacciones SET totalRegistroTransaccion = '" + precio + "' WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "'");
             comando.close();
             conexion.close();
             return precio;

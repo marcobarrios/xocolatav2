@@ -43,7 +43,7 @@ import xocolata_v2.Rinventario;
 public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
 
     double total;
-    int idRegistroTransaccion, idTransaccion;
+    int idRegistroTransaccion = 0, idTransaccion = 0;
     String fechaActual = "";
     HiloCalculos hilo;
     /**
@@ -217,7 +217,6 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         rReusarTransaccion = new javax.swing.JRadioButton();
         cbRegistroTransaccion = new javax.swing.JComboBox();
 
-        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
@@ -642,7 +641,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         if(resultado == JOptionPane.YES_OPTION)
         {
             //REPORTE CON PRECIO SUGERIDO 
-            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\.jasper");
+            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\H_TransaccionesPrecioSugerido.jasper");
             this.getParent().add(Rinv);        
             Rinv.show();
             try {
@@ -653,7 +652,7 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
         else
         {
             //REPORTE SIN PRECIO SUGERIDO
-            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\.jasper");
+            Rinventario Rinv=new Rinventario(String.valueOf(idTransaccion),"src\\Reportes\\H_TransaccionesSinPrecioSugerdio.jasper");
             this.getParent().add(Rinv);        
             Rinv.show();
             try {
@@ -688,17 +687,22 @@ public class VentanaSalidaProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblProductosTrasaccionMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if(resultado == JOptionPane.YES_OPTION)
-        {        
-            if (rNuevaTransaccion.isSelected()) {
-                TransaccionQuerys.cancelarRegistroTransaccion(idTransaccion, idRegistroTransaccion);
-            }
-            else if (rReusarTransaccion.isSelected()) {
-                TransaccionQuerys.cancelarTransaccion(idTransaccion);
-            }
+        if (idRegistroTransaccion == 0 || idTransaccion == 0) {
             this.dispose();
         }
+        else {
+            int resultado = JOptionPane.showConfirmDialog(null, "¿Seguro desea cancelar esta transacción?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(resultado == JOptionPane.YES_OPTION)
+            {        
+                if (rNuevaTransaccion.isSelected()) {
+                    TransaccionQuerys.cancelarRegistroTransaccion(idTransaccion, idRegistroTransaccion);
+                }
+                else if (rReusarTransaccion.isSelected()) {
+                    TransaccionQuerys.cancelarTransaccion(idTransaccion);
+                }
+                this.dispose();
+            }
+        }    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tOfertaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tOfertaFocusGained
