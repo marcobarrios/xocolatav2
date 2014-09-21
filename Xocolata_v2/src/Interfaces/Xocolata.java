@@ -11,8 +11,14 @@ import ReportesClases.VentanaDatosVendedores;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import xocolata_v2.ConexionDB;
 import xocolata_v2.Rinventario;
 
 /**

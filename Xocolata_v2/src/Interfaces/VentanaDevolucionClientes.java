@@ -6,10 +6,21 @@
 
 package Interfaces;
 
+import ContenedorComboBox.Item;
+import Querys.PersonaQuerys;
+import Querys.ProductoQuerys;
+import Querys.TransaccionQuerys;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import xocolata_v2.ConexionDB;
 
 /**
  *
@@ -17,6 +28,11 @@ import javax.swing.ImageIcon;
  */
 public class VentanaDevolucionClientes extends javax.swing.JInternalFrame {
 
+    int idProducto;
+    int idTransaccion;
+    int idPersona;
+    double descuento;
+    
     /**
      * Creates new form VentanaDevolucionClientes
      */
@@ -367,11 +383,63 @@ public class VentanaDevolucionClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tPrecioActionPerformed
 
     private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
-        // TODO add your handling code here:
+        TransaccionQuerys.devolverProductoTransaccion(idTransaccion, idProducto);
+        ProductoQuerys.cambiarEstadoProducto(idProducto, 1);
+        PersonaQuerys.cargarSaldo(idPersona, descuento);
+        JOptionPane.showMessageDialog(null, "Producto Devuelto Correctamente");
+        limpiarCampos();
     }//GEN-LAST:event_bAceptarActionPerformed
 
+    public void limpiarCampos() {
+        tCodigoProducto.setText("");
+        tCliente.setText("");
+        tSaldoActual.setText("");
+        tMontoDescuento.setText("");
+        tSaldoNuevo.setText("");
+        tCodigo.setText("");
+        tMarca.setText("");
+        tTipo.setText("");
+        tPrecio.setText("");
+        tCodigoProducto.requestFocus();
+    }
+    
     private void tCodigoProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCodigoProductoKeyPressed
-        // TODO add your handling code here:
+        if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
+        {
+            Connection conexion = ConexionDB.ObtenerConexion();            
+        if(conexion!=null)
+        {
+            try
+            {
+                Statement Query = conexion.createStatement();            
+                ResultSet Datos = Query.executeQuery("SELECT * FROM tblPersonas INNER JOIN tblRegistroTransacciones ON tblPersonas.idPersona = tblRegistroTransacciones.idPersona "
+                        + "INNER JOIN tblTransacciones ON tblRegistroTransacciones.idRegistroTransaccion = tblTransacciones.idRegistroTransaccion "
+                        + "INNER JOIN tblDetalleTransacciones ON tblTransacciones.idTransaccion = tblDetalleTransacciones.idTransaccion "
+                        + "INNER JOIN tblProductos ON tblDetalleTransacciones.idProducto = tblProductos.idProducto "
+                        + "INNER JOIN tblMarcas ON tblProductos.idMarca = tblMarcas.idMarca "
+                        + "INNER JOIN tblTipoProductos ON tblProductos.idTipoProducto = tblTipoProductos.idTipoProducto WHERE tblProductos.codigoProducto = '" + tCodigoProducto.getText() + "'");
+                Datos = Query.getResultSet();                    
+                while (Datos.next()) 
+                {
+                    idProducto = Integer.parseInt(Datos.getString("tblProductos.idProducto"));
+                    idPersona = Integer.parseInt(Datos.getString("tblPersonas.idPersona"));
+                    descuento = (Double.parseDouble(Datos.getString("tblPersonas.saldoPersona"))-Double.parseDouble(Datos.getString("tblProductos.precioVentaFinal")));
+                    tCliente.setText(Datos.getString("tblPersonas.nombrePersona"));
+                    tSaldoActual.setText(Datos.getString("tblPersonas.saldoPersona"));
+                    tMontoDescuento.setText(Datos.getString("tblProductos.precioVentaFinal"));
+                    tSaldoNuevo.setText(String.valueOf(Double.parseDouble(Datos.getString("tblPersonas.saldoPersona"))-Double.parseDouble(Datos.getString("tblProductos.precioVentaFinal"))));
+                    tCodigo.setText(Datos.getString("tblProductos.codigoProducto"));
+                    tMarca.setText(Datos.getString("tblMarcas.Marca"));
+                    tTipo.setText(Datos.getString("tblTipoProductos.TipoProducto"));
+                    tPrecio.setText(Datos.getString("tblProductos.precioVentaFinal"));
+                }
+            }
+            catch (SQLException exp) 
+            {
+                JOptionPane.showMessageDialog(null, exp.toString());
+            }
+        }
+        }
     }//GEN-LAST:event_tCodigoProductoKeyPressed
 
     public void setIcon(Icon anIcon){

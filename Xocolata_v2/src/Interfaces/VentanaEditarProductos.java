@@ -677,6 +677,11 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Realizar Cambios");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -803,6 +808,14 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tCodigoProductoKeyPressed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        guardarCambios();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void guardarCambios() {
+        
+    }
+    
     public void setIcon(Icon anIcon){
         setFrameIcon(anIcon);
     }

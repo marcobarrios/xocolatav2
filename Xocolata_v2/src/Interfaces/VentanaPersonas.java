@@ -238,7 +238,7 @@ public class VentanaPersonas extends javax.swing.JInternalFrame {
             }
             else
             {
-                editarPersona(1);
+                editarPersona(2);
             }
         }
         limpiarT();
