@@ -896,7 +896,7 @@ public class Xocolata extends javax.swing.JFrame {
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
         String codigo = JOptionPane.showInputDialog(null, "Ingrese Código del Producto");
-        Rinventario Rinv=new Rinventario("","src\\Reportes\\K_GastosGenerales.jasper");
+        Rinventario Rinv=new Rinventario(codigo,"src\\Reportes\\J_ProductoCodigo.jasper");
         jDesktopPane1.add(Rinv);        
         Rinv.show();
         try {

@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -30,12 +31,14 @@ import xocolata_v2.ConexionDB;
  */
 public class VentanaEditarProductos extends javax.swing.JInternalFrame {
 
+    HiloCalculos hilo;
     Productos p;
     /**
      * Creates new form VentanaEditarProducto
      */
     public VentanaEditarProductos() {
         initComponents();
+        
         this.setFrameIcon(new ImageIcon(this.getClass().getResource("/Imagenes/xocolata.jpg")));
         setJTexFieldChanged(tCodigoProducto);
    }
@@ -166,7 +169,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
     
     private void printIt(DocumentEvent documentEvent) {
         DocumentEvent.EventType type = documentEvent.getType();
- 
+        hilo = new HiloCalculos();
         if (type.equals(DocumentEvent.EventType.CHANGE))
         {
             //tCorreo.setText("");
@@ -707,6 +710,11 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -832,8 +840,32 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
         guardarCambios();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void guardarCambios() {
-        
+        Item aux = (Item)cbMarca.getSelectedItem();
+        int marca = Integer.parseInt(aux.getId());
+        aux = (Item)cbGenero.getSelectedItem();
+        int genero = Integer.parseInt(aux.getId());
+        aux = (Item)cbTalla.getSelectedItem();
+        int talla = Integer.parseInt(aux.getId());
+        aux = (Item)cbTipoProducto.getSelectedItem();
+        int tipo = Integer.parseInt(aux.getId());
+        Connection conexion = ConexionDB.ObtenerConexion();
+        try
+        {
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                comando.executeUpdate("UPDATE tblProductos SET idMarca = '"+marca+"', idtipoproducto = '"+tipo+"', idtalla = '"+talla+"', idgenero = '"+genero+"', colorProducto = '"+tColor.getText()+"', descripcionProducto = '"+tDescripción.getText()+"', costoDolares = '"+tCostoDolares.getText()+"', totalDolares = '"+tTotalDolares.getText()+"', totalQuetzales = '"+tTotalQ.getText()+"', porcentajeGanancia = '"+tPorcentajeGanancia.getText()+"', gananciaEstimada = '"+tGananciaEstimada.getText()+"', precioVenta = '"+tPrecioVenta.getText()+"', porcentajeGananciaSugerida = '"+tPorcentajeGananciaSugerida.getText()+"', gananciaSugerida = '"+tGanaciaSugerida.getText()+"', precioSugerido = '"+tPrecioSugerido.getText()+"', porcentajeOferta = '0', descuentoOferta = '0', precioOfertado = '"+tPrecioVenta.getText()+"', precioOfertadoSugerido = '"+tPrecioSugerido.getText()+"' Where codigoProducto = '" + tCodigoProducto.getText() + "'");
+                JOptionPane.showMessageDialog(null, "Producto Editado Correctamente");
+            }
+            conexion.close();
+        }
+        catch (SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
     
     public void setIcon(Icon anIcon){
@@ -844,6 +876,110 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
     protected void paintComponent(Graphics g) {
         g.setColor(new Color(100, 0, 4, 85));
         g.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+    }
+    
+    public class HiloCalculos implements Runnable {
+        private Thread t;
+        DecimalFormat df = new DecimalFormat("0.00");
+        public HiloCalculos() 
+        {
+            t = new Thread(this);
+            t.start();
+        }
+
+        @Override
+        public void run() 
+        {
+            while(true)
+            {
+                try 
+                {
+                    if (tCostoDolares.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tTotalDolares.setText(String.valueOf(df.format(Double.parseDouble(tCostoDolares.getText()) * (1 + Double.parseDouble(tImpuestoProducto.getText()) / 100) + Double.parseDouble(tEnvioProducto.getText()))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tCostoDolares.getText().length() - 1;
+                            String resultado = tCostoDolares.getText().substring(0, hasta);
+                            tCostoDolares.setText(resultado);
+                            tCostoDolares.setCaretPosition(hasta);
+                        }
+                    }
+                   
+                    if (tCostoDolares.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tTotalQ.setText(String.valueOf(df.format(Double.parseDouble(tCostoDolares.getText()) * (Double.parseDouble(tTipoCambio.getText())) + Double.parseDouble(tEnvioGuate.getText()))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+    
+                        }
+                    } else {
+                        tCostoDolares.setText("0");
+                    }
+                    if (tTotalQ.getText().length() != 0 && tPrecioVenta.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tGananciaEstimada.setText(String.valueOf(df.format(Double.parseDouble(tPrecioVenta.getText()) - Double.parseDouble(tTotalQ.getText()))));
+                            tPorcentajeGanancia.setText(String.valueOf(df.format((Double.parseDouble(tPrecioVenta.getText())*100/Double.parseDouble(tTotalQ.getText()))-100)));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tTotalQ.getText().length() - 1;
+                            String resultado = tTotalQ.getText().substring(0, hasta);
+                            tTotalQ.setText(resultado);
+                            tTotalQ.setCaretPosition(hasta);
+                        }
+                    } else {
+                        tTotalQ.setText("0");
+                        tPrecioVenta.setText("0");
+                    }
+                    if (tPrecioVenta.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tPrecioSugerido.setText(String.valueOf(df.format(Double.parseDouble(tPrecioVenta.getText()))));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tPrecioVenta.getText().length() - 1;
+                            String resultado = tPrecioVenta.getText().substring(0, hasta);
+                            tPrecioVenta.setText(resultado);
+                            tPrecioVenta.setCaretPosition(hasta);
+                        }
+                    }
+                    if (tPrecioVenta.getText().length() != 0 && tPrecioSugerido.getText().length() != 0)
+                    {
+                        try
+                        {
+                            tGanaciaSugerida.setText(String.valueOf(df.format(Double.parseDouble(tPrecioSugerido.getText())  - Double.parseDouble(tPrecioVenta.getText()))));
+                            tPorcentajeGananciaSugerida.setText(String.valueOf(df.format(Double.parseDouble(tPrecioSugerido.getText())*100/Double.parseDouble(tPrecioVenta.getText())-100)));
+                        }
+                        catch (NumberFormatException exp)
+                        {
+                            int hasta = tPrecioSugerido.getText().length() - 1;
+                            String resultado = tPrecioSugerido.getText().substring(0, hasta);
+                            tPrecioSugerido.setText(resultado);
+                            tPrecioSugerido.setCaretPosition(hasta);
+                        }
+                    } else {
+                        tPrecioVenta.setText("0");
+                        tPrecioSugerido.setText("0");
+                    }
+                    
+                    Thread.sleep(100);
+                }
+                catch(InterruptedException exp) 
+                {
+                }
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

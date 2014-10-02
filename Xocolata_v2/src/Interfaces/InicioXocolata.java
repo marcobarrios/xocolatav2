@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interfaces;
-
 
 import Querys.UsuariosQuerys;
 import java.awt.Image;
@@ -15,18 +13,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 
 /**
  *
- * @author enrique
+ * @author Marco Barrios
  */
-public class Inicio extends javax.swing.JFrame {
+public class InicioXocolata extends javax.swing.JFrame {
 
     /**
-     * Creates new form Inicio
+     * Creates new form InicioXocolata
      */
-    public Inicio() {
+    public InicioXocolata() {
         initComponents();
         Image icon = new ImageIcon(getClass().getResource("/Imagenes/xocolata.PNG")).getImage();
         Icon icono = new ImageIcon(icon.getScaledInstance(250, 180, Image.SCALE_DEFAULT));
@@ -45,7 +42,6 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pPrincipal = new javax.swing.JPanel();
         pTitulo = new javax.swing.JPanel();
         pContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -59,10 +55,6 @@ public class Inicio extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setForeground(new java.awt.Color(153, 153, 153));
-        setResizable(false);
-
-        pPrincipal.setLayout(new javax.swing.BoxLayout(pPrincipal, javax.swing.BoxLayout.Y_AXIS));
 
         pTitulo.setBackground(new java.awt.Color(255, 51, 204));
         pTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -73,14 +65,12 @@ public class Inicio extends javax.swing.JFrame {
         pTitulo.setLayout(pTituloLayout);
         pTituloLayout.setHorizontalGroup(
             pTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pTituloLayout.setVerticalGroup(
             pTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 36, Short.MAX_VALUE)
         );
-
-        pPrincipal.add(pTitulo);
 
         pContenedor.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -119,7 +109,6 @@ public class Inicio extends javax.swing.JFrame {
         bIngresar.setBackground(new java.awt.Color(255, 51, 204));
         bIngresar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         bIngresar.setForeground(new java.awt.Color(255, 255, 255));
-        bIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/16x16/user.png"))); // NOI18N
         bIngresar.setText("Ingresar");
         bIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,7 +127,7 @@ public class Inicio extends javax.swing.JFrame {
         jLabel4.setText("Powered by:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
-        jLabel5.setText("versión 1.1");
+        jLabel5.setText("versión 2.0");
 
         javax.swing.GroupLayout pContenedorLayout = new javax.swing.GroupLayout(pContenedor);
         pContenedor.setLayout(pContenedorLayout);
@@ -182,7 +171,7 @@ public class Inicio extends javax.swing.JFrame {
         pContenedorLayout.setVerticalGroup(
             pContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pContenedorLayout.createSequentialGroup()
-                .addContainerGap(228, Short.MAX_VALUE)
+                .addContainerGap(219, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(47, 47, 47)
                 .addComponent(jLabel2)
@@ -206,39 +195,25 @@ public class Inicio extends javax.swing.JFrame {
                     .addGap(30, 30, 30)))
         );
 
-        pPrincipal.add(pContenedor);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 441, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIngresarActionPerformed
-        String pass = UsuariosQuerys.consultarUsuario(tUsuario.getText());
-        if(tContrasenia.getText().equals(pass))
-        {
-            
-            Xocolata ventana = new Xocolata();
-            ventana.setTitle("Xocolata 2.0 - Distribuidora de Ropa");
-            ventana.setLocationRelativeTo(null);
-            ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            ventana.setVisible(true);
-            this.dispose();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Usuario o Contraseña no válida");
-        }
-    }//GEN-LAST:event_bIngresarActionPerformed
 
     private void tContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tContraseniaActionPerformed
         // TODO add your handling code here:
@@ -264,6 +239,10 @@ public class Inicio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tContraseniaKeyPressed
 
+    private void tUsuarioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tUsuarioPropertyChange
+
+    }//GEN-LAST:event_tUsuarioPropertyChange
+
     private void tUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tUsuarioKeyPressed
         if(evt.getKeyCode() ==  KeyEvent.VK_ENTER)
         {
@@ -271,9 +250,58 @@ public class Inicio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tUsuarioKeyPressed
 
-    private void tUsuarioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tUsuarioPropertyChange
-         
-    }//GEN-LAST:event_tUsuarioPropertyChange
+    private void bIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIngresarActionPerformed
+        String pass = UsuariosQuerys.consultarUsuario(tUsuario.getText());
+        if(tContrasenia.getText().equals(pass))
+        {
+
+            Xocolata ventana = new Xocolata();
+            ventana.setTitle("Xocolata 2.0 - Distribuidora de Ropa");
+            ventana.setLocationRelativeTo(null);
+            ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            ventana.setVisible(true);
+            this.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usuario o Contraseña no válida");
+        }
+    }//GEN-LAST:event_bIngresarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(InicioXocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(InicioXocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(InicioXocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(InicioXocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new InicioXocolata().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bIngresar;
@@ -284,7 +312,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lImagen;
     private javax.swing.JPanel pContenedor;
-    private javax.swing.JPanel pPrincipal;
     private javax.swing.JPanel pTitulo;
     private javax.swing.JPasswordField tContrasenia;
     private javax.swing.JTextField tUsuario;
