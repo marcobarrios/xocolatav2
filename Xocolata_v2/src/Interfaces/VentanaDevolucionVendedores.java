@@ -32,6 +32,7 @@ import xocolata_v2.ConexionDB;
 public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
 
     int idRegistroTransaccion, idTransaccion;
+    int idPersonaTransaccion;
     HiloCalculos hilo;
     /**
      * Creates new form VentanaDevolucionVendedores
@@ -71,15 +72,14 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }
     
     private void cargarDatosTransaccion() {
-        Item gasto = (Item)cbVendedor.getSelectedItem();
-        int id = Integer.parseInt(gasto.getId());
+        
         cbRegistroTransaccion.removeAllItems();
         ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
             try
             {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + id + "' ORDER BY idRegistroTransaccion DESC");
+                dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + idPersonaTransaccion + "' ORDER BY idRegistroTransaccion DESC");
                 while(dato.next())
                 {
                     Item registroTransaccion = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
@@ -93,6 +93,13 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
             {
                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
+        
+        if(cbRegistroTransaccion.equals(null)) {
+            jButton1.setEnabled(false);
+        }
+        else {
+            jButton1.setEnabled(true);
+        }
     }
 
     private void cargarTablaProductosTransaccion() {
@@ -400,12 +407,15 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbVendedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbVendedorItemStateChanged
-        cargarDatosTransaccion();
+            Item idpersona = (Item)cbVendedor.getSelectedItem();
+            idPersonaTransaccion = Integer.parseInt(idpersona.getId());
+            cargarDatosTransaccion();
     }//GEN-LAST:event_cbVendedorItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Item transaccion = (Item)cbRegistroTransaccion.getSelectedItem();
-        idTransaccion =  Integer.parseInt(transaccion.getId());
+        idRegistroTransaccion =  Integer.parseInt(transaccion.getId());
+        idTransaccion = idRegistroTransaccion;
         cargarTablaProductosTransaccion();
         
         tProducto.setEnabled(true);
@@ -426,7 +436,7 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     private void descargarProducto(String codigo) {
         int idProducto = ProductoQuerys.buscarIdProductoTransaccion(codigo);
         if (idProducto != 0) {
-            TransaccionQuerys.devolverProductoTransaccion(idTransaccion, idProducto);
+            TransaccionQuerys.devolverProductoTransaccion(idRegistroTransaccion, idProducto);
             ProductoQuerys.cambiarEstadoProducto(idProducto, 1);
             
             Item persona = (Item)cbVendedor.getSelectedItem();
@@ -446,9 +456,8 @@ public class VentanaDevolucionVendedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tProductoKeyPressed
 
     private void cbRegistroTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbRegistroTransaccionItemStateChanged
-        Item registroTransaccion = (Item)cbRegistroTransaccion.getSelectedItem();
-        idRegistroTransaccion =  Integer.parseInt(registroTransaccion.getId());
-        
+        //Item registroTransaccion = (Item)cbRegistroTransaccion.getSelectedItem();
+        //idRegistroTransaccion =  Integer.parseInt(registroTransaccion.getId());             
     }//GEN-LAST:event_cbRegistroTransaccionItemStateChanged
 
     public class HiloCalculos implements Runnable {

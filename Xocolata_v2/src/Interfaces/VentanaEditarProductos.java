@@ -937,22 +937,8 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
                             tTotalQ.setCaretPosition(hasta);
                         }
                     } else {
-                        tTotalQ.setText("0");
-                        tPrecioVenta.setText("0");
-                    }
-                    if (tPrecioVenta.getText().length() != 0)
-                    {
-                        try
-                        {
-                            tPrecioSugerido.setText(String.valueOf(df.format(Double.parseDouble(tPrecioVenta.getText()))));
-                        }
-                        catch (NumberFormatException exp)
-                        {
-                            int hasta = tPrecioVenta.getText().length() - 1;
-                            String resultado = tPrecioVenta.getText().substring(0, hasta);
-                            tPrecioVenta.setText(resultado);
-                            tPrecioVenta.setCaretPosition(hasta);
-                        }
+                        tPrecioSugerido.setText("0");
+                        tPrecioVenta.setText("");
                     }
                     if (tPrecioVenta.getText().length() != 0 && tPrecioSugerido.getText().length() != 0)
                     {
@@ -969,8 +955,7 @@ public class VentanaEditarProductos extends javax.swing.JInternalFrame {
                             tPrecioSugerido.setCaretPosition(hasta);
                         }
                     } else {
-                        tPrecioVenta.setText("0");
-                        tPrecioSugerido.setText("0");
+                        tPrecioSugerido.setText("");
                     }
                     
                     Thread.sleep(100);

@@ -463,6 +463,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         {
             ProductoQuerys.insertarMarca(marca);
         }
+        cargarMarcas();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -471,6 +472,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         {
             ProductoQuerys.insertarTipoProducto(tipo);
         }
+        cargarTipos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -479,6 +481,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         {
             ProductoQuerys.insertarTalla(talla);
         }
+        cargarTallas();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -487,6 +490,7 @@ public class VentanaProductos extends javax.swing.JInternalFrame {
         {
             ProductoQuerys.insertarGenero(genero);
         }
+        cargarGeneros();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void cbCodigoPedidoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCodigoPedidoItemStateChanged

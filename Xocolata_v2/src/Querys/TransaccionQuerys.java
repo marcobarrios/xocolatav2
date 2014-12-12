@@ -240,7 +240,7 @@ public class TransaccionQuerys {
         try
         {
             try (Statement comando = (Statement)conexion.createStatement()) {
-                comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idTransaccion = '" + idTransaccion + "' AND idProducto = '" + idProducto + "'");
+                comando.executeUpdate("DELETE FROM tblDetalleTransacciones WHERE idProducto = '" + idProducto + "'");
             }
             conexion.close();
         }
