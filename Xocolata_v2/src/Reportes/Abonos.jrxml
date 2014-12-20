@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ca6f382-9177-4618-9ce7-1e3b4b7115bd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="23"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
@@ -77,7 +77,7 @@ where  tblPersonas.idPersona = $P{dato} and tblAbonoPersonas.idAbonoPersona = (s
 	<queryString>
 		<![CDATA[select * from  tblAbonoPersonas
 inner join tblPersonas on tblAbonoPersonas.idPersona = tblPersonas.idPersona
-where tblAbonoPersonas.idAbonoPersona = (select max(idAbonoPersona) from tblAbonoPersonas)and tblPersonas.idPersona = $P{dato}]]>
+where tblAbonoPersonas.montoAbono <>0 and tblAbonoPersonas.idAbonoPersona = (select max(idAbonoPersona) from tblAbonoPersonas)and tblPersonas.idPersona = $P{dato}]]>
 	</queryString>
 	<field name="idAbonoPersona" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>

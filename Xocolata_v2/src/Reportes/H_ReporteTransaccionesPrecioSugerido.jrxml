@@ -23,6 +23,26 @@
 			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
 		</box>
 	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
 	<subDataset name="Telefono" uuid="dfe8a8f5-2d12-46ff-826c-093170d2c703">
 		<parameter name="dato" class="java.lang.String">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -37,6 +57,19 @@ where tblRegistroTransacciones.idRegistroTransaccion = $P{dato}]]>
 		<group name="max(contactoPersona)">
 			<groupExpression><![CDATA[$F{max(contactoPersona)}]]></groupExpression>
 		</group>
+	</subDataset>
+	<subDataset name="saldo" uuid="a90148ca-acbb-4e0a-967b-fc6c1061252c">
+		<parameter name="dato" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select tblPersonas.saldoPersona from tblPersonas
+inner join tblRegistroTransacciones on tblpersonas.idPersona = tblRegistroTransacciones.idPersona
+where tblRegistroTransacciones.idRegistroTransaccion = $P{dato}]]>
+		</queryString>
+		<field name="saldoPersona" class="java.lang.Double">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
 	</subDataset>
 	<parameter name="dato" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -536,7 +569,7 @@ order by tblProductos.codigoProducto]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="35" splitType="Stretch">
+		<band height="54" splitType="Stretch">
 			<textField>
 				<reportElement x="295" y="9" width="76" height="20" uuid="43e6de8d-8123-4f59-a819-4446e44342af"/>
 				<textElement verticalAlignment="Middle"/>
@@ -550,7 +583,7 @@ order by tblProductos.codigoProducto]]>
 				<text><![CDATA[Cantidad de Productos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="554" y="11" width="121" height="20" uuid="4898b353-0378-4a14-a312-21f79f794389"/>
+				<reportElement x="555" y="31" width="121" height="20" uuid="4898b353-0378-4a14-a312-21f79f794389"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -560,10 +593,37 @@ order by tblProductos.codigoProducto]]>
 				<reportElement x="0" y="5" width="802" height="1" forecolor="#999999" uuid="9c8a3812-d7bd-4e4d-b7b3-24c24c718d72"/>
 			</line>
 			<textField pattern="###0.00">
-				<reportElement x="679" y="11" width="100" height="20" uuid="ddcb76d9-e00f-44d0-b839-76830d6e90ec"/>
+				<reportElement x="680" y="31" width="100" height="20" uuid="ddcb76d9-e00f-44d0-b839-76830d6e90ec"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{totalRegistroTransaccion}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="516" y="9" width="159" height="20" uuid="14ba3caf-8c6f-45c6-811a-10cfd050a394"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="680" y="10" width="76" height="20" uuid="e5c4f3d1-8de8-40f7-a494-73a68e6d5e4b"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="saldo" uuid="0f5a1f1f-854d-4aa5-abfe-b31749c4d434">
+						<datasetParameter name="dato">
+							<datasetParameterExpression><![CDATA[$P{dato}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="5a49b481-4131-4a01-8efa-fe4ecb96fa02">
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField pattern="###0.00">
+								<reportElement x="0" y="0" width="90" height="20" uuid="ec465ee6-38a3-4a78-a61b-e7e2e90e4624"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{saldoPersona}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 		</band>
 	</summary>
 </jasperReport>
