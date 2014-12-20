@@ -380,6 +380,29 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem33ActionPerformed"/>
                   </Events>
                 </MenuItem>
+                <Menu class="javax.swing.JMenu" name="jMenu22">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Resumen"/>
+                  </Properties>
+                  <SubComponents>
+                    <MenuItem class="javax.swing.JMenuItem" name="jMenuItem26">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="General"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem26ActionPerformed"/>
+                      </Events>
+                    </MenuItem>
+                    <MenuItem class="javax.swing.JMenuItem" name="jMenuItem44">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Bodega"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem44ActionPerformed"/>
+                      </Events>
+                    </MenuItem>
+                  </SubComponents>
+                </Menu>
               </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu16">

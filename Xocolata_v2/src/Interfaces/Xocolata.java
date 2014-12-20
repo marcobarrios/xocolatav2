@@ -11,14 +11,8 @@ import ReportesClases.VentanaDatosVendedores;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.beans.PropertyVetoException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import xocolata_v2.ConexionDB;
 import xocolata_v2.Rinventario;
 
 /**
@@ -46,13 +40,7 @@ public class Xocolata extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Xocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Xocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Xocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Xocolata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
@@ -117,6 +105,9 @@ public class Xocolata extends javax.swing.JFrame {
         jMenuItem31 = new javax.swing.JMenuItem();
         jMenuItem32 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
+        jMenu22 = new javax.swing.JMenu();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem44 = new javax.swing.JMenuItem();
         jMenu16 = new javax.swing.JMenu();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
@@ -466,6 +457,26 @@ public class Xocolata extends javax.swing.JFrame {
             }
         });
         jMenu15.add(jMenuItem33);
+
+        jMenu22.setText("Resumen");
+
+        jMenuItem26.setText("General");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu22.add(jMenuItem26);
+
+        jMenuItem44.setText("Bodega");
+        jMenuItem44.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem44ActionPerformed(evt);
+            }
+        });
+        jMenu22.add(jMenuItem44);
+
+        jMenu15.add(jMenu22);
 
         jMenu9.add(jMenu15);
 
@@ -995,6 +1006,28 @@ public class Xocolata extends javax.swing.JFrame {
         ventana.show();
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        Rinventario Rinv=new Rinventario("","src\\Reportes\\N_ResumenProductosGeneral.jasper");
+        //Rinv.setVisible(true);
+        jDesktopPane1.add(Rinv);        
+        Rinv.show();
+        try {
+            Rinv.setSelected(true);
+        } catch (PropertyVetoException ex) {
+        }
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem44ActionPerformed
+        Rinventario Rinv=new Rinventario("","src\\Reportes\\N_ResumenProductosBodega.jasper");
+        //Rinv.setVisible(true);
+        jDesktopPane1.add(Rinv);        
+        Rinv.show();
+        try {
+            Rinv.setSelected(true);
+        } catch (PropertyVetoException ex) {
+        }
+    }//GEN-LAST:event_jMenuItem44ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1046,6 +1079,7 @@ public class Xocolata extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu20;
     private javax.swing.JMenu jMenu21;
+    private javax.swing.JMenu jMenu22;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -1072,6 +1106,7 @@ public class Xocolata extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
@@ -1091,6 +1126,7 @@ public class Xocolata extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem41;
     private javax.swing.JMenuItem jMenuItem42;
     private javax.swing.JMenuItem jMenuItem43;
+    private javax.swing.JMenuItem jMenuItem44;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
