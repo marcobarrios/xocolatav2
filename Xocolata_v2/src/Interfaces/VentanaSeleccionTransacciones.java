@@ -51,18 +51,19 @@ public class VentanaSeleccionTransacciones extends javax.swing.JInternalFrame {
     
     public void cargarPersonas() {
         ResultSet dato = null;
+        cbPersona.removeAllItems();
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            dato = comando.executeQuery("Select idPersona, nombrePersona from tblPersonas ORDER BY nombrePersona");
-            while(dato.next())
-            {
-                Item persona = new Item(dato.getString("idPersona"), dato.getString("nombrePersona"));
-                cbPersona.addItem(persona);
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                dato = comando.executeQuery("Select idPersona, nombrePersona from tblPersonas ORDER BY nombrePersona");
+                while(dato.next())
+                {
+                    Item persona = new Item(dato.getString("idPersona"), dato.getString("nombrePersona"));
+                    cbPersona.addItem(persona);
+                }
+                dato.close();
             }
-            dato.close();
-            comando.close();
             conexion.close();
         }
         catch (SQLException ex)
@@ -72,41 +73,43 @@ public class VentanaSeleccionTransacciones extends javax.swing.JInternalFrame {
     }
     
     public void cargarRegistroTransacciones() {
-        ResultSet dato = null;
+        cbRegistroTransaccion.removeAllItems();
+        ResultSet dato;
         Connection conexion = ConexionDB.ObtenerConexion();
-        try
-        {
-            Statement comando = (Statement)conexion.createStatement();
-            dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + idPersona + "' ORDER BY idRegistroTransaccion DESC");
-            while(dato.next())
+            try
             {
-                Item persona = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
-                cbRegistroTransaccion.addItem(persona);
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                dato = comando.executeQuery("Select idRegistroTransaccion, codigoTransaccion from tblRegistroTransacciones WHERE idPersona = '" + idPersona + "' ORDER BY idRegistroTransaccion DESC");
+                while(dato.next())
+                {
+                    Item registroTransaccion = new Item(dato.getString("idRegistroTransaccion"), dato.getString("codigoTransaccion"));
+                    cbRegistroTransaccion.addItem(registroTransaccion);
+                }
+                dato.close();
             }
-            dato.close();
-            comando.close();
             conexion.close();
-        }
-        catch (SQLException ex)
-        {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
+            }
+            catch (SQLException ex)
+            {
+               JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
     }
     
     public void cargarTransacciones() {
         ResultSet dato = null;
+        cbTransaccion.removeAllItems();
         Connection conexion = ConexionDB.ObtenerConexion();
         try
         {
-            Statement comando = (Statement)conexion.createStatement();
-            dato = comando.executeQuery("Select idTransaccion, fechaTransaccion from tblTransacciones WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "' ORDER BY idTransaccion DESC");
-            while(dato.next())
-            {
-                Item persona = new Item(dato.getString("idTransaccion"), dato.getString("fechaTransaccion"));
-                cbTransaccion.addItem(persona);
+            try (Statement comando = (Statement)conexion.createStatement()) {
+                dato = comando.executeQuery("Select idTransaccion, fechaTransaccion from tblTransacciones WHERE idRegistroTransaccion = '" + idRegistroTransaccion + "' ORDER BY idTransaccion DESC");
+                while(dato.next())
+                {
+                    Item persona = new Item(dato.getString("idTransaccion"), dato.getString("fechaTransaccion"));
+                    cbTransaccion.addItem(persona);
+                }
+                dato.close();
             }
-            dato.close();
-            comando.close();
             conexion.close();
         }
         catch (SQLException ex)
@@ -282,13 +285,17 @@ public class VentanaSeleccionTransacciones extends javax.swing.JInternalFrame {
 
     private void cbRegistroTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbRegistroTransaccionItemStateChanged
         Item registroTransaccion = (Item)cbRegistroTransaccion.getSelectedItem();
-        idRegistroTransaccion = Integer.parseInt(registroTransaccion.getId());
-        cargarTransacciones();
+        if (registroTransaccion!=null) {
+            idRegistroTransaccion = Integer.parseInt(registroTransaccion.getId());
+            cargarTransacciones();
+        }
     }//GEN-LAST:event_cbRegistroTransaccionItemStateChanged
 
     private void cbTransaccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTransaccionItemStateChanged
         Item transaccion = (Item)cbTransaccion.getSelectedItem();
-        idTransaccion = Integer.parseInt(transaccion.getId());
+        if(transaccion!=null) {
+            idTransaccion = Integer.parseInt(transaccion.getId());
+        }
     }//GEN-LAST:event_cbTransaccionItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -308,7 +315,7 @@ public class VentanaSeleccionTransacciones extends javax.swing.JInternalFrame {
         else
         {
             //REPORTE SIN PRECIO SUGERIDO
-            Rinventario Rinv=new Rinventario(String.valueOf(idRegistroTransaccion),"src\\Reportes\\H_ReporteTransaccionesSinPrecioSugerdio.jasper");
+            Rinventario Rinv=new Rinventario(String.valueOf(idRegistroTransaccion),"src\\Reportes\\H_ReporteTransaccionesSinPrecioSugerido.jasper");
             this.getParent().add(Rinv);        
             Rinv.show();
             try {
